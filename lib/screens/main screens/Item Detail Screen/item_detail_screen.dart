@@ -28,7 +28,6 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
       'https://apollo-singapore.akamaized.net/v1/files/ryg7fvp9ft8b1-IN/image;s=272x0',
     ];
     return Scaffold(
-      // backgroundColor: const Color.fromARGB(255, 247, 246, 247),
       backgroundColor: const Color(0xFFEEEEEE),
       appBar: AppBar(
         systemOverlayStyle: const SystemUiOverlayStyle(
@@ -150,11 +149,18 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                 ),
               ),
               Container(
-                margin:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                margin: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 255, 254, 254),
                   borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 1,
+                      blurRadius: 10,
+                      offset: const Offset(8, 4), // changes position of shadow
+                    ),
+                  ],
                 ),
                 padding: const EdgeInsets.all(10),
                 child: Column(
