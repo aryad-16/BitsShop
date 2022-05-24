@@ -140,6 +140,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                     ),
                   ],
                 ),
+                margin: const EdgeInsets.only(bottom: 8),
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 255, 254, 254),
                   borderRadius: BorderRadius.only(
@@ -190,9 +191,90 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                   ],
                 ),
               ),
+              Container(
+                margin: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 255, 254, 254),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 1,
+                      blurRadius: 10,
+                      offset: const Offset(8, 4), // changes position of shadow
+                    ),
+                  ],
+                ),
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Contact Details',
+                      style: TextStyle(
+                        fontFamily: 'ManRope Regular',
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.9,
+                        color: Color.fromRGBO(34, 26, 69, 1),
+                      ),
+                    ),
+                    ContactDetailsRow(
+                      title1: 'Name: ',
+                      title2: 'Prathamesh Anwekar',
+                    ),
+                    ContactDetailsRow(
+                      title1: 'Bhawan & Room No: ',
+                      title2: '2140,  Shankar Bhawan',
+                    ),
+                    ContactDetailsRow(
+                      title1: 'Phone No: ',
+                      title2: '8220585181',
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ContactDetailsRow extends StatelessWidget {
+  final String title1;
+  final String title2;
+  const ContactDetailsRow({
+    Key? key,
+    required this.title1,
+    required this.title2,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: <Widget>[
+          Text(
+            title1,
+            style: const TextStyle(
+              fontFamily: 'ManRope Regular',
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Color.fromARGB(180, 0, 0, 0),
+            ),
+          ),
+          Text(
+            title2,
+            style: TextStyle(
+              fontFamily: 'ManRope Regular',
+              fontSize: 15,
+              color: Constant.greyColor1,
+            ),
+          )
+        ],
       ),
     );
   }
