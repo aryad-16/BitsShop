@@ -63,6 +63,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 child: Column(
@@ -150,6 +151,30 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(35),
                     bottomRight: Radius.circular(35),
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 10, left: 17),
+                child: Text(
+                  'Description',
+                  style: TextStyle(
+                    fontFamily: 'ManRope Regular',
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 0.9,
+                    color: Color.fromRGBO(34, 26, 69, 1),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10, left: 17, right: 17),
+                child: Text(
+                  'The product used to be good but recently I purchased a pack of 3 in an offer for just 199rs and that came out to be a duplicate product. It is causing irritation to the skin. Overall, product is good but do not purchase it during the cheap deals when they offer multiple quantities at the price of one.',
+                  style: TextStyle(
+                    fontFamily: 'ManRope Regular',
+                    fontSize: 15,
+                    color: Constant.greyColor1,
                   ),
                 ),
               ),
