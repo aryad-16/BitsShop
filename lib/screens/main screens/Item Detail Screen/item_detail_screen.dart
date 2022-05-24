@@ -69,47 +69,13 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Column(
-                        children: [
-                          Text(
-                            widget.title,
-                            overflow: TextOverflow.clip,
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.montserrat(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              color: const Color.fromRGBO(34, 26, 69, 1),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            '\u{20B9} ${4500}',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.montserrat(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w500,
-                              color: Constant.yellowColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                     Container(
                       margin: const EdgeInsets.only(bottom: 12),
-                      // color: Colors.red,
-                      // width: double.infinity - 80,
                       child: CarouselSlider.builder(
                         itemCount: imagelist.length,
-                        itemBuilder: (context, index, realindex) => Container(
-                          // color: Colors.red,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.network(imagelist[index]),
-                          ),
+                        itemBuilder: (context, index, realindex) => ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.network(imagelist[index]),
                         ),
                         options: CarouselOptions(
                           onPageChanged: (index, reason) {
@@ -143,9 +109,38 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                         spacing: 6.0,
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          bottom: 10, left: 15, right: 15, top: 20),
+                      child: Column(
+                        children: [
+                          Text(
+                            widget.title,
+                            overflow: TextOverflow.clip,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.montserrat(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              color: const Color.fromRGBO(34, 26, 69, 1),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            '\u{20B9} ${4500}',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.montserrat(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500,
+                              color: Constant.yellowColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-                padding: const EdgeInsets.only(bottom: 25),
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 255, 254, 254),
                   borderRadius: BorderRadius.only(
@@ -154,28 +149,39 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                   ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(top: 10, left: 17),
-                child: Text(
-                  'Description',
-                  style: TextStyle(
-                    fontFamily: 'ManRope Regular',
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.9,
-                    color: Color.fromRGBO(34, 26, 69, 1),
-                  ),
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 255, 254, 254),
+                  borderRadius: BorderRadius.circular(15),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 17, right: 17),
-                child: Text(
-                  'The product used to be good but recently I purchased a pack of 3 in an offer for just 199rs and that came out to be a duplicate product. It is causing irritation to the skin. Overall, product is good but do not purchase it during the cheap deals when they offer multiple quantities at the price of one.',
-                  style: TextStyle(
-                    fontFamily: 'ManRope Regular',
-                    fontSize: 15,
-                    color: Constant.greyColor1,
-                  ),
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Description',
+                      style: TextStyle(
+                        fontFamily: 'ManRope Regular',
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.9,
+                        color: Color.fromRGBO(34, 26, 69, 1),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Text(
+                        'The product used to be good but recently I purchased a pack of 3 in an offer for just 199rs and that came out to be a duplicate product. It is causing irritation to the skin. Overall, product is good but do not purchase it during the cheap deals when they offer multiple quantities at the price of one.',
+                        style: TextStyle(
+                          fontFamily: 'ManRope Regular',
+                          fontSize: 15,
+                          color: Constant.greyColor1,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
