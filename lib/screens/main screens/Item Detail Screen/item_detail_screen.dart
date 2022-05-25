@@ -59,6 +59,33 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
         elevation: 0,
         backgroundColor: const Color.fromARGB(255, 255, 254, 254),
       ),
+      // floatingActionButton: Container(
+      //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      //   margin: const EdgeInsets.only(right: 0, bottom: 50),
+      //   decoration: BoxDecoration(
+      //     boxShadow: [Constant.boxShadow],
+      //     gradient: Constant.yellowlinear,
+      //     borderRadius: BorderRadius.circular(100),
+      //   ),
+      //   child: Row(
+      //     mainAxisSize: MainAxisSize.min,
+      //     children: [
+      //       SvgPicture.asset(
+      //         'assets/icons/call.svg',
+      //         width: 35,
+      //         height: 35,
+      //         color: Colors.white,
+      //       ),
+      //       const SizedBox(width: 10),
+      //       SvgPicture.asset(
+      //         'assets/icons/call.svg',
+      //         width: 35,
+      //         height: 35,
+      //         color: Colors.white,
+      //       ),
+      //     ],
+      //   ),
+      // ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -208,8 +235,8 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       'Contact Details',
                       style: TextStyle(
                         fontFamily: 'ManRope Regular',
@@ -219,17 +246,45 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                         color: Color.fromRGBO(34, 26, 69, 1),
                       ),
                     ),
-                    ContactDetailsRow(
+                    const ContactDetailsRow(
                       title1: 'Name: ',
                       title2: 'Prathamesh Anwekar',
                     ),
-                    ContactDetailsRow(
+                    const ContactDetailsRow(
                       title1: 'Bhawan & Room No: ',
                       title2: '2140,  Shankar Bhawan',
                     ),
-                    ContactDetailsRow(
+                    const ContactDetailsRow(
                       title1: 'Phone No: ',
                       title2: '8220585181',
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 8),
+                      margin: const EdgeInsets.only(top: 4),
+                      decoration: BoxDecoration(
+                        boxShadow: [Constant.boxShadow],
+                        gradient: Constant.yellowlinear,
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icons/call.svg',
+                            width: 35,
+                            height: 35,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(width: 10),
+                          SvgPicture.asset(
+                            'assets/icons/whatsapp.svg',
+                            width: 35,
+                            height: 35,
+                            color: Colors.white,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
