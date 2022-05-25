@@ -44,12 +44,12 @@ class HomeScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: const Color.fromARGB(255, 245, 245, 245),
 
       // backgroundColor: const Color(0xFFFFFFEE),
       appBar: AppBar(
         systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Color.fromARGB(255, 247, 246, 247),
+          statusBarColor: Color.fromARGB(255, 245, 245, 245),
           // statusBarColor: Color(0xFFEEEEEE),
         ),
         backgroundColor: Colors.grey[100],
@@ -172,7 +172,7 @@ class HomeScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {},
-                              child: categorieslistView(index),
+                              child: categorieslistView(index, context),
                             );
                           },
                         ),

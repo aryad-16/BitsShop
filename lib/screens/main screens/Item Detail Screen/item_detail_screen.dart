@@ -23,7 +23,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final imagelist = [
-      'https://apollo-singapore.akamaized.net/v1/files/ezsysftziv8v-IN/image;s=272x0',
+      'https://apollo-singapore.akamaized.net/v1/files/werg5prnq1023-IN/image;s=272x0',
       'https://apollo-singapore.akamaized.net/v1/files/b0n1994mmf4y2-IN/image;s=272x0',
       'https://apollo-singapore.akamaized.net/v1/files/ryg7fvp9ft8b1-IN/image;s=272x0',
     ];
@@ -59,35 +59,9 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
         elevation: 0,
         backgroundColor: const Color.fromARGB(255, 255, 254, 254),
       ),
-      // floatingActionButton: Container(
-      //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      //   margin: const EdgeInsets.only(right: 0, bottom: 50),
-      //   decoration: BoxDecoration(
-      //     boxShadow: [Constant.boxShadow],
-      //     gradient: Constant.yellowlinear,
-      //     borderRadius: BorderRadius.circular(100),
-      //   ),
-      //   child: Row(
-      //     mainAxisSize: MainAxisSize.min,
-      //     children: [
-      //       SvgPicture.asset(
-      //         'assets/icons/call.svg',
-      //         width: 35,
-      //         height: 35,
-      //         color: Colors.white,
-      //       ),
-      //       const SizedBox(width: 10),
-      //       SvgPicture.asset(
-      //         'assets/icons/call.svg',
-      //         width: 35,
-      //         height: 35,
-      //         color: Colors.white,
-      //       ),
-      //     ],
-      //   ),
-      // ),
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -183,8 +157,8 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                   borderRadius: BorderRadius.circular(15),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 1,
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 3,
                       blurRadius: 10,
                       offset: const Offset(8, 4), // changes position of shadow
                     ),
@@ -219,14 +193,14 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.all(15),
+                margin: const EdgeInsets.fromLTRB(15, 15, 15, 30),
                 decoration: BoxDecoration(
                   color: const Color.fromARGB(255, 255, 254, 254),
                   borderRadius: BorderRadius.circular(15),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 1,
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 3,
                       blurRadius: 10,
                       offset: const Offset(8, 4), // changes position of shadow
                     ),
@@ -246,6 +220,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                         color: Color.fromRGBO(34, 26, 69, 1),
                       ),
                     ),
+                    const SizedBox(height: 6),
                     const ContactDetailsRow(
                       title1: 'Name: ',
                       title2: 'Prathamesh Anwekar',
@@ -276,7 +251,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                             height: 35,
                             color: Colors.white,
                           ),
-                          const SizedBox(width: 10),
+                          const SizedBox(width: 20),
                           SvgPicture.asset(
                             'assets/icons/whatsapp.svg',
                             width: 35,
