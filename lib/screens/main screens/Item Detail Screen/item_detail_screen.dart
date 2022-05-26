@@ -23,12 +23,11 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final imagelist = [
-      'https://apollo-singapore.akamaized.net/v1/files/ezsysftziv8v-IN/image;s=272x0',
+      'https://apollo-singapore.akamaized.net/v1/files/werg5prnq1023-IN/image;s=272x0',
       'https://apollo-singapore.akamaized.net/v1/files/b0n1994mmf4y2-IN/image;s=272x0',
       'https://apollo-singapore.akamaized.net/v1/files/ryg7fvp9ft8b1-IN/image;s=272x0',
     ];
     return Scaffold(
-      // backgroundColor: const Color.fromARGB(255, 247, 246, 247),
       backgroundColor: const Color(0xFFEEEEEE),
       appBar: AppBar(
         systemOverlayStyle: const SystemUiOverlayStyle(
@@ -42,18 +41,17 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
               size: 26,
             ),
             onPressed: () => Navigator.of(context).pop(),
-            color: const Color.fromARGB(180, 0, 0, 0),
+            color: const Color.fromRGBO(14, 20, 70, 1),
           ),
         ),
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 20, left: 12.4),
-            // width: 23,
             child: SvgPicture.asset(
               'assets/icons/bookmark.svg',
               width: 26,
               height: 26,
-              color: const Color.fromARGB(180, 0, 0, 0),
+              color: const Color.fromRGBO(14, 20, 70, 1),
             ),
           ),
         ],
@@ -62,53 +60,21 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Column(
-                        children: [
-                          Text(
-                            widget.title,
-                            overflow: TextOverflow.clip,
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.montserrat(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              color: const Color.fromRGBO(34, 26, 69, 1),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            '\u{20B9} ${4500}',
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.montserrat(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w500,
-                              color: Constant.yellowColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                     Container(
                       margin: const EdgeInsets.only(bottom: 12),
-                      // color: Colors.red,
-                      // width: double.infinity - 80,
                       child: CarouselSlider.builder(
                         itemCount: imagelist.length,
-                        itemBuilder: (context, index, realindex) => Container(
-                          // color: Colors.red,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.network(imagelist[index]),
-                          ),
+                        itemBuilder: (context, index, realindex) => ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: Image.network(imagelist[index]),
                         ),
                         options: CarouselOptions(
                           onPageChanged: (index, reason) {
@@ -142,9 +108,39 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                         spacing: 6.0,
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          bottom: 10, left: 15, right: 15, top: 20),
+                      child: Column(
+                        children: [
+                          Text(
+                            widget.title,
+                            overflow: TextOverflow.clip,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.montserrat(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              color: const Color.fromRGBO(34, 26, 69, 1),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            '\u{20B9} ${4500}',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.montserrat(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500,
+                              color: Constant.yellowColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-                padding: const EdgeInsets.only(bottom: 25),
+                margin: const EdgeInsets.only(bottom: 8),
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 255, 254, 254),
                   borderRadius: BorderRadius.only(
@@ -153,9 +149,161 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                   ),
                 ),
               ),
+              Container(
+                margin: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 255, 254, 254),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 3,
+                      blurRadius: 10,
+                      offset: const Offset(8, 4), // changes position of shadow
+                    ),
+                  ],
+                ),
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Description',
+                      style: TextStyle(
+                        fontFamily: 'ManRope Regular',
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.9,
+                        color: Color.fromRGBO(34, 26, 69, 1),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Text(
+                        'Sometimes the scent of seasonal hand wash is all we need to rouse our holiday spirits. Available in an array of festive fragrances, our naturally derived gel hand wash will leave your hands soft, clean and ready to be tucked into a pair of fair isle mittens. It really is the most wonderful time of the year.',
+                        style: TextStyle(
+                          fontFamily: 'ManRope Regular',
+                          fontSize: 15,
+                          color: Constant.greyColor1,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.fromLTRB(15, 15, 15, 30),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 255, 254, 254),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 3,
+                      blurRadius: 10,
+                      offset: const Offset(8, 4), // changes position of shadow
+                    ),
+                  ],
+                ),
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Contact Details',
+                      style: TextStyle(
+                        fontFamily: 'ManRope Regular',
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.9,
+                        color: Color.fromRGBO(34, 26, 69, 1),
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    const ContactDetailsRow(
+                      title1: 'Name: ',
+                      title2: 'Prathamesh Anwekar',
+                    ),
+                    const ContactDetailsRow(
+                      title1: 'Bhawan & Room No: ',
+                      title2: '2140,  Shankar Bhawan',
+                    ),
+                    const ContactDetailsRow(
+                      title1: 'Phone No: ',
+                      title2: '8220585181',
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 8),
+                      margin: const EdgeInsets.only(top: 4),
+                      decoration: BoxDecoration(
+                        boxShadow: [Constant.boxShadow],
+                        gradient: Constant.yellowlinear,
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icons/call.svg',
+                            width: 35,
+                            height: 35,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(width: 20),
+                          SvgPicture.asset(
+                            'assets/icons/whatsapp.svg',
+                            width: 35,
+                            height: 35,
+                            color: Colors.white,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ContactDetailsRow extends StatelessWidget {
+  final String title1;
+  final String title2;
+  const ContactDetailsRow({
+    Key? key,
+    required this.title1,
+    required this.title2,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        children: <Widget>[
+          Text(
+            title1,
+            style: const TextStyle(
+              fontFamily: 'ManRope Regular',
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Color.fromARGB(180, 0, 0, 0),
+            ),
+          ),
+          Text(
+            title2,
+            style: TextStyle(
+              fontFamily: 'ManRope Regular',
+              fontSize: 15,
+              color: Constant.greyColor1,
+            ),
+          )
+        ],
       ),
     );
   }

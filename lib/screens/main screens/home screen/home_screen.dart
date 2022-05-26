@@ -2,58 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
+import 'package:login_singup_screen_ui/screens/main%20screens/Item%20Category%20Screen/item_category_screen.dart';
 import 'package:login_singup_screen_ui/screens/main%20screens/home%20screen/popular_grid.dart';
 import 'package:login_singup_screen_ui/screens/main%20screens/home%20screen/search_screen.dart';
-
-import 'categories_list_view.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Widget _mainHeadingAndSeeAll(String title) {
-      return Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 7),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              title,
-              style: const TextStyle(
-                fontFamily: 'ManRope Regular',
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 0.9,
-                color: Color.fromRGBO(34, 26, 69, 1),
-              ),
-            ),
-            Text(
-              'See All',
-              style: TextStyle(
-                fontFamily: 'ManRope Regular',
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 0.9,
-                color: Constant.greyColor1,
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
     return Scaffold(
-      backgroundColor: Colors.grey[100],
-
-      // backgroundColor: const Color(0xFFFFFFEE),
+      backgroundColor: const Color.fromARGB(255, 245, 245, 245),
       appBar: AppBar(
         systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Color.fromARGB(255, 247, 246, 247),
-          // statusBarColor: Color(0xFFEEEEEE),
+          statusBarColor: Color.fromARGB(255, 245, 245, 245),
         ),
         backgroundColor: Colors.grey[100],
-        // backgroundColor: const Color(0xFFEEEEEE),
         leading: Padding(
           padding: const EdgeInsets.only(left: 20, right: 5),
           child: SvgPicture.asset(
@@ -61,10 +25,10 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         title: Text(
-          'Rentalz',
+          'BitsShop',
           style: TextStyle(
             fontFamily: 'ManRope SemiBold',
-            fontSize: 30,
+            fontSize: 28,
             letterSpacing: 1.2,
             color: Constant.yellowColor,
           ),
@@ -76,7 +40,6 @@ class HomeScreen extends StatelessWidget {
               width: 28,
               child: SvgPicture.asset(
                 'assets/icons/notification_on.svg',
-                // color: Colors.,
               ),
             ),
           ),
@@ -94,7 +57,6 @@ class HomeScreen extends StatelessWidget {
             children: <Widget>[
               GestureDetector(
                 onTap: () {
-                  // showSearch(context: context, delegate: delegate);
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (ctx) => const SearchScreen(),
@@ -158,46 +120,83 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 15, bottom: 15),
-                child: Column(
-                  children: <Widget>[
-                    _mainHeadingAndSeeAll('Categories'),
-                    SizedBox(
-                      height: 150,
-                      child: Expanded(
-                        child: ListView.builder(
-                          itemCount: 9,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {},
-                              child: categorieslistView(index),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              _mainHeadingAndSeeAll('Most Popular'),
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 0.75,
-                  crossAxisSpacing: 0,
-                  mainAxisSpacing: 15,
-                  crossAxisCount: 2,
-                ),
-                itemBuilder: (ctx, index) => populargrid(index, context),
-                itemCount: 10,
-              ),
+              const HorizontalListView(title: 'Books'),
+              const HorizontalListView(title: 'Cycles'),
+              const HorizontalListView(title: 'Electronics'),
+              const HorizontalListView(title: 'Other'),
             ],
           ),
           padding: const EdgeInsets.only(bottom: 15),
         ),
+      ),
+    );
+  }
+}
+
+class HorizontalListView extends StatelessWidget {
+  final String title;
+  const HorizontalListView({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(top: 15),
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 7),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontFamily: 'ManRope Regular',
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 0.9,
+                    color: Color.fromRGBO(34, 26, 69, 1),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (ctx) => ItemCategoryScreen(category: title),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    'See All',
+                    style: TextStyle(
+                      fontFamily: 'ManRope Regular',
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.9,
+                      color: Constant.greyColor1,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 310,
+            child: Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: 9,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return populargrid(index, context);
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

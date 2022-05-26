@@ -16,12 +16,15 @@ Widget populargrid(int index, BuildContext context) {
       ),
     ),
     child: Container(
+      padding: const EdgeInsets.only(bottom: 10),
       margin: const EdgeInsets.symmetric(horizontal: 8),
       height: 150,
+      width: 200,
       child: Card(
         color: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        shadowColor: Colors.grey.withOpacity(0.25),
+        elevation: 8,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -29,14 +32,17 @@ Widget populargrid(int index, BuildContext context) {
             Container(
               height: 170,
               alignment: Alignment.topCenter,
+              padding: const EdgeInsets.symmetric(horizontal: 7),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
-                  index == 0
+                  index % 4 == 0
                       ? 'https://5.imimg.com/data5/ES/XX/ED/SELLER-66915681/bmw-power-black-mtb-cycle-500x500.jpg'
-                      : index == 1
+                      : index % 4 == 1
                           ? 'https://images-na.ssl-images-amazon.com/images/I/919N4Tj2qRL.jpg'
-                          : 'https://5.imimg.com/data5/JS/NM/US/SELLER-89410464/gym-accessories-kit-dumbbells-500x500.jpg',
+                          : index % 4 == 2
+                              ? 'https://www.reliancedigital.in/medias/Reconnect-RHTRG0001-Trimmer-491332808-i-2-1200Wx1200H-300Wx300H?context=bWFzdGVyfGltYWdlc3w0NTIyMXxpbWFnZS9qcGVnfGltYWdlcy9oM2IvaDZjLzkzMjY5NDU0MzU2NzguanBnfGM5YmNlZWIxYTgyMzA5ZTVhY2VlYWYzY2EyNTU2YmZmZDkwMGJlNTlhOGRkZGYwOGM3YTI3NzYxYWUxMWQ5MmQ'
+                              : 'https://www.indianq.com/wp-content/uploads/2020/01/G-Shock-Watches-For-Men-white.jpg',
                   fit: BoxFit.contain,
                 ),
               ),

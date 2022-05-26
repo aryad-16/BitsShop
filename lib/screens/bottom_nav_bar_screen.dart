@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:login_singup_screen_ui/screens/main%20screens/cart_screen.dart';
 import 'package:login_singup_screen_ui/widgets/animated_indexed_stack.dart';
+
 import 'main screens/ads_alive_screen.dart';
 import 'main screens/home screen/home_screen.dart';
 import 'main screens/lending_screen.dart';
 import 'main screens/profile_screen.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);

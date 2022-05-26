@@ -16,7 +16,6 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-
     books = allBooks;
   }
 
@@ -38,12 +37,10 @@ class _SearchScreenState extends State<SearchScreen> {
                   itemCount: books.length,
                   itemBuilder: (context, index) {
                     final book = books[index];
-
                     return buildBook(book);
                   },
                 ),
               ),
-              // Expanded(child: )
             ],
           ),
         ),
