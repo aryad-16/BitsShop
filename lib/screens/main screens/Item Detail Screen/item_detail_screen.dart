@@ -41,18 +41,17 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
               size: 26,
             ),
             onPressed: () => Navigator.of(context).pop(),
-            color: const Color.fromARGB(180, 0, 0, 0),
+            color: const Color.fromRGBO(14, 20, 70, 1),
           ),
         ),
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 20, left: 12.4),
-            // width: 23,
             child: SvgPicture.asset(
               'assets/icons/bookmark.svg',
               width: 26,
               height: 26,
-              color: const Color.fromARGB(180, 0, 0, 0),
+              color: const Color.fromRGBO(14, 20, 70, 1),
             ),
           ),
         ],
@@ -181,7 +180,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Text(
-                        'The product used to be good but recently I purchased a pack of 3 in an offer for just 199rs and that came out to be a duplicate product. It is causing irritation to the skin. Overall, product is good but do not purchase it during the cheap deals when they offer multiple quantities at the price of one.',
+                        'Sometimes the scent of seasonal hand wash is all we need to rouse our holiday spirits. Available in an array of festive fragrances, our naturally derived gel hand wash will leave your hands soft, clean and ready to be tucked into a pair of fair isle mittens. It really is the most wonderful time of the year.',
                         style: TextStyle(
                           fontFamily: 'ManRope Regular',
                           fontSize: 15,

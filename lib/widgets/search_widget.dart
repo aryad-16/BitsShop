@@ -69,8 +69,6 @@ class _SearchWidgetState extends State<SearchWidget> {
                     ),
                     child: SvgPicture.asset(
                       'assets/icons/clear_cross.svg',
-                      // height: 22,
-                      // width: 22,
                     ),
                   ),
                   onTap: () {
