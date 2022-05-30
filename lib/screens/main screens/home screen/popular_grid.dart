@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
 import 'package:login_singup_screen_ui/screens/main%20screens/Item%20Detail%20Screen/item_detail_screen.dart';
 
-Widget populargrid(int index, BuildContext context) {
+Widget singleItemWidget(int index, BuildContext context) {
   return GestureDetector(
     onTap: () => Navigator.of(context).push(
       MaterialPageRoute(
@@ -42,7 +42,7 @@ Widget populargrid(int index, BuildContext context) {
                           ? 'https://images-na.ssl-images-amazon.com/images/I/919N4Tj2qRL.jpg'
                           : index % 4 == 2
                               ? 'https://www.reliancedigital.in/medias/Reconnect-RHTRG0001-Trimmer-491332808-i-2-1200Wx1200H-300Wx300H?context=bWFzdGVyfGltYWdlc3w0NTIyMXxpbWFnZS9qcGVnfGltYWdlcy9oM2IvaDZjLzkzMjY5NDU0MzU2NzguanBnfGM5YmNlZWIxYTgyMzA5ZTVhY2VlYWYzY2EyNTU2YmZmZDkwMGJlNTlhOGRkZGYwOGM3YTI3NzYxYWUxMWQ5MmQ'
-                              : 'https://www.indianq.com/wp-content/uploads/2020/01/G-Shock-Watches-For-Men-white.jpg',
+                              : 'https://static.toiimg.com/photo/msid-82706812/82706812.jpg',
                   fit: BoxFit.contain,
                 ),
               ),
@@ -55,16 +55,8 @@ Widget populargrid(int index, BuildContext context) {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 minFontSize: 14,
-                // style: TextStyle(
-                //   fontSize: 16,
-                //   height: 1.1,
-                //   fontFamily: 'Poppins Regulaar',
-                //   // fontWeight: FontWeight.bold,
-                //   color: Color.fromRGBO(14, 20, 70, 1),
-                // ),
                 style: TextStyle(
                   fontFamily: 'ManRope Regular',
-                  // fontSize: 13,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 1.1,
                   color: Color.fromRGBO(14, 20, 70, 1),
@@ -83,7 +75,7 @@ Widget populargrid(int index, BuildContext context) {
                   maxLines: 1,
                   overflow: TextOverflow.clip,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 17,
                     fontFamily: 'Poppins Medium',
                     // fontWeight: FontWeight.bold,
                     color: Constant.yellowColor,
@@ -92,13 +84,17 @@ Widget populargrid(int index, BuildContext context) {
                 const Spacer(
                   flex: 1,
                 ),
-                Container(
-                  margin: const EdgeInsets.only(right: 12),
-                  child: SvgPicture.asset(
-                    'assets/icons/bookmark.svg',
-                    width: 20,
-                    height: 20,
-                    color: const Color.fromARGB(180, 0, 0, 0),
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    child: SvgPicture.asset(
+                      'assets/icons/bookmark.svg',
+                      width: 20,
+                      height: 20,
+                      color: const Color.fromARGB(180, 0, 0, 0),
+                    ),
                   ),
                 ),
               ],

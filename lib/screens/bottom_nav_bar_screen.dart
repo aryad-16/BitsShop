@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:login_singup_screen_ui/screens/main%20screens/cart_screen.dart';
 import 'package:login_singup_screen_ui/widgets/animated_indexed_stack.dart';
 
+import 'main screens/New Ad Screen/lending_screen.dart';
 import 'main screens/ads_alive_screen.dart';
 import 'main screens/home screen/home_screen.dart';
-import 'main screens/lending_screen.dart';
 import 'main screens/profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -19,8 +18,7 @@ class _MainScreenState extends State<MainScreen> {
   int _pageindex = 0;
   List<Widget> pagelist = <Widget>[
     const HomeScreen(),
-    const LendingScreen(),
-    const CartScreen(),
+    const NewAdScreen(),
     const AdsAliveScreen(),
     const ProfileScreen(),
   ];
@@ -75,21 +73,6 @@ class _MainScreenState extends State<MainScreen> {
               width: 28,
               height: 28,
               color: const Color.fromRGBO(247, 154, 0, 1),
-            ),
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'assets/icons/cart.svg',
-              width: 34,
-              height: 34,
-              color: const Color.fromRGBO(27, 27, 27, 1),
-            ),
-            label: "Cart",
-            activeIcon: SvgPicture.asset(
-              'assets/icons/cart_on.svg',
-              width: 34,
-              height: 34,
-              // color: const Color.fromRGBO(247, 154, 0, 1),
             ),
           ),
           BottomNavigationBarItem(
