@@ -140,6 +140,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                     ),
                   ],
                 ),
+                padding: const EdgeInsets.only(top: 10),
                 margin: const EdgeInsets.only(bottom: 8),
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 255, 254, 254),

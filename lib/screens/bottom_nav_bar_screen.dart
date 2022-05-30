@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:login_singup_screen_ui/widgets/animated_indexed_stack.dart';
 
-import 'main screens/New Ad Screen/lending_screen.dart';
+import 'main screens/New Ad Screen/new_ad_screen.dart';
 import 'main screens/ads_alive_screen.dart';
 import 'main screens/home screen/home_screen.dart';
 import 'main screens/profile_screen.dart';
@@ -25,6 +25,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 245, 245, 245),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _pageindex,
         onTap: (value) {

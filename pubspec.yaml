@@ -36,9 +36,9 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   google_fonts: ^2.3.3
   awesome_dropdown: ^0.0.4
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  firebase_core: ^1.17.1
+  image_picker: ^0.8.5+3
 
 dev_dependencies:
   flutter_test:
@@ -86,11 +86,15 @@ flutter:
     - assets/icons/addnewad.svg
     - assets/icons/adslist.svg
     - assets/icons/cart.svg
+    - assets/icons/delete.svg
     - assets/icons/cart_on.svg
     - assets/icons/favorite_border.svg
     - assets/images/holding-phone.png
     - assets/icons/clear_cross.svg
     - assets/icons/arrow_back.svg
+    - assets/icons/addimagefromcamera.svg
+    - assets/icons/addimagefromgallery.svg
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
