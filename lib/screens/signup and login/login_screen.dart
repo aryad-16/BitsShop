@@ -87,155 +87,151 @@ class LoginScreen extends StatelessWidget {
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: SizedBox(
-          width: double.infinity,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              top_Text(height, 'Welcome Back'),
-              _textFormField('Email', 'assets/icons/email.svg', '', 0),
-              _textFormField('Password', 'assets/icons/password.svg',
-                  'assets/icons/seehidepassword.svg', 1),
-              const SizedBox(
-                height: 15,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            top_Text(height, 'Welcome Back'),
+            _textFormField('Email', 'assets/icons/email.svg', '', 0),
+            _textFormField('Password', 'assets/icons/password.svg',
+                'assets/icons/seehidepassword.svg', 1),
+            const SizedBox(
+              height: 15,
+            ),
+            const Text(
+              'Forgot your password?',
+              style: TextStyle(
+                color: Color.fromRGBO(173, 164, 165, 1),
+                fontFamily: 'Poppins Medium',
+                fontSize: 14,
+                decoration: TextDecoration.underline,
               ),
-              const Text(
-                'Forgot your password?',
-                style: TextStyle(
-                  color: Color.fromRGBO(173, 164, 165, 1),
-                  fontFamily: 'Poppins Medium',
-                  fontSize: 14,
-                  decoration: TextDecoration.underline,
-                ),
+            ),
+            const Spacer(flex: 1),
+            Container(
+              margin: EdgeInsets.only(top: 50, bottom: (10 / 812) * height),
+              decoration: BoxDecoration(
+                boxShadow: [Constant.boxShadow],
+                gradient: Constant.yellowlinear,
+                borderRadius: BorderRadius.circular(100),
               ),
-              const Expanded(
-                child: SizedBox(),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 50, bottom: (10 / 812) * height),
-                decoration: BoxDecoration(
-                  boxShadow: [Constant.boxShadow],
-                  gradient: Constant.yellowlinear,
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                width: (315 / 375) * width,
-                height: (60 / 812) * height,
-                child: ElevatedButton(
-                  style: Constant.elevatedButtonStyle,
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (ctx) => const MainScreen(),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: <Widget>[
-                      SvgPicture.asset('assets/icons/login.svg'),
-                      const Text(
-                        '  Login',
-                        style: TextStyle(
-                          fontFamily: 'Poppins Bold',
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: (30 / 375) * width,
-                  right: (30 / 375) * width,
-                  bottom: (00 / 812) * height,
-                ),
+              width: (315 / 375) * width,
+              height: (60 / 812) * height,
+              child: ElevatedButton(
+                style: Constant.elevatedButtonStyle,
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (ctx) => const MainScreen(),
+                    ),
+                  );
+                },
                 child: Row(
                   children: <Widget>[
-                    SizedBox(
-                      width: (141 / 375) * width,
-                      child: const Divider(
-                        thickness: 1.2,
-                        color: Color.fromRGBO(221, 218, 218, 1),
+                    SvgPicture.asset('assets/icons/login.svg'),
+                    const Text(
+                      '  Login',
+                      style: TextStyle(
+                        fontFamily: 'Poppins Bold',
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Or",
-                        style: Constant.introductoryScreenTextDescStyle,
-                      ),
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                left: (30 / 375) * width,
+                right: (30 / 375) * width,
+                bottom: (00 / 812) * height,
+              ),
+              child: Row(
+                children: <Widget>[
+                  SizedBox(
+                    width: (141 / 375) * width,
+                    child: const Divider(
+                      thickness: 1.2,
+                      color: Color.fromRGBO(221, 218, 218, 1),
                     ),
-                    SizedBox(
-                      width: (140 / 375) * width,
-                      child: const Divider(
-                        thickness: 1.2,
-                        color: Color.fromRGBO(221, 218, 218, 1),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Or",
+                      style: Constant.introductoryScreenTextDescStyle,
+                    ),
+                  ),
+                  SizedBox(
+                    width: (140 / 375) * width,
+                    child: const Divider(
+                      thickness: 1.2,
+                      color: Color.fromRGBO(221, 218, 218, 1),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              children: <Widget>[
+                Stack(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icons/google.svg',
+                    ),
+                    Transform.scale(
+                      scale: 0.37,
+                      child: SvgPicture.asset(
+                        'assets/icons/google_icon.svg',
+                        height: 50,
+                        width: 50,
                       ),
                     ),
                   ],
                 ),
-              ),
-              Row(
-                children: <Widget>[
-                  Stack(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/google.svg',
-                      ),
-                      Transform.scale(
-                        scale: 0.37,
-                        child: SvgPicture.asset(
-                          'assets/icons/google_icon.svg',
-                          height: 50,
-                          width: 50,
-                        ),
+                SizedBox(
+                  width: (30 / 375) * width,
+                ),
+                SvgPicture.asset('assets/icons/facebook.svg'),
+              ],
+              mainAxisAlignment: MainAxisAlignment.center,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  top: (20 / 812) * height, bottom: (20 / 812) * height),
+              child: Center(
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Don\'t have an account yet?',
+                    style: const TextStyle(
+                      fontFamily: 'Poppins Regular',
+                      fontSize: 18,
+                      color: Colors.black,
+                      height: 1.5,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: ' Register',
+                        style: const TextStyle(
+                            color: Color.fromRGBO(245, 130, 50, 1),
+                            fontSize: 18),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (ctx) => const SignUpScreen(),
+                              ),
+                            );
+                          },
                       ),
                     ],
                   ),
-                  SizedBox(
-                    width: (30 / 375) * width,
-                  ),
-                  SvgPicture.asset('assets/icons/facebook.svg'),
-                ],
-                mainAxisAlignment: MainAxisAlignment.center,
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: (20 / 812) * height, bottom: (20 / 812) * height),
-                child: Center(
-                  child: RichText(
-                    text: TextSpan(
-                      text: 'Don\'t have an account yet?',
-                      style: const TextStyle(
-                        fontFamily: 'Poppins Regular',
-                        fontSize: 18,
-                        color: Colors.black,
-                        height: 1.5,
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: ' Register',
-                          style: const TextStyle(
-                              color: Color.fromRGBO(245, 130, 50, 1),
-                              fontSize: 18),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                  builder: (ctx) => const SignUpScreen(),
-                                ),
-                              );
-                            },
-                        ),
-                      ],
-                    ),
-                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+            const Spacer(flex: 2)
+          ],
         ),
       ),
     );

@@ -112,7 +112,7 @@ class ItemCategoryScreen extends StatelessWidget {
                     mainAxisSpacing: 15,
                     crossAxisCount: 2,
                   ),
-                  itemBuilder: (ctx, index) => populargrid(index, context),
+                  itemBuilder: (ctx, index) => singleItemWidget(index, context),
                   itemCount: 10,
                 ),
               ],

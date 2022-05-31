@@ -185,15 +185,13 @@ class HorizontalListView extends StatelessWidget {
           ),
           SizedBox(
             height: 310,
-            child: Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: 9,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return populargrid(index, context);
-                },
-              ),
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: 9,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return singleItemWidget(index, context);
+              },
             ),
           ),
         ],
