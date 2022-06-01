@@ -4,12 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:login_singup_screen_ui/Constants/constants.dart';
 
 class AddPicture extends StatefulWidget {
   final BuildContext context;
+  final int index;
+  final List<File> imageList;
   const AddPicture({
     Key? key,
+    required this.imageList,
     required this.context,
+    required this.index,
   }) : super(key: key);
 
   @override
@@ -27,6 +32,7 @@ class _AddPictureState extends State<AddPicture> {
       setState(() {
         this.image = imagetemp;
       });
+      widget.imageList.add(imagetemp);
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
@@ -104,25 +110,26 @@ class _AddPictureState extends State<AddPicture> {
     return GestureDetector(
       onTap: () => showPopUp(),
       child: Container(
-        width: 200,
+        width: 250,
         margin: const EdgeInsets.fromLTRB(10, 51.5, 10, 24.5),
+        padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(10),
         ),
         child: Stack(
           children: [
             Center(
-              child: image != null
-                  ? Image.file(image!)
-                  : const Text(
-                      '+',
-                      style: TextStyle(
-                        fontFamily: 'ManRope Regular',
-                        fontSize: 36,
-                        color: Color.fromRGBO(27, 27, 27, 1),
-                      ),
-                    ),
+              child: widget.imageList[widget.index]!=null? image != null
+                  ? ClipRRect(
+                      child: Image.file(image!),
+                      borderRadius: BorderRadius.circular(10),
+                    )
+                  : SvgPicture.asset(
+                      'assets/icons/images.svg',
+                      color: const Color.fromRGBO(34, 26, 69, 1),
+                      width: 30,
+                    ):Container(),
             ),
             image != null
                 ? Positioned(
@@ -130,13 +137,18 @@ class _AddPictureState extends State<AddPicture> {
                       onTap: () {
                         setState(() {
                           image = null;
+                          widget.imageList.removeAt(widget.index);
                         });
                       },
                       child: Container(
-                        child: SvgPicture.asset('assets/icons/delete.svg'),
+                        padding: const EdgeInsets.all(2),
+                        child: SvgPicture.asset(
+                          'assets/icons/delete.svg',
+                          color: Constant.yellowColor,
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.white.withOpacity(0.9),
+                          color: Colors.white.withOpacity(1),
                         ),
                       ),
                     ),
