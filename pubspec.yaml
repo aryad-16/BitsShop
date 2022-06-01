@@ -38,8 +38,8 @@ dependencies:
   awesome_dropdown: "0.0.4"
   cupertino_icons: ^1.0.2
   firebase_core: ^1.17.1
-  image_picker: ^0.8.5+3
   scroll_snap_list: ^0.9.1
+  image_picker: ^0.8.5+3
 
 dev_dependencies:
   flutter_test:

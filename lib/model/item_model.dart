@@ -1,9 +1,7 @@
-import 'dart:io';
-
 enum Category { books, cycles, electronics, others }
 
 class Item {
-  List<File> imageList;
+  List<String> imageList;
   String title;
   String description;
   int price;

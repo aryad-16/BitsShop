@@ -19,13 +19,6 @@ class NewAdScreen extends StatefulWidget {
 int _activeindex = 0;
 List<String> _dropDownList = ['Books', 'Cycles', 'Electronics', 'Others'];
 bool _isOpened = false;
-Item item = Item(
-  imageList: [],
-  title: '',
-  description: '',
-  price: 0,
-  category: Category.books,
-);
 String? _selectedCategory;
 TextEditingController titlecontroller = TextEditingController();
 TextEditingController desccontroller = TextEditingController();
@@ -44,6 +37,13 @@ _fieldFocusChange(
 class _NewAdScreenState extends State<NewAdScreen> {
   @override
   Widget build(BuildContext context) {
+    Item item = Item(
+      imageList: ['a', 'a', 'a', 'a', 'a'],
+      title: '',
+      description: '',
+      price: 0,
+      category: Category.books,
+    );
     List<Widget> _addPictures = [
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
@@ -117,6 +117,7 @@ class _NewAdScreenState extends State<NewAdScreen> {
                                     _activeindex = index;
                                   });
                                 },
+                                viewportFraction: 1,
                                 height: 300,
                                 scrollPhysics: const BouncingScrollPhysics(),
                                 enableInfiniteScroll: false,
@@ -567,11 +568,11 @@ class _NewAdScreenState extends State<NewAdScreen> {
                                           print(item.title);
                                           print(item.description);
                                           print('${item.price}');
-                                          print('${item.imageList[0]}');
-                                          print('${item.imageList[1]}');
-                                          print('${item.imageList[2]}');
-                                          print('${item.imageList[3]}');
-                                          print('${item.imageList[4]}');
+                                          print(item.imageList[0]);
+                                          print(item.imageList[1]);
+                                          print(item.imageList[2]);
+                                          print(item.imageList[3]);
+                                          print(item.imageList[4]);
                                         }
                                       },
                                       child: Container(

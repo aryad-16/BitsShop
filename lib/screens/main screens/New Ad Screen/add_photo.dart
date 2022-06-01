@@ -6,11 +6,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
 
+// ignore: must_be_immutable
 class AddPicture extends StatefulWidget {
   final BuildContext context;
   final int index;
-  final List<File> imageList;
-  const AddPicture({
+  List<String> imageList;
+  AddPicture({
     Key? key,
     required this.imageList,
     required this.context,
@@ -31,8 +32,11 @@ class _AddPictureState extends State<AddPicture> {
       final imagetemp = File(image.path);
       setState(() {
         this.image = imagetemp;
+        // print(
+        // 'Hi guys fuck you, at ${widget.index} the path of image is ${image.path}');
+        widget.imageList[widget.index] = image.path;
+        print('Hi guys fcuk you, ${widget.imageList[widget.index]}');
       });
-      widget.imageList.add(imagetemp);
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }
@@ -106,6 +110,13 @@ class _AddPictureState extends State<AddPicture> {
       );
 
   @override
+  void initState() {
+    print(
+        'Hi guys fcuk you, ${widget.imageList[widget.index]} at ${widget.index}');
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => showPopUp(),
@@ -120,16 +131,21 @@ class _AddPictureState extends State<AddPicture> {
         child: Stack(
           children: [
             Center(
-              child: widget.imageList[widget.index]!=null? image != null
+              child: widget.imageList[widget.index] != 'a'
                   ? ClipRRect(
-                      child: Image.file(image!),
+                      child: Image.file(File(widget.imageList[widget.index])),
                       borderRadius: BorderRadius.circular(10),
                     )
-                  : SvgPicture.asset(
-                      'assets/icons/images.svg',
-                      color: const Color.fromRGBO(34, 26, 69, 1),
-                      width: 30,
-                    ):Container(),
+                  : image != null
+                      ? ClipRRect(
+                          child: Image.file(image!),
+                          borderRadius: BorderRadius.circular(10),
+                        )
+                      : SvgPicture.asset(
+                          'assets/icons/images.svg',
+                          color: const Color.fromRGBO(34, 26, 69, 1),
+                          width: 30,
+                        ),
             ),
             image != null
                 ? Positioned(
