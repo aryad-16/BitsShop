@@ -1,8 +1,11 @@
 import 'package:awesome_dropdown/awesome_dropdown.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../Constants/constants.dart';
+import '../../../model/item_model.dart';
 import 'add_photo.dart';
 import 'custom_bg_painter.dart';
 
@@ -13,8 +16,16 @@ class NewAdScreen extends StatefulWidget {
   State<NewAdScreen> createState() => _NewAdScreenState();
 }
 
+int _activeindex = 0;
 List<String> _dropDownList = ['Books', 'Cycles', 'Electronics', 'Others'];
 bool _isOpened = false;
+Item item = Item(
+  imageList: [],
+  title: '',
+  description: '',
+  price: 0,
+  category: Category.books,
+);
 String? _selectedCategory;
 TextEditingController titlecontroller = TextEditingController();
 TextEditingController desccontroller = TextEditingController();
@@ -33,6 +44,48 @@ _fieldFocusChange(
 class _NewAdScreenState extends State<NewAdScreen> {
   @override
   Widget build(BuildContext context) {
+    List<Widget> _addPictures = [
+      ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: AddPicture(
+          imageList: item.imageList,
+          context: context,
+          index: 0,
+        ),
+      ),
+      ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: AddPicture(
+          imageList: item.imageList,
+          context: context,
+          index: 1,
+        ),
+      ),
+      ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: AddPicture(
+          imageList: item.imageList,
+          context: context,
+          index: 2,
+        ),
+      ),
+      ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: AddPicture(
+          imageList: item.imageList,
+          context: context,
+          index: 3,
+        ),
+      ),
+      ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: AddPicture(
+          imageList: item.imageList,
+          context: context,
+          index: 4,
+        ),
+      ),
+    ];
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -48,25 +101,57 @@ class _NewAdScreenState extends State<NewAdScreen> {
                 onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
                 child: Column(
                   children: <Widget>[
-                    SizedBox(
-                      height: 260,
-                      // width: 240,
-                      child: SingleChildScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(
-                              width: width * 0.23,
+                    Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            color: const Color.fromARGB(255, 245, 245, 245),
+                            margin: const EdgeInsets.only(
+                                bottom: 0, left: 50, right: 50),
+                            child: CarouselSlider(
+                              items: _addPictures,
+                              options: CarouselOptions(
+                                onPageChanged: (index, reason) {
+                                  setState(() {
+                                    _activeindex = index;
+                                  });
+                                },
+                                height: 300,
+                                scrollPhysics: const BouncingScrollPhysics(),
+                                enableInfiniteScroll: false,
+                              ),
                             ),
-                            AddPicture(
-                              context: context,
+                          ),
+                          AnimatedSmoothIndicator(
+                            activeIndex: _activeindex,
+                            count: 5,
+                            effect: CustomizableEffect(
+                              activeDotDecoration: DotDecoration(
+                                width: 22,
+                                height: 3.5,
+                                color: const Color.fromRGBO(247, 154, 0, 1),
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              dotDecoration: DotDecoration(
+                                width: 10,
+                                height: 3.5,
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(16),
+                                verticalOffset: 0,
+                              ),
+                              spacing: 6.0,
                             ),
-                            AddPicture(
-                              context: context,
-                            ),
-                          ],
+                          ),
+                        ],
+                      ),
+                      // padding: const EdgeInsets.only(top: 10),
+                      margin: const EdgeInsets.only(bottom: 20),
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 245, 245, 245),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(35),
+                          bottomRight: Radius.circular(35),
                         ),
                       ),
                     ),
@@ -81,7 +166,7 @@ class _NewAdScreenState extends State<NewAdScreen> {
                           Container(
                             padding: const EdgeInsets.only(top: 50),
                             child: SingleChildScrollView(
-                              physics: const BouncingScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               child: Column(
                                 children: <Widget>[
                                   Container(
@@ -90,45 +175,46 @@ class _NewAdScreenState extends State<NewAdScreen> {
                                     width: width - 50,
                                     height: 65,
                                     child: AwesomeDropDown(
-                                        dropStateChanged: (isOpened) {
-                                          setState(() {
-                                            _isOpened = isOpened;
-                                          });
-                                        },
-                                        selectedItem:
-                                            _selectedCategory ?? 'Category',
-                                        dropDownBorderRadius: 0,
-                                        dropDownTopBorderRadius: 10,
-                                        dropDownBottomBorderRadius: 10,
-                                        selectedItemTextStyle: const TextStyle(
-                                          fontFamily: 'ManRope Regular',
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.white,
-                                        ),
-                                        dropDownList: _dropDownList,
-                                        dropDownListTextStyle: const TextStyle(
-                                          fontFamily: 'ManRope Regular',
-                                          color: Color.fromRGBO(34, 26, 69, 1),
-                                          fontSize: 18,
-                                          backgroundColor: Colors.transparent,
-                                        ),
-                                        padding: 10,
-                                        dropDownIcon: Icon(
-                                          _isOpened // Create a switching animation here, looks very weird
-                                              ? Icons.keyboard_arrow_up_outlined
-                                              : Icons
-                                                  .keyboard_arrow_down_outlined,
-                                          color: Colors.white,
-                                          size: 28,
-                                        ),
-                                        elevation: 6,
-                                        dropDownBGColor: const Color.fromRGBO(
-                                            247, 154, 0, 1),
-                                        numOfListItemToShow: 4,
-                                        onDropDownItemClick: (selectedItem) {
-                                          _selectedCategory = selectedItem;
-                                        }),
+                                      dropStateChanged: (isOpened) {
+                                        setState(() {
+                                          _isOpened = isOpened;
+                                        });
+                                      },
+                                      selectedItem:
+                                          _selectedCategory ?? 'Category',
+                                      dropDownBorderRadius: 0,
+                                      dropDownTopBorderRadius: 10,
+                                      dropDownBottomBorderRadius: 10,
+                                      selectedItemTextStyle: const TextStyle(
+                                        fontFamily: 'ManRope Regular',
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.white,
+                                      ),
+                                      dropDownList: _dropDownList,
+                                      dropDownListTextStyle: const TextStyle(
+                                        fontFamily: 'ManRope Regular',
+                                        color: Color.fromRGBO(34, 26, 69, 1),
+                                        fontSize: 18,
+                                        backgroundColor: Colors.transparent,
+                                      ),
+                                      padding: 10,
+                                      dropDownIcon: Icon(
+                                        _isOpened // Create a switching animation here, looks very weird
+                                            ? Icons.keyboard_arrow_up_outlined
+                                            : Icons
+                                                .keyboard_arrow_down_outlined,
+                                        color: Colors.white,
+                                        size: 28,
+                                      ),
+                                      elevation: 6,
+                                      dropDownBGColor:
+                                          const Color.fromRGBO(247, 154, 0, 1),
+                                      numOfListItemToShow: 4,
+                                      onDropDownItemClick: (selectedItem) {
+                                        _selectedCategory = selectedItem;
+                                      },
+                                    ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(
@@ -200,6 +286,13 @@ class _NewAdScreenState extends State<NewAdScreen> {
                                       onFieldSubmitted: (term) {
                                         _fieldFocusChange(
                                             context, _descFocus, _priceFocus);
+                                      },
+                                      validator: (val) {
+                                        if (val!.isEmpty) {
+                                          return "Field cannot be empty";
+                                        } else {
+                                          return null;
+                                        }
                                       },
                                       decoration: const InputDecoration(
                                         contentPadding: EdgeInsets.only(
@@ -294,7 +387,7 @@ class _NewAdScreenState extends State<NewAdScreen> {
                                               bottom: 10, right: 8),
                                           child: TextFormField(
                                             cursorColor: Constant.yellowColor,
-                                            cursorHeight: 10,
+                                            cursorHeight: 28,
                                             focusNode: _priceFocus,
                                             textInputAction:
                                                 TextInputAction.done,
@@ -347,109 +440,13 @@ class _NewAdScreenState extends State<NewAdScreen> {
                                         const Text(
                                           '/per day',
                                           style: TextStyle(
-                                              fontFamily: 'ManRope Regular',
-                                              fontSize: 19),
+                                            fontFamily: 'ManRope Regular',
+                                            fontSize: 19,
+                                          ),
                                         )
                                       ],
                                     ),
                                   ),
-                                  // Padding(
-                                  //   padding: const EdgeInsets.only(
-                                  //       left: 25, right: 25, top: 25),
-                                  //   child: Row(
-                                  //     mainAxisAlignment:
-                                  //         MainAxisAlignment.spaceAround,
-                                  //     crossAxisAlignment: CrossAxisAlignment.end,
-                                  //     children: <Widget>[
-                                  //       Column(
-                                  //         crossAxisAlignment:
-                                  //             CrossAxisAlignment.center,
-                                  //         children: <Widget>[
-                                  //           const Text(
-                                  //             'From',
-                                  //             style: TextStyle(
-                                  //               color: Colors.black,
-                                  //               fontSize: 20,
-                                  //               letterSpacing: 0.1,
-                                  //               fontWeight: FontWeight.w400,
-                                  //             ),
-                                  //           ),
-                                  //           const SizedBox(
-                                  //             height: 8,
-                                  //           ),
-                                  //           Container(
-                                  //             height: 30,
-                                  //             // width: 65,
-                                  //             child: const Text(
-                                  //               "24 Nov'21",
-                                  //               style: TextStyle(
-                                  //                 color: Color.fromRGBO(
-                                  //                     247, 154, 0, 1),
-                                  //                 fontSize: 22,
-                                  //                 letterSpacing: 0.1,
-                                  //                 fontFamily: 'Avenir',
-                                  //                 fontWeight: FontWeight.w400,
-                                  //               ),
-                                  //             ),
-                                  //             decoration: const BoxDecoration(
-                                  //               border: Border(
-                                  //                 bottom: BorderSide(
-                                  //                   width: 3,
-                                  //                   color: Colors.black,
-                                  //                 ),
-                                  //               ),
-                                  //             ),
-                                  //           ),
-                                  //         ],
-                                  //       ),
-                                  //       const Icon(
-                                  //         Icons.arrow_right_alt_outlined,
-                                  //         size: 38,
-                                  //       ),
-                                  //       Column(
-                                  //         crossAxisAlignment:
-                                  //             CrossAxisAlignment.center,
-                                  //         children: <Widget>[
-                                  //           const Text(
-                                  //             'To',
-                                  //             style: TextStyle(
-                                  //               color: Colors.black,
-                                  //               fontSize: 20,
-                                  //               letterSpacing: 0.1,
-                                  //               fontWeight: FontWeight.w400,
-                                  //             ),
-                                  //           ),
-                                  //           const SizedBox(
-                                  //             height: 8,
-                                  //           ),
-                                  //           Container(
-                                  //             height: 30,
-                                  //             // width: 65,
-                                  //             child: const Text(
-                                  //               "28 Nov'21",
-                                  //               style: TextStyle(
-                                  //                 color: Color.fromRGBO(
-                                  //                     247, 154, 0, 1),
-                                  //                 fontSize: 22,
-                                  //                 letterSpacing: 0.1,
-                                  //                 fontFamily: 'Avenir',
-                                  //                 fontWeight: FontWeight.w400,
-                                  //               ),
-                                  //             ),
-                                  //             decoration: const BoxDecoration(
-                                  //               border: Border(
-                                  //                 bottom: BorderSide(
-                                  //                   width: 3,
-                                  //                   color: Colors.black,
-                                  //                 ),
-                                  //               ),
-                                  //             ),
-                                  //           ),
-                                  //         ],
-                                  //       ),
-                                  //     ],
-                                  //   ),
-                                  // ),
                                   Padding(
                                     padding: const EdgeInsets.only(
                                       top: 30,
@@ -464,22 +461,117 @@ class _NewAdScreenState extends State<NewAdScreen> {
                                           showDialog(
                                             context: context,
                                             builder: (context) => AlertDialog(
-                                              title: const Text('Alert'),
+                                              title: const Text('Error'),
                                               content: const Text(
                                                   "Category can't be empty"),
                                               actions: [
-                                                ElevatedButton(
-                                                  onPressed: () {
+                                                GestureDetector(
+                                                  onTap: () {
                                                     Navigator.of(context).pop();
                                                   },
-                                                  child: const Text("Ok"),
+                                                  child: Container(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        vertical: 5,
+                                                        horizontal: 10),
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            right: 10,
+                                                            bottom: 5),
+                                                    child: const Text(
+                                                      'Ok',
+                                                      style: TextStyle(
+                                                        fontFamily:
+                                                            'ManRope Regular',
+                                                        fontSize: 19,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                        10,
+                                                      ),
+                                                      boxShadow: [
+                                                        Constant.boxShadow
+                                                      ],
+                                                      gradient:
+                                                          Constant.yellowlinear,
+                                                    ),
+                                                  ),
                                                 ),
                                               ],
                                             ),
                                           );
                                         } else if (_formkey.currentState!
                                             .validate()) {
-                                          // add the post for moderation
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) => AlertDialog(
+                                              content: const Text(
+                                                  "Ad posted succesfully!"),
+                                              actions: [
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  child: Container(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        vertical: 5,
+                                                        horizontal: 10),
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            right: 10,
+                                                            bottom: 5),
+                                                    child: const Text(
+                                                      'Ok',
+                                                      style: TextStyle(
+                                                        fontFamily:
+                                                            'ManRope Regular',
+                                                        fontSize: 19,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                        10,
+                                                      ),
+                                                      boxShadow: [
+                                                        Constant.boxShadow
+                                                      ],
+                                                      gradient:
+                                                          Constant.yellowlinear,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                          item.title = titlecontroller.text;
+                                          item.description =
+                                              desccontroller.text;
+                                          item.category = _selectedCategory ==
+                                                  'Books'
+                                              ? Category.books
+                                              : _selectedCategory == 'Cycles'
+                                                  ? Category.cycles
+                                                  : _selectedCategory ==
+                                                          'Electronics'
+                                                      ? Category.electronics
+                                                      : Category.others;
+                                          item.price =
+                                              int.parse(pricecontroller.text);
+                                          print('${item.category}');
+                                          print(item.title);
+                                          print(item.description);
+                                          print('${item.price}');
+                                          print('${item.imageList[0]}');
+                                          print('${item.imageList[1]}');
+                                          print('${item.imageList[2]}');
+                                          print('${item.imageList[3]}');
+                                          print('${item.imageList[4]}');
                                         }
                                       },
                                       child: Container(
@@ -504,7 +596,6 @@ class _NewAdScreenState extends State<NewAdScreen> {
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(height: 50),
                                 ],
                               ),
                             ),

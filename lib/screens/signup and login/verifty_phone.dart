@@ -76,7 +76,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         buildCodeNumberBox(
-                            code.length > 0 ? code.substring(0, 1) : ""),
+                            code.isNotEmpty ? code.substring(0, 1) : ""),
                         buildCodeNumberBox(
                             code.length > 1 ? code.substring(1, 2) : ""),
                         buildCodeNumberBox(
