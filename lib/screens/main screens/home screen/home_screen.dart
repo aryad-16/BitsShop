@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
-import 'package:login_singup_screen_ui/screens/main%20screens/Item%20Category%20Screen/item_category_screen.dart';
-import 'package:login_singup_screen_ui/screens/main%20screens/home%20screen/popular_grid.dart';
 import 'package:login_singup_screen_ui/screens/main%20screens/home%20screen/search_screen.dart';
+
+import 'horizontal_list_view.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -128,73 +128,6 @@ class HomeScreen extends StatelessWidget {
           ),
           padding: const EdgeInsets.only(bottom: 15),
         ),
-      ),
-    );
-  }
-}
-
-class HorizontalListView extends StatelessWidget {
-  final String title;
-  const HorizontalListView({
-    Key? key,
-    required this.title,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 15),
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 7),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontFamily: 'ManRope Regular',
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.9,
-                    color: Color.fromRGBO(34, 26, 69, 1),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (ctx) => ItemCategoryScreen(category: title),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    'See All',
-                    style: TextStyle(
-                      fontFamily: 'ManRope Regular',
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 0.9,
-                      color: Constant.greyColor1,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 310,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: 9,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return singleItemWidget(index, context);
-              },
-            ),
-          ),
-        ],
       ),
     );
   }

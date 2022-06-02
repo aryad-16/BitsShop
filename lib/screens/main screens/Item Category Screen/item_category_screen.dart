@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../Constants/constants.dart';
-import '../home screen/popular_grid.dart';
+import '../home screen/grid_item.dart';
 import '../home screen/search_screen.dart';
 
 class ItemCategoryScreen extends StatelessWidget {
@@ -112,7 +112,7 @@ class ItemCategoryScreen extends StatelessWidget {
                     mainAxisSpacing: 15,
                     crossAxisCount: 2,
                   ),
-                  itemBuilder: (ctx, index) => singleItemWidget(index, context),
+                  itemBuilder: (ctx, index) => SingleItemWidget(index, context),
                   itemCount: 10,
                 ),
               ],

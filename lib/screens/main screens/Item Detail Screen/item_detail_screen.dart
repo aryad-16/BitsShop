@@ -3,16 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:login_singup_screen_ui/model/item_model.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../Constants/constants.dart';
 
 class ItemDetailScreen extends StatefulWidget {
-  final String title;
-  final String imageURL;
-  const ItemDetailScreen(
-      {Key? key, required this.title, required this.imageURL})
-      : super(key: key);
+  final Item item;
+  const ItemDetailScreen({Key? key, required this.item}) : super(key: key);
 
   @override
   State<ItemDetailScreen> createState() => _ItemDetailScreenState();
@@ -22,11 +20,6 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
   int _activeindex = 0;
   @override
   Widget build(BuildContext context) {
-    final imagelist = [
-      'https://apollo-singapore.akamaized.net/v1/files/werg5prnq1023-IN/image;s=272x0',
-      'https://apollo-singapore.akamaized.net/v1/files/b0n1994mmf4y2-IN/image;s=272x0',
-      'https://apollo-singapore.akamaized.net/v1/files/ryg7fvp9ft8b1-IN/image;s=272x0',
-    ];
     return Scaffold(
       backgroundColor: const Color(0xFFEEEEEE),
       appBar: AppBar(
@@ -71,10 +64,10 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                     Container(
                       margin: const EdgeInsets.only(bottom: 12),
                       child: CarouselSlider.builder(
-                        itemCount: imagelist.length,
+                        itemCount: widget.item.imageList.length,
                         itemBuilder: (context, index, realindex) => ClipRRect(
                           borderRadius: BorderRadius.circular(12),
-                          child: Image.network(imagelist[index]),
+                          child: Image.network(widget.item.imageList[index]),
                         ),
                         options: CarouselOptions(
                           onPageChanged: (index, reason) {
@@ -90,7 +83,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                     ),
                     AnimatedSmoothIndicator(
                       activeIndex: _activeindex,
-                      count: imagelist.length,
+                      count: widget.item.imageList.length,
                       effect: CustomizableEffect(
                         activeDotDecoration: DotDecoration(
                           width: 22,
@@ -114,7 +107,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                       child: Column(
                         children: [
                           Text(
-                            widget.title,
+                            widget.item.title,
                             overflow: TextOverflow.clip,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.montserrat(
@@ -127,7 +120,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                             height: 5,
                           ),
                           Text(
-                            '\u{20B9} ${4500}',
+                            '\u{20B9} ${widget.item.price}',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.montserrat(
                               fontSize: 22,
@@ -181,7 +174,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Text(
-                        'Sometimes the scent of seasonal hand wash is all we need to rouse our holiday spirits. Available in an array of festive fragrances, our naturally derived gel hand wash will leave your hands soft, clean and ready to be tucked into a pair of fair isle mittens. It really is the most wonderful time of the year.',
+                        widget.item.description,
                         style: TextStyle(
                           fontFamily: 'ManRope Regular',
                           fontSize: 15,

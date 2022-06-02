@@ -562,8 +562,8 @@ class _NewAdScreenState extends State<NewAdScreen> {
                                                           'Electronics'
                                                       ? Category.electronics
                                                       : Category.others;
-                                          item.price =
-                                              int.parse(pricecontroller.text);
+                                          item.price = double.parse(
+                                              pricecontroller.text);
                                           print('${item.category}');
                                           print(item.title);
                                           print(item.description);
