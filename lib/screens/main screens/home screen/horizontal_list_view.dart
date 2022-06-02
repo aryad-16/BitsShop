@@ -74,7 +74,7 @@ class HorizontalListView extends StatelessWidget {
               itemBuilder: (context, index) {
                 return ChangeNotifierProvider.value(
                   value: items[index],
-                  child: const SingleItemWidget(),
+                  child: const SingleItemWidget(isEdit: false),
                 );
               },
             ),

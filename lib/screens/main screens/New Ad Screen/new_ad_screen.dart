@@ -234,7 +234,7 @@ class _NewAdScreenState extends State<NewAdScreen> {
                                           return null;
                                         }
                                       },
-                                      onFieldSubmitted: (term) {
+                                      onFieldSubmitted: (_) {
                                         _fieldFocusChange(
                                             context, _titleFocus, _descFocus);
                                       },
@@ -286,7 +286,7 @@ class _NewAdScreenState extends State<NewAdScreen> {
                                         color: Color.fromRGBO(27, 27, 27, 1),
                                       ),
                                       maxLength: 400,
-                                      onFieldSubmitted: (term) {
+                                      onFieldSubmitted: (_) {
                                         _fieldFocusChange(
                                             context, _descFocus, _priceFocus);
                                       },
@@ -402,7 +402,7 @@ class _NewAdScreenState extends State<NewAdScreen> {
                                                 return null;
                                               }
                                             },
-                                            onFieldSubmitted: (term) {
+                                            onFieldSubmitted: (_) {
                                               _priceFocus.unfocus();
                                             },
                                             keyboardType: TextInputType.number,

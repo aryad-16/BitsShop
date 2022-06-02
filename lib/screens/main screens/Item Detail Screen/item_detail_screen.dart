@@ -4,13 +4,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:login_singup_screen_ui/providers/item_model.dart';
+import 'package:login_singup_screen_ui/providers/profiles_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../Constants/constants.dart';
 
 class ItemDetailScreen extends StatefulWidget {
-  final Item item;
-  const ItemDetailScreen({Key? key, required this.item}) : super(key: key);
+  // final Item item;
+  const ItemDetailScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ItemDetailScreen> createState() => _ItemDetailScreenState();
@@ -20,6 +24,8 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
   int _activeindex = 0;
   @override
   Widget build(BuildContext context) {
+    final item = Provider.of<Item>(context, listen: false);
+    final profile = Provider.of<Profiles>(context).getProfile(item.profileId);
     return Scaffold(
       backgroundColor: const Color(0xFFEEEEEE),
       appBar: AppBar(
@@ -40,11 +46,23 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 20, left: 12.4),
-            child: SvgPicture.asset(
-              'assets/icons/bookmark.svg',
-              width: 26,
-              height: 26,
-              color: const Color.fromRGBO(14, 20, 70, 1),
+            child: GestureDetector(
+              onTap: () {
+                item.toggleFavouriteStatus();
+              },
+              child: Consumer<Item>(
+                builder: (context, item, _) => Container(
+                  margin: const EdgeInsets.only(right: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  child: Icon(
+                    item.isFavourite
+                        ? Icons.bookmark_added_rounded
+                        : Icons.bookmark_add_outlined,
+                    size: 24,
+                    color: const Color.fromARGB(180, 0, 0, 0),
+                  ),
+                ),
+              ),
             ),
           ),
         ],
@@ -64,10 +82,10 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                     Container(
                       margin: const EdgeInsets.only(bottom: 12),
                       child: CarouselSlider.builder(
-                        itemCount: widget.item.imageList.length,
+                        itemCount: item.imageList.length,
                         itemBuilder: (context, index, realindex) => ClipRRect(
                           borderRadius: BorderRadius.circular(12),
-                          child: Image.network(widget.item.imageList[index]),
+                          child: Image.network(item.imageList[index]),
                         ),
                         options: CarouselOptions(
                           onPageChanged: (index, reason) {
@@ -83,7 +101,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                     ),
                     AnimatedSmoothIndicator(
                       activeIndex: _activeindex,
-                      count: widget.item.imageList.length,
+                      count: item.imageList.length,
                       effect: CustomizableEffect(
                         activeDotDecoration: DotDecoration(
                           width: 22,
@@ -107,7 +125,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                       child: Column(
                         children: [
                           Text(
-                            widget.item.title,
+                            item.title,
                             overflow: TextOverflow.clip,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.montserrat(
@@ -120,7 +138,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                             height: 5,
                           ),
                           Text(
-                            '\u{20B9} ${widget.item.price}',
+                            '\u{20B9} ${item.price}',
                             textAlign: TextAlign.center,
                             style: GoogleFonts.montserrat(
                               fontSize: 22,
@@ -174,7 +192,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       child: Text(
-                        widget.item.description,
+                        item.description,
                         style: TextStyle(
                           fontFamily: 'ManRope Regular',
                           fontSize: 15,
@@ -214,17 +232,17 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 6),
-                    const ContactDetailsRow(
+                    ContactDetailsRow(
                       title1: 'Name: ',
-                      title2: 'Prathamesh Anwekar',
+                      title2: profile.name,
                     ),
-                    const ContactDetailsRow(
+                    ContactDetailsRow(
                       title1: 'Bhawan & Room No: ',
-                      title2: '2140,  Shankar Bhawan',
+                      title2: '${profile.rommNo},  ${profile.bhawanName}',
                     ),
-                    const ContactDetailsRow(
+                    ContactDetailsRow(
                       title1: 'Phone No: ',
-                      title2: '8220585181',
+                      title2: '${profile.phoneNumber}',
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(

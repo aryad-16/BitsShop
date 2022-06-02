@@ -4,8 +4,8 @@ import 'package:login_singup_screen_ui/providers/items_provider.dart';
 import 'package:login_singup_screen_ui/widgets/animated_indexed_stack.dart';
 import 'package:provider/provider.dart';
 
+import 'main screens/Manage Ads/manage_ads.dart';
 import 'main screens/New Ad Screen/new_ad_screen.dart';
-import 'main screens/ads_alive_screen.dart';
 import 'main screens/home screen/home_screen.dart';
 import 'main screens/profile_screen.dart';
 
@@ -21,7 +21,7 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> pagelist = <Widget>[
     const HomeScreen(),
     const NewAdScreen(),
-    const AdsAliveScreen(),
+    const ManageAds(),
     const ProfileScreen(),
   ];
   @override

@@ -93,8 +93,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: AppBar(
           elevation: 0,
           systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarColor: Colors.transparent,
-              statusBarIconBrightness: Brightness.dark),
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness: Brightness.dark,
+          ),
           backgroundColor: Colors.white,
         ),
         preferredSize: const Size.fromHeight(0),

@@ -7,8 +7,10 @@ import 'package:provider/provider.dart';
 import '../../../providers/item_model.dart';
 
 class SingleItemWidget extends StatelessWidget {
+  final bool isEdit;
   const SingleItemWidget({
     Key? key,
+    required this.isEdit,
   }) : super(key: key);
 
   @override
@@ -17,13 +19,16 @@ class SingleItemWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => ItemDetailScreen(item: item),
+          builder: (context) => ChangeNotifierProvider.value(
+            value: item,
+            child: const ItemDetailScreen(),
+          ),
         ),
       ),
       child: Container(
-        padding: const EdgeInsets.only(bottom: 10),
+        padding: EdgeInsets.only(bottom: isEdit ? 0 : 10),
         margin: const EdgeInsets.symmetric(horizontal: 8),
-        height: 150,
+        // height: isEdit ? 200 : 150,
         width: 200,
         child: Card(
           color: Colors.white,
@@ -96,7 +101,7 @@ class SingleItemWidget extends StatelessWidget {
                           item.isFavourite
                               ? Icons.bookmark_added_rounded
                               : Icons.bookmark_add_outlined,
-                          size: 20,
+                          size: 24,
                           color: const Color.fromARGB(180, 0, 0, 0),
                         ),
                       ),
@@ -104,6 +109,22 @@ class SingleItemWidget extends StatelessWidget {
                   ),
                 ],
               ),
+              isEdit
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.edit_rounded),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.delete_forever_rounded),
+                          color: Colors.red,
+                        )
+                      ],
+                    )
+                  : const SizedBox(),
             ],
           ),
         ),

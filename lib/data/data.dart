@@ -83,3 +83,5 @@ final allBooks = <Book>[
       urlImage:
           'https://images.unsplash.com/photo-1615300236079-4bdb43bd9a9a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=700&q=80'),
 ];
+
+const String profileID = 'abcf';

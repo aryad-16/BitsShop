@@ -61,7 +61,7 @@ class Items with ChangeNotifier {
       price: 249,
       category: Category.others,
       id: '4',
-      profileId: 'abcg',
+      profileId: 'abcd',
     ),
   ];
 
@@ -87,5 +87,13 @@ class Items with ChangeNotifier {
     return [
       ..._items
     ]; //returns a copy of the list, so as to not edit it anywhere else in the app
+  }
+
+  List<Item> getItems(List<String> ids) {
+    List<Item> temp = [];
+    for (String id in ids) {
+      temp.add(_items.firstWhere((element) => element.id == id));
+    }
+    return temp;
   }
 }
