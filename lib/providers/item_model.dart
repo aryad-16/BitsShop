@@ -3,11 +3,11 @@ import 'package:flutter/foundation.dart';
 enum Category { books, cycles, electronics, others }
 
 class Item with ChangeNotifier {
-  List<String> imageList;
-  String title;
-  String description;
-  int price;
-  Category category;
+  final List<String> imageList;
+  final String title;
+  final String description;
+  final int price;
+  final Category category;
   bool isFavourite;
   final String id;
   final String profileId;

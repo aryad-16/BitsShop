@@ -32,10 +32,7 @@ class _AddPictureState extends State<AddPicture> {
       final imagetemp = File(image.path);
       setState(() {
         this.image = imagetemp;
-        // print(
-        // 'Hi guys fuck you, at ${widget.index} the path of image is ${image.path}');
         widget.imageList[widget.index] = image.path;
-        print('Hi guys fcuk you, ${widget.imageList[widget.index]}');
       });
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
@@ -110,13 +107,6 @@ class _AddPictureState extends State<AddPicture> {
       );
 
   @override
-  void initState() {
-    print(
-        'Hi guys fcuk you, ${widget.imageList[widget.index]} at ${widget.index}');
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => showPopUp(),
@@ -147,13 +137,14 @@ class _AddPictureState extends State<AddPicture> {
                           width: 30,
                         ),
             ),
-            image != null
+            image != null || widget.imageList[widget.index] != 'a'
                 ? Positioned(
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
                           image = null;
                           widget.imageList.removeAt(widget.index);
+                          widget.imageList.add('a');
                         });
                       },
                       child: Container(
