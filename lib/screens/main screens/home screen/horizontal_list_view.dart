@@ -45,7 +45,9 @@ class HorizontalListView extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (ctx) => ItemCategoryScreen(category: title),
+                        builder: (ctx) => ChangeNotifierProvider.value(
+                            value: Items(),
+                            child: ItemCategoryScreen(category: title)),
                       ),
                     );
                   },
@@ -67,11 +69,12 @@ class HorizontalListView extends StatelessWidget {
             height: 310,
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: 6,
+              itemCount: items.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                return SingleItemWidget(
-                  item: items[index],
+                return ChangeNotifierProvider.value(
+                  value: items[index],
+                  child: const SingleItemWidget(),
                 );
               },
             ),

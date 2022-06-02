@@ -27,7 +27,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (BuildContext context) => Items(),
+      create: (_) => Items(),
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 245, 245, 245),
         bottomNavigationBar: BottomNavigationBar(

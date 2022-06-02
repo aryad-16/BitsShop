@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../../Constants/constants.dart';
+import '../../../providers/items_provider.dart';
 import '../home screen/grid_item.dart';
 import '../home screen/search_screen.dart';
 
@@ -13,6 +15,13 @@ class ItemCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final items = category == 'Books'
+        ? Provider.of<Items>(context).bookitems
+        : category == 'Cycles'
+            ? Provider.of<Items>(context).cycleitems
+            : category == 'Electronics'
+                ? Provider.of<Items>(context).electronicsitems
+                : Provider.of<Items>(context).othersitems;
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 245, 245, 245),
       appBar: AppBar(
@@ -112,8 +121,11 @@ class ItemCategoryScreen extends StatelessWidget {
                     mainAxisSpacing: 15,
                     crossAxisCount: 2,
                   ),
-                  itemBuilder: (ctx, index) => SingleItemWidget(index, context),
-                  itemCount: 10,
+                  itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
+                    value: items[index],
+                    child: const SingleItemWidget(),
+                  ),
+                  itemCount: items.length,
                 ),
               ],
             ),

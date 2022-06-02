@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../model/item_model.dart';
+import 'item_model.dart';
 
 class Items with ChangeNotifier {
   final List<Item> _items = [
@@ -16,6 +16,7 @@ class Items with ChangeNotifier {
       price: 4500,
       category: Category.books,
       id: '1',
+      profileId: 'abcd',
     ),
     Item(
       imageList: [
@@ -29,6 +30,7 @@ class Items with ChangeNotifier {
       price: 11000,
       category: Category.cycles,
       id: '2',
+      profileId: 'abce',
     ),
     Item(
       imageList: [
@@ -43,6 +45,7 @@ class Items with ChangeNotifier {
       price: 599,
       category: Category.electronics,
       id: '3',
+      profileId: 'abcf',
     ),
     Item(
       imageList: [
@@ -58,6 +61,7 @@ class Items with ChangeNotifier {
       price: 249,
       category: Category.others,
       id: '4',
+      profileId: 'abcg',
     ),
   ];
 

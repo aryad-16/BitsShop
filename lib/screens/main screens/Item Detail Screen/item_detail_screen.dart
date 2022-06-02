@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:login_singup_screen_ui/model/item_model.dart';
+import 'package:login_singup_screen_ui/providers/item_model.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../Constants/constants.dart';

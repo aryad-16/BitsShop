@@ -1,21 +1,19 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
 import 'package:login_singup_screen_ui/screens/main%20screens/Item%20Detail%20Screen/item_detail_screen.dart';
+import 'package:provider/provider.dart';
 
-import '../../../model/item_model.dart';
+import '../../../providers/item_model.dart';
 
 class SingleItemWidget extends StatelessWidget {
-  final Item item;
-
   const SingleItemWidget({
     Key? key,
-    required this.item,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final item = Provider.of<Item>(context, listen: false);
     return GestureDetector(
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
@@ -87,15 +85,20 @@ class SingleItemWidget extends StatelessWidget {
                     flex: 1,
                   ),
                   GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      margin: const EdgeInsets.only(right: 12),
-                      padding: const EdgeInsets.symmetric(horizontal: 6),
-                      child: SvgPicture.asset(
-                        'assets/icons/bookmark.svg',
-                        width: 20,
-                        height: 20,
-                        color: const Color.fromARGB(180, 0, 0, 0),
+                    onTap: () {
+                      item.toggleFavouriteStatus();
+                    },
+                    child: Consumer<Item>(
+                      builder: (context, item, _) => Container(
+                        margin: const EdgeInsets.only(right: 12),
+                        padding: const EdgeInsets.symmetric(horizontal: 6),
+                        child: Icon(
+                          item.isFavourite
+                              ? Icons.bookmark_added_rounded
+                              : Icons.bookmark_add_outlined,
+                          size: 20,
+                          color: const Color.fromARGB(180, 0, 0, 0),
+                        ),
                       ),
                     ),
                   ),

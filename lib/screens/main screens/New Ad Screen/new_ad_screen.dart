@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../Constants/constants.dart';
-import '../../../model/item_model.dart';
+import '../../../providers/item_model.dart';
 import 'add_photo.dart';
 import 'custom_bg_painter.dart';
 
@@ -43,6 +43,8 @@ class _NewAdScreenState extends State<NewAdScreen> {
       description: '',
       price: 0,
       category: Category.books,
+      id: '',
+      profileId: '',
     );
     List<Widget> _addPictures = [
       ClipRRect(
@@ -562,8 +564,8 @@ class _NewAdScreenState extends State<NewAdScreen> {
                                                           'Electronics'
                                                       ? Category.electronics
                                                       : Category.others;
-                                          item.price = double.parse(
-                                              pricecontroller.text);
+                                          item.price =
+                                              int.parse(pricecontroller.text);
                                           print('${item.category}');
                                           print(item.title);
                                           print(item.description);
