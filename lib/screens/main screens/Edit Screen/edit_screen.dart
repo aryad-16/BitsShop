@@ -2,21 +2,20 @@ import 'package:awesome_dropdown/awesome_dropdown.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:login_singup_screen_ui/data/data.dart';
-import 'package:login_singup_screen_ui/providers/profiles_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../Constants/constants.dart';
+import '../../../data/data.dart';
 import '../../../providers/item_model.dart';
 import '../../../providers/items_provider.dart';
-import 'add_photo.dart';
+import '../New Ad Screen/add_photo.dart';
 
-class NewAdScreen extends StatefulWidget {
-  const NewAdScreen({Key? key}) : super(key: key);
-
+class EditScreen extends StatefulWidget {
+  const EditScreen({Key? key}) : super(key: key);
+  static const routeName = '/edit-item';
   @override
-  State<NewAdScreen> createState() => _NewAdScreenState();
+  State<EditScreen> createState() => EditScreenState();
 }
 
 int _activeindex = 0;
@@ -32,7 +31,8 @@ _fieldFocusChange(
   FocusScope.of(context).requestFocus(nextFocus);
 }
 
-class _NewAdScreenState extends State<NewAdScreen> {
+class EditScreenState extends State<EditScreen> {
+  bool _isinit = true;
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   Item _editeditem = Item(
     imageList: ['a', 'a', 'a', 'a', 'a'],
@@ -44,45 +44,18 @@ class _NewAdScreenState extends State<NewAdScreen> {
     profileId: profileID,
   );
 
-  // @override
-  // void dispose() {
-  //   _titleFocus.dispose();
-  //   _descFocus.dispose();
-  //   _priceFocus.dispose();
-  //   super.dispose();
-  // }
-
-  final _isinit = true;
-  var initValues = {
-    'title': '',
-    'description': '',
-    'price': '',
-    'imageList': ['a', 'a', 'a', 'a', 'a'],
-    'category': 'Category',
-    'id': '',
-    'profileId': profileID,
-    'appbartitle': 'New Ad',
-  };
-  // @override
-  // void didChangeDependencies() {
-  //   if (_isinit) {
-  //     final item = ModalRoute.of(context)!.settings.arguments as Item;
-  //     if (item.imageList[0] != 'a') {
-  //       initValues = {
-  //         'title': _editeditem.title,
-  //         'description': _editeditem.description,
-  //         'price': _editeditem.price,
-  //         'imageList': _editeditem.imageList,
-  //         'category': _editeditem.category,
-  //         'id': _editeditem.id,
-  //         'profileId': _editeditem.profileId,
-  //         'appbartitle': 'Edit Ad',
-  //       };
-  //     }
-  //   }
-  //   _isinit = false;
-  //   super.didChangeDependencies();
-  // }
+  @override
+  void didChangeDependencies() {
+    if (_isinit) {
+      final item = ModalRoute.of(context)!.settings.arguments as Item;
+      _editeditem = item;
+      for (int i = _editeditem.imageList.length; i < 5; i++) {
+        _editeditem.imageList.add('a');
+      }
+    }
+    _isinit = false;
+    super.didChangeDependencies();
+  }
 
   void _saveForm() {
     _editeditem = Item(
@@ -92,13 +65,12 @@ class _NewAdScreenState extends State<NewAdScreen> {
       category: _editeditem.category,
       profileId: _editeditem.profileId,
       imageList: _editeditem.imageList,
-      id: DateTime.now().toString(),
+      id: _editeditem.id,
     );
     _formkey.currentState!.save();
     _formkey.currentState!.reset();
-    Provider.of<Items>(context, listen: false).addItem(_editeditem);
-    Provider.of<Profiles>(context, listen: false)
-        .addItem(_editeditem.profileId, _editeditem.id);
+    Provider.of<Items>(context, listen: false)
+        .updateitem(_editeditem.id, _editeditem);
   }
 
   @override
@@ -153,9 +125,9 @@ class _NewAdScreenState extends State<NewAdScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text(
-            initValues['appbartitle'].toString(),
-            style: const TextStyle(
+          title: const Text(
+            'Edit Ad',
+            style: TextStyle(
               fontSize: 21,
               fontFamily: 'Poppins Medium',
               color: Color.fromRGBO(14, 20, 70, 1),
@@ -250,7 +222,7 @@ class _NewAdScreenState extends State<NewAdScreen> {
                                 });
                               },
                               selectedItem: _selectedCategory ??
-                                  initValues['category'].toString(),
+                                  '${_editeditem.category.toString().substring(9)[0].toUpperCase()}${_editeditem.category.toString().substring(9).substring(1)}',
                               dropDownBorderRadius: 0,
                               dropDownTopBorderRadius: 10,
                               dropDownBottomBorderRadius: 10,
@@ -308,7 +280,7 @@ class _NewAdScreenState extends State<NewAdScreen> {
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.text,
                               textCapitalization: TextCapitalization.sentences,
-                              initialValue: initValues['title'].toString(),
+                              initialValue: _editeditem.title,
                               validator: (val) {
                                 if (val!.isEmpty) {
                                   return "Field cannot be empty";
@@ -370,8 +342,7 @@ class _NewAdScreenState extends State<NewAdScreen> {
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.multiline,
                               textCapitalization: TextCapitalization.sentences,
-                              initialValue:
-                                  initValues['description'].toString(),
+                              initialValue: _editeditem.description,
                               minLines: 5,
                               maxLines: 6,
                               style: const TextStyle(
@@ -450,8 +421,7 @@ class _NewAdScreenState extends State<NewAdScreen> {
                                     focusNode: _priceFocus,
                                     textInputAction: TextInputAction.done,
                                     // controller: pricecontroller,
-                                    initialValue:
-                                        initValues['price'].toString(),
+                                    initialValue: _editeditem.price.toString(),
                                     validator: (val) {
                                       if (val!.isEmpty) {
                                         return "Field cannot be empty";
@@ -522,23 +492,19 @@ class _NewAdScreenState extends State<NewAdScreen> {
                             child: GestureDetector(
                               onTap: () {
                                 FocusScope.of(context).unfocus();
-                                if (_selectedCategory == null) {
-                                  showAlert(context, "Category can't be empty");
-                                } else if (_editeditem.imageList[0] == 'a') {
+                                if (_editeditem.imageList[0] == 'a') {
                                   showAlert(context, "Add Atleast 1 image");
                                 } else if (_formkey.currentState!.validate()) {
                                   showDialog(
                                     context: context,
                                     builder: (context) => AlertDialog(
                                       content:
-                                          const Text("Ad posted succesfully!"),
+                                          const Text("Ad edited succesfully!"),
                                       actions: [
                                         GestureDetector(
                                           onTap: () {
                                             Navigator.of(context).pop();
-                                            setState(() {
-                                              _selectedCategory = 'Category';
-                                            });
+                                            Navigator.pop(context);
                                             _saveForm();
                                           },
                                           child: Container(
@@ -578,7 +544,7 @@ class _NewAdScreenState extends State<NewAdScreen> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 18, vertical: 14),
                                 child: const Text(
-                                  'Post Ad',
+                                  'Edit Ad',
                                   style: TextStyle(
                                     fontFamily: 'ManRope Regular',
                                     fontSize: 18,

@@ -41,4 +41,11 @@ class Profiles with ChangeNotifier {
         .firstWhere((element) => element.profileId == profileId)
         .favouriteItemsId;
   }
+
+  void addItem(String profileId, String id) {
+    final profile =
+        _profiles.firstWhere((element) => element.profileId == profileId);
+    profile.theirAdIds.add(id);
+    notifyListeners();
+  }
 }

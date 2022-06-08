@@ -96,4 +96,26 @@ class Items with ChangeNotifier {
     }
     return temp;
   }
+
+  void addItem(Item item) {
+    item.imageList.removeWhere((element) => element == 'a');
+    final newItem = Item(
+      category: item.category,
+      id: item.id,
+      title: item.title,
+      description: item.description,
+      price: item.price,
+      imageList: item.imageList,
+      profileId: item.profileId,
+    );
+    _items.add(newItem);
+    notifyListeners();
+  }
+
+  void updateitem(String id, Item newItem) {
+    newItem.imageList.removeWhere((element) => element == 'a');
+    final itemIndex = _items.indexWhere((element) => element.id == id);
+    _items[itemIndex] = newItem;
+    notifyListeners();
+  }
 }

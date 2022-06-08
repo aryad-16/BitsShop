@@ -6,12 +6,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
 
-// ignore: must_be_immutable
 class AddPicture extends StatefulWidget {
   final BuildContext context;
   final int index;
-  List<String> imageList;
-  AddPicture({
+  final List<String> imageList;
+  const AddPicture({
     Key? key,
     required this.imageList,
     required this.context,
@@ -123,7 +122,7 @@ class _AddPictureState extends State<AddPicture> {
             Center(
               child: widget.imageList[widget.index] != 'a'
                   ? ClipRRect(
-                      child: Image.file(File(widget.imageList[widget.index])),
+                      child: Image.network(widget.imageList[widget.index]),
                       borderRadius: BorderRadius.circular(10),
                     )
                   : image != null

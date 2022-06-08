@@ -45,9 +45,7 @@ class HorizontalListView extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (ctx) => ChangeNotifierProvider.value(
-                            value: Items(),
-                            child: ItemCategoryScreen(category: title)),
+                        builder: (ctx) => ItemCategoryScreen(category: title),
                       ),
                     );
                   },

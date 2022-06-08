@@ -5,6 +5,7 @@ import 'package:login_singup_screen_ui/screens/main%20screens/Item%20Detail%20Sc
 import 'package:provider/provider.dart';
 
 import '../../../providers/item_model.dart';
+import '../Edit Screen/edit_screen.dart';
 
 class SingleItemWidget extends StatelessWidget {
   final bool isEdit;
@@ -26,9 +27,8 @@ class SingleItemWidget extends StatelessWidget {
         ),
       ),
       child: Container(
-        padding: EdgeInsets.only(bottom: isEdit ? 0 : 10),
+        padding: EdgeInsets.only(bottom: isEdit ? 0 : 10, top: isEdit ? 0 : 10),
         margin: const EdgeInsets.symmetric(horizontal: 8),
-        // height: isEdit ? 200 : 150,
         width: 200,
         child: Card(
           color: Colors.white,
@@ -114,7 +114,12 @@ class SingleItemWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(
+                              EditScreen.routeName,
+                              arguments: item,
+                            );
+                          },
                           icon: const Icon(Icons.edit_rounded),
                         ),
                         IconButton(
