@@ -52,17 +52,17 @@ class _NewAdScreenState extends State<NewAdScreen> {
   //   super.dispose();
   // }
 
-  final _isinit = true;
-  var initValues = {
-    'title': '',
-    'description': '',
-    'price': '',
-    'imageList': ['a', 'a', 'a', 'a', 'a'],
-    'category': 'Category',
-    'id': '',
-    'profileId': profileID,
-    'appbartitle': 'New Ad',
-  };
+  // final _isinit = true;
+  // var initValues = {
+  //   'title': '',
+  //   'description': '',
+  //   'price': '',
+  //   'imageList': ['a', 'a', 'a', 'a', 'a'],
+  //   'category': 'Category',
+  //   'id': '',
+  //   'profileId': profileID,
+  //   'appbartitle': 'New Ad',
+  // };
   // @override
   // void didChangeDependencies() {
   //   if (_isinit) {
@@ -153,9 +153,9 @@ class _NewAdScreenState extends State<NewAdScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text(
-            initValues['appbartitle'].toString(),
-            style: const TextStyle(
+          title: const Text(
+            'New Ad',
+            style: TextStyle(
               fontSize: 21,
               fontFamily: 'Poppins Medium',
               color: Color.fromRGBO(14, 20, 70, 1),
@@ -249,8 +249,7 @@ class _NewAdScreenState extends State<NewAdScreen> {
                                   _isOpened = isOpened;
                                 });
                               },
-                              selectedItem: _selectedCategory ??
-                                  initValues['category'].toString(),
+                              selectedItem: _selectedCategory ?? 'Category',
                               dropDownBorderRadius: 0,
                               dropDownTopBorderRadius: 10,
                               dropDownBottomBorderRadius: 10,
@@ -308,7 +307,6 @@ class _NewAdScreenState extends State<NewAdScreen> {
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.text,
                               textCapitalization: TextCapitalization.sentences,
-                              initialValue: initValues['title'].toString(),
                               validator: (val) {
                                 if (val!.isEmpty) {
                                   return "Field cannot be empty";
@@ -370,8 +368,6 @@ class _NewAdScreenState extends State<NewAdScreen> {
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.multiline,
                               textCapitalization: TextCapitalization.sentences,
-                              initialValue:
-                                  initValues['description'].toString(),
                               minLines: 5,
                               maxLines: 6,
                               style: const TextStyle(
@@ -450,8 +446,6 @@ class _NewAdScreenState extends State<NewAdScreen> {
                                     focusNode: _priceFocus,
                                     textInputAction: TextInputAction.done,
                                     // controller: pricecontroller,
-                                    initialValue:
-                                        initValues['price'].toString(),
                                     validator: (val) {
                                       if (val!.isEmpty) {
                                         return "Field cannot be empty";
