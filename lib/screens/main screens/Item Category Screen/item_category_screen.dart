@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../Constants/constants.dart';
 import '../../../providers/items_provider.dart';
+import '../../../widgets/rounded_containers.dart';
 import 'items_grid_view.dart';
 
 class ItemCategoryScreen extends StatefulWidget {
@@ -95,7 +96,8 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
                                           _selectedYear = null;
                                         });
                                       },
-                                      child: roundedContainer('Reset', false)),
+                                      child: const RoundedContainer(
+                                          title: 'Reset', yellowBg: false)),
                                 ],
                               ),
                               const Divider(
@@ -127,8 +129,9 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
                                         _selectedYear = '1st Year';
                                       });
                                     },
-                                    child: roundedContainer('1st Year',
-                                        _selectedYear == '1st Year'),
+                                    child: RoundedContainer(
+                                        title: '1st Year',
+                                        yellowBg: _selectedYear == '1st Year'),
                                   ),
                                   const SizedBox(width: 10),
                                   GestureDetector(
@@ -137,8 +140,9 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
                                         _selectedYear = '2nd Year';
                                       });
                                     },
-                                    child: roundedContainer('2nd Year',
-                                        _selectedYear == '2nd Year'),
+                                    child: RoundedContainer(
+                                        title: '2nd Year',
+                                        yellowBg: _selectedYear == '2nd Year'),
                                   ),
                                   const SizedBox(width: 10),
                                   GestureDetector(
@@ -147,8 +151,9 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
                                         _selectedYear = '3rd Year';
                                       });
                                     },
-                                    child: roundedContainer('3rd Year',
-                                        _selectedYear == '3rd Year'),
+                                    child: RoundedContainer(
+                                        title: '3rd Year',
+                                        yellowBg: _selectedYear == '3rd Year'),
                                   ),
                                   const SizedBox(width: 10),
                                   GestureDetector(
@@ -157,8 +162,9 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
                                         _selectedYear = '4th Year';
                                       });
                                     },
-                                    child: roundedContainer('4th Year',
-                                        _selectedYear == '4th Year'),
+                                    child: RoundedContainer(
+                                        title: '4th Year',
+                                        yellowBg: _selectedYear == '4th Year'),
                                   ),
                                   const SizedBox(width: 10),
                                   GestureDetector(
@@ -167,8 +173,9 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
                                         _selectedYear = '5th Year';
                                       });
                                     },
-                                    child: roundedContainer('5th Year',
-                                        _selectedYear == '5th Year'),
+                                    child: RoundedContainer(
+                                        title: '5th Year',
+                                        yellowBg: _selectedYear == '5th Year'),
                                   ),
                                 ],
                               ),
@@ -197,8 +204,10 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
                                           _selectedSem = '1st Semester';
                                         });
                                       },
-                                      child: roundedContainer('1st Semester',
-                                          _selectedSem == '1st Semester')),
+                                      child: RoundedContainer(
+                                          title: '1st Semester',
+                                          yellowBg:
+                                              _selectedSem == '1st Semester')),
                                   const SizedBox(width: 10),
                                   GestureDetector(
                                       onTap: () {
@@ -206,8 +215,10 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
                                           _selectedSem = '2nd Semester';
                                         });
                                       },
-                                      child: roundedContainer('2nd Semester',
-                                          _selectedSem == '2nd Semester')),
+                                      child: RoundedContainer(
+                                          title: '2nd Semester',
+                                          yellowBg:
+                                              _selectedSem == '2nd Semester')),
                                   const SizedBox(width: 10),
                                 ],
                               ),
@@ -236,8 +247,9 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
                                           _selectedBranch = 'ENI';
                                         });
                                       },
-                                      child: roundedContainer(
-                                          'ENI', _selectedBranch == 'ENI')),
+                                      child: RoundedContainer(
+                                          title: 'ENI',
+                                          yellowBg: _selectedBranch == 'ENI')),
                                   const SizedBox(width: 10),
                                   GestureDetector(
                                       onTap: () {
@@ -245,8 +257,9 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
                                           _selectedBranch = 'ECE';
                                         });
                                       },
-                                      child: roundedContainer(
-                                          'ECE', _selectedBranch == 'ECE')),
+                                      child: RoundedContainer(
+                                          title: 'ECE',
+                                          yellowBg: _selectedBranch == 'ECE')),
                                   const SizedBox(width: 10),
                                   GestureDetector(
                                       onTap: () {
@@ -254,8 +267,9 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
                                           _selectedBranch = 'EEE';
                                         });
                                       },
-                                      child: roundedContainer(
-                                          'EEE', _selectedBranch == 'EEE')),
+                                      child: RoundedContainer(
+                                          title: 'EEE',
+                                          yellowBg: _selectedBranch == 'EEE')),
                                   const SizedBox(width: 10),
                                   GestureDetector(
                                       onTap: () {
@@ -263,8 +277,9 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
                                           _selectedBranch = 'CS';
                                         });
                                       },
-                                      child: roundedContainer(
-                                          'CS', _selectedBranch == 'CS')),
+                                      child: RoundedContainer(
+                                          title: 'CS',
+                                          yellowBg: _selectedBranch == 'CS')),
                                   const SizedBox(width: 10),
                                   GestureDetector(
                                       onTap: () {
@@ -272,8 +287,10 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
                                           _selectedBranch = 'Chemical';
                                         });
                                       },
-                                      child: roundedContainer('Chemical',
-                                          _selectedBranch == 'Chemical')),
+                                      child: RoundedContainer(
+                                          title: 'Chemical',
+                                          yellowBg:
+                                              _selectedBranch == 'Chemical')),
                                   const SizedBox(width: 10),
                                   GestureDetector(
                                       onTap: () {
@@ -281,8 +298,10 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
                                           _selectedBranch = 'Manufacturing';
                                         });
                                       },
-                                      child: roundedContainer('Manufacturing',
-                                          _selectedBranch == 'Manufacturing')),
+                                      child: RoundedContainer(
+                                          title: 'Manufacturing',
+                                          yellowBg: _selectedBranch ==
+                                              'Manufacturing')),
                                   const SizedBox(width: 10),
                                   GestureDetector(
                                       onTap: () {
@@ -290,8 +309,10 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
                                           _selectedBranch = 'Civil';
                                         });
                                       },
-                                      child: roundedContainer(
-                                          'Civil', _selectedBranch == 'Civil')),
+                                      child: RoundedContainer(
+                                          title: 'Civil',
+                                          yellowBg:
+                                              _selectedBranch == 'Civil')),
                                   const SizedBox(width: 10),
                                   GestureDetector(
                                       onTap: () {
@@ -299,8 +320,10 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
                                           _selectedBranch = 'Bio Dual';
                                         });
                                       },
-                                      child: roundedContainer('Bio Dual',
-                                          _selectedBranch == 'Bio Dual')),
+                                      child: RoundedContainer(
+                                          title: 'Bio Dual',
+                                          yellowBg:
+                                              _selectedBranch == 'Bio Dual')),
                                   const SizedBox(width: 10),
                                   GestureDetector(
                                       onTap: () {
@@ -308,8 +331,10 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
                                           _selectedBranch = 'Phy Dual';
                                         });
                                       },
-                                      child: roundedContainer('Phy Dual',
-                                          _selectedBranch == 'Phy Dual')),
+                                      child: RoundedContainer(
+                                          title: 'Phy Dual',
+                                          yellowBg:
+                                              _selectedBranch == 'Phy Dual')),
                                   const SizedBox(width: 10),
                                   GestureDetector(
                                       onTap: () {
@@ -317,8 +342,10 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
                                           _selectedBranch = 'Chem Dual';
                                         });
                                       },
-                                      child: roundedContainer('Chem Dual',
-                                          _selectedBranch == 'Chem Dual')),
+                                      child: RoundedContainer(
+                                          title: 'Chem Dual',
+                                          yellowBg:
+                                              _selectedBranch == 'Chem Dual')),
                                   const SizedBox(width: 10),
                                   GestureDetector(
                                       onTap: () {
@@ -326,8 +353,10 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
                                           _selectedBranch = 'Eco Dual';
                                         });
                                       },
-                                      child: roundedContainer('Eco Dual',
-                                          _selectedBranch == 'Eco Dual')),
+                                      child: RoundedContainer(
+                                          title: 'Eco Dual',
+                                          yellowBg:
+                                              _selectedBranch == 'Eco Dual')),
                                 ],
                               ),
                               GestureDetector(
@@ -378,28 +407,6 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
       ),
       body:
           ItemsGridView(category: widget.category, items: items, isEdit: false),
-    );
-  }
-
-  Widget roundedContainer(String title, bool yellowBg) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: 3,
-        horizontal: 5,
-      ),
-      decoration: BoxDecoration(
-        color: yellowBg ? Constant.yellowColor : Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Constant.yellowColor),
-      ),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontFamily: 'manRope Regular',
-          fontSize: 16,
-          color: yellowBg ? Colors.white : Constant.yellowColor,
-        ),
-      ),
     );
   }
 }

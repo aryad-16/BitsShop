@@ -140,7 +140,13 @@ class EditScreenState extends State<EditScreen> {
             statusBarIconBrightness: Brightness.dark,
           ),
           backgroundColor: const Color.fromARGB(255, 245, 245, 245),
-          leading: const SizedBox(),
+          leading: IconButton(
+            onPressed: () => Navigator.of(context).pop(),
+            icon: const Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: Color.fromRGBO(14, 20, 70, 1),
+            ),
+          ),
         ),
         body: SingleChildScrollView(
           child: Form(
