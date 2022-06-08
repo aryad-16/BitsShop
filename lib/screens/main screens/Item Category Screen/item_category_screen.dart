@@ -7,18 +7,27 @@ import '../../../Constants/constants.dart';
 import '../../../providers/items_provider.dart';
 import 'items_grid_view.dart';
 
-class ItemCategoryScreen extends StatelessWidget {
+class ItemCategoryScreen extends StatefulWidget {
   final String category;
   const ItemCategoryScreen({Key? key, required this.category})
       : super(key: key);
 
   @override
+  State<ItemCategoryScreen> createState() => _ItemCategoryScreenState();
+}
+
+class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
+  late StateSetter _setState;
+  String? _selectedYear;
+  String? _selectedSem;
+  String? _selectedBranch;
+  @override
   Widget build(BuildContext context) {
-    final items = category == 'Books'
+    final items = widget.category == 'Books'
         ? Provider.of<Items>(context).bookitems
-        : category == 'Cycles'
+        : widget.category == 'Cycles'
             ? Provider.of<Items>(context).cycleitems
-            : category == 'Electronics'
+            : widget.category == 'Electronics'
                 ? Provider.of<Items>(context).electronicsitems
                 : Provider.of<Items>(context).othersitems;
     return Scaffold(
@@ -42,7 +51,7 @@ class ItemCategoryScreen extends StatelessWidget {
         ),
         centerTitle: true,
         title: Text(
-          category,
+          widget.category,
           style: const TextStyle(
             fontSize: 21,
             fontFamily: 'Poppins Medium',
@@ -50,116 +59,309 @@ class ItemCategoryScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          category == 'Books'
+          widget.category == 'Books'
               ? GestureDetector(
                   onTap: () => showDialog(
                     context: context,
-                    builder: (context) => AlertDialog(
-                      content: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    builder: (context) {
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        content: StatefulBuilder(builder:
+                            (BuildContext context, StateSetter setState) {
+                          _setState = setState;
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              const Text(
-                                'Filters',
-                                style: TextStyle(
-                                  fontFamily: 'manRope Regular',
-                                  fontSize: 16,
-                                  color: Colors.black,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  const Text(
+                                    'Filters',
+                                    style: TextStyle(
+                                      fontFamily: 'manRope Regular',
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                      onTap: () {
+                                        _setState(() {
+                                          _selectedBranch = null;
+                                          _selectedSem = null;
+                                          _selectedYear = null;
+                                        });
+                                      },
+                                      child: roundedContainer('Reset', false)),
+                                ],
+                              ),
+                              const Divider(
+                                color: Colors.black87,
+                                height: 20,
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(top: 5),
+                                child: Text(
+                                  'YEAR',
+                                  style: TextStyle(
+                                    fontFamily: 'manRope Regular',
+                                    fontSize: 16,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black87,
+                                  ),
                                 ),
                               ),
-                              roundedContainer('Reset'),
+                              const SizedBox(height: 7),
+                              Wrap(
+                                alignment: WrapAlignment.start,
+                                direction: Axis.horizontal,
+                                runSpacing: 6,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      _setState(() {
+                                        _selectedYear = '1st Year';
+                                      });
+                                    },
+                                    child: roundedContainer('1st Year',
+                                        _selectedYear == '1st Year'),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      _setState(() {
+                                        _selectedYear = '2nd Year';
+                                      });
+                                    },
+                                    child: roundedContainer('2nd Year',
+                                        _selectedYear == '2nd Year'),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      _setState(() {
+                                        _selectedYear = '3rd Year';
+                                      });
+                                    },
+                                    child: roundedContainer('3rd Year',
+                                        _selectedYear == '3rd Year'),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      _setState(() {
+                                        _selectedYear = '4th Year';
+                                      });
+                                    },
+                                    child: roundedContainer('4th Year',
+                                        _selectedYear == '4th Year'),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      _setState(() {
+                                        _selectedYear = '5th Year';
+                                      });
+                                    },
+                                    child: roundedContainer('5th Year',
+                                        _selectedYear == '5th Year'),
+                                  ),
+                                ],
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(top: 20),
+                                child: Text(
+                                  'SEMESTER',
+                                  style: TextStyle(
+                                    fontFamily: 'manRope Regular',
+                                    fontSize: 16,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 7),
+                              Wrap(
+                                alignment: WrapAlignment.start,
+                                direction: Axis.horizontal,
+                                runSpacing: 6,
+                                children: [
+                                  GestureDetector(
+                                      onTap: () {
+                                        _setState(() {
+                                          _selectedSem = '1st Semester';
+                                        });
+                                      },
+                                      child: roundedContainer('1st Semester',
+                                          _selectedSem == '1st Semester')),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                      onTap: () {
+                                        _setState(() {
+                                          _selectedSem = '2nd Semester';
+                                        });
+                                      },
+                                      child: roundedContainer('2nd Semester',
+                                          _selectedSem == '2nd Semester')),
+                                  const SizedBox(width: 10),
+                                ],
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(top: 20),
+                                child: Text(
+                                  'BRANCH',
+                                  style: TextStyle(
+                                    fontFamily: 'manRope Regular',
+                                    fontSize: 16,
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 7),
+                              Wrap(
+                                alignment: WrapAlignment.start,
+                                direction: Axis.horizontal,
+                                runSpacing: 6,
+                                children: [
+                                  GestureDetector(
+                                      onTap: () {
+                                        _setState(() {
+                                          _selectedBranch = 'ENI';
+                                        });
+                                      },
+                                      child: roundedContainer(
+                                          'ENI', _selectedBranch == 'ENI')),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                      onTap: () {
+                                        _setState(() {
+                                          _selectedBranch = 'ECE';
+                                        });
+                                      },
+                                      child: roundedContainer(
+                                          'ECE', _selectedBranch == 'ECE')),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                      onTap: () {
+                                        _setState(() {
+                                          _selectedBranch = 'EEE';
+                                        });
+                                      },
+                                      child: roundedContainer(
+                                          'EEE', _selectedBranch == 'EEE')),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                      onTap: () {
+                                        _setState(() {
+                                          _selectedBranch = 'CS';
+                                        });
+                                      },
+                                      child: roundedContainer(
+                                          'CS', _selectedBranch == 'CS')),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                      onTap: () {
+                                        _setState(() {
+                                          _selectedBranch = 'Chemical';
+                                        });
+                                      },
+                                      child: roundedContainer('Chemical',
+                                          _selectedBranch == 'Chemical')),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                      onTap: () {
+                                        _setState(() {
+                                          _selectedBranch = 'Manufacturing';
+                                        });
+                                      },
+                                      child: roundedContainer('Manufacturing',
+                                          _selectedBranch == 'Manufacturing')),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                      onTap: () {
+                                        _setState(() {
+                                          _selectedBranch = 'Civil';
+                                        });
+                                      },
+                                      child: roundedContainer(
+                                          'Civil', _selectedBranch == 'Civil')),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                      onTap: () {
+                                        _setState(() {
+                                          _selectedBranch = 'Bio Dual';
+                                        });
+                                      },
+                                      child: roundedContainer('Bio Dual',
+                                          _selectedBranch == 'Bio Dual')),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                      onTap: () {
+                                        _setState(() {
+                                          _selectedBranch = 'Phy Dual';
+                                        });
+                                      },
+                                      child: roundedContainer('Phy Dual',
+                                          _selectedBranch == 'Phy Dual')),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                      onTap: () {
+                                        _setState(() {
+                                          _selectedBranch = 'Chem Dual';
+                                        });
+                                      },
+                                      child: roundedContainer('Chem Dual',
+                                          _selectedBranch == 'Chem Dual')),
+                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                      onTap: () {
+                                        _setState(() {
+                                          _selectedBranch = 'Eco Dual';
+                                        });
+                                      },
+                                      child: roundedContainer('Eco Dual',
+                                          _selectedBranch == 'Eco Dual')),
+                                ],
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Center(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      boxShadow: [Constant.boxShadow],
+                                      gradient: Constant.yellowlinear,
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 18, vertical: 14),
+                                    margin: const EdgeInsets.only(top: 28),
+                                    child: const Text(
+                                      'Refine Search',
+                                      style: TextStyle(
+                                        fontFamily: 'ManRope Regular',
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 0.9,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
                             ],
-                          ),
-                          const Divider(
-                            color: Colors.black87,
-                            height: 20,
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 8),
-                            child: Text(
-                              'YEAR',
-                              style: TextStyle(
-                                fontFamily: 'manRope Regular',
-                                fontSize: 16,
-                                letterSpacing: 1,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black87,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 7),
-                          Wrap(
-                            alignment: WrapAlignment.spaceBetween,
-                            direction: Axis.horizontal,
-                            runSpacing: 6,
-                            children: [
-                              roundedContainer('1st Year'),
-                              const SizedBox(width: 10),
-                              roundedContainer('2nd Year'),
-                              const SizedBox(width: 10),
-                              roundedContainer('3rd Year'),
-                              const SizedBox(width: 10),
-                              roundedContainer('4th Year'),
-                            ],
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 4, top: 20),
-                            child: Text(
-                              'SEMESTER',
-                              style: TextStyle(
-                                fontFamily: 'manRope Regular',
-                                fontSize: 16,
-                                letterSpacing: 1,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black87,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 7),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: [
-                                roundedContainer('1st Semester'),
-                                const SizedBox(width: 10),
-                                roundedContainer('2nd Semester'),
-                                const SizedBox(width: 10),
-                              ],
-                            ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 4, top: 20),
-                            child: Text(
-                              'BRANCH',
-                              style: TextStyle(
-                                fontFamily: 'manRope Regular',
-                                fontSize: 16,
-                                letterSpacing: 1,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black87,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 7),
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: [
-                                roundedContainer('ENI'),
-                                const SizedBox(width: 10),
-                                roundedContainer('ECE'),
-                                const SizedBox(width: 10),
-                                roundedContainer('EEE'),
-                                const SizedBox(width: 10),
-                                roundedContainer('CS'),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                          );
+                        }),
+                      );
+                    },
                   ),
                   child: Container(
                     margin: const EdgeInsets.only(right: 20, left: 12.4),
@@ -174,28 +376,28 @@ class ItemCategoryScreen extends StatelessWidget {
               : const SizedBox(),
         ],
       ),
-      body: ItemsGridView(category: category, items: items, isEdit: false),
+      body:
+          ItemsGridView(category: widget.category, items: items, isEdit: false),
     );
   }
 
-  Container roundedContainer(String title) {
+  Widget roundedContainer(String title, bool yellowBg) {
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 3,
         horizontal: 5,
       ),
       decoration: BoxDecoration(
+        color: yellowBg ? Constant.yellowColor : Colors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Constant.yellowColor,
-        ),
+        border: Border.all(color: Constant.yellowColor),
       ),
       child: Text(
         title,
         style: TextStyle(
           fontFamily: 'manRope Regular',
           fontSize: 16,
-          color: Constant.yellowColor,
+          color: yellowBg ? Colors.white : Constant.yellowColor,
         ),
       ),
     );
