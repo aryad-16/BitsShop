@@ -48,4 +48,11 @@ class Profiles with ChangeNotifier {
     profile.theirAdIds.add(id);
     notifyListeners();
   }
+
+  void deleteItem(String profileId, String id) {
+    final profile =
+        _profiles.firstWhere((element) => element.profileId == profileId);
+    profile.theirAdIds.removeWhere((element) => element == id);
+    notifyListeners();
+  }
 }

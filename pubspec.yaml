@@ -70,6 +70,7 @@ flutter:
     - assets/icons/person.svg
     - assets/icons/email.svg
     - assets/icons/call.svg
+    - assets/icons/cancel_sign.svg
     - assets/icons/whatsapp.svg
     - assets/icons/bookmark.svg
     - assets/icons/password.svg

@@ -118,4 +118,9 @@ class Items with ChangeNotifier {
     _items[itemIndex] = newItem;
     notifyListeners();
   }
+
+  void deleteItem(String id) {
+    _items.removeWhere((element) => element.id == id);
+    notifyListeners();
+  }
 }
