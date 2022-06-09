@@ -34,7 +34,8 @@ class ManageAds extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 245, 245, 245),
         leading: const SizedBox(),
       ),
-      body: ItemsGridView(category: 'ads', items: items, isEdit: true),
+      body: ItemsGridView(
+          category: 'ads', items: items, isEdit: true, searchInclude: true),
     );
   }
 }

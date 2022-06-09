@@ -11,9 +11,11 @@ class ItemsGridView extends StatelessWidget {
   final bool isEdit;
   final String category;
   final List<Item> items;
+  final bool searchInclude;
   const ItemsGridView({
     Key? key,
     required this.category,
+    required this.searchInclude,
     required this.isEdit,
     required this.items,
   }) : super(key: key);
@@ -30,46 +32,51 @@ class ItemsGridView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Column(
             children: <Widget>[
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (ctx) => const SearchScreen(),
-                    ),
-                  );
-                },
-                child: Container(
-                  margin:
-                      const EdgeInsets.only(bottom: 15.0, left: 32, right: 32),
-                  width: double.infinity,
-                  height: 50,
-                  padding: const EdgeInsets.only(
-                      top: 3.0, left: 10.0, bottom: 3.0, right: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      SvgPicture.asset(
-                        'assets/icons/search.svg',
-                        height: 22,
-                      ),
-                      const SizedBox(width: 15),
-                      Text(
-                        'Search $category',
-                        style: TextStyle(
-                          fontFamily: 'manRope Regular',
-                          fontSize: 17,
-                          color: Constant.greyColor1,
+              searchInclude
+                  ? GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => SearchScreen(
+                              category: category,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            bottom: 15.0, left: 32, right: 32),
+                        width: double.infinity,
+                        height: 50,
+                        padding: const EdgeInsets.only(
+                            top: 3.0, left: 10.0, bottom: 3.0, right: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            SvgPicture.asset(
+                              'assets/icons/search.svg',
+                              height: 22,
+                            ),
+                            const SizedBox(width: 15),
+                            Text(
+                              'Search $category',
+                              style: TextStyle(
+                                fontFamily: 'manRope Regular',
+                                fontSize: 17,
+                                color: Constant.greyColor1,
+                              ),
+                            ),
+                          ],
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
+                          border: Border.all(color: Colors.black45),
                         ),
                       ),
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(color: Colors.black45),
-                  ),
-                ),
-              ),
+                    )
+                  : const SizedBox(),
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),

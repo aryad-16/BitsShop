@@ -65,6 +65,12 @@ class Items with ChangeNotifier {
     ),
   ];
 
+  List<Item> get allitems {
+    return [
+      ..._items
+    ]; //returns a copy of the list, so as to not edit it anywhere else in the app
+  }
+
   List<Item> get bookitems {
     return [
       ..._items
@@ -123,4 +129,6 @@ class Items with ChangeNotifier {
     _items.removeWhere((element) => element.id == id);
     notifyListeners();
   }
+
+  void searchItems(String query) {}
 }

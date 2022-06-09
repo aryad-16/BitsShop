@@ -22,6 +22,12 @@ class _SearchWidgetState extends State<SearchWidget> {
   final controller = TextEditingController();
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     const styleActive = TextStyle(
       fontFamily: 'manRope Regular',
@@ -37,9 +43,10 @@ class _SearchWidgetState extends State<SearchWidget> {
 
     return Container(
       height: 50,
-      margin: const EdgeInsets.all(16),
+      margin: EdgeInsets.fromLTRB(
+          5, 16, widget.hintText.contains('Books') ? 0 : 16, 16),
       decoration: BoxDecoration(
-        color: Colors.grey.withOpacity(0.04),
+        color: Colors.white,
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         border: Border.all(color: Colors.black45),
       ),
