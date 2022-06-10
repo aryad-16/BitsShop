@@ -7,17 +7,53 @@ import 'package:login_singup_screen_ui/providers/item_model.dart';
 import 'package:login_singup_screen_ui/providers/profiles_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Constants/constants.dart';
 
 class ItemDetailScreen extends StatefulWidget {
-  // final Item item;
   const ItemDetailScreen({
     Key? key,
   }) : super(key: key);
 
   @override
   State<ItemDetailScreen> createState() => _ItemDetailScreenState();
+}
+
+openWhatsapp(String phoneNumber) async {
+  var _url = "https://api.whatsapp.com/send?phone=91";
+  try {
+    await launch(_url + phoneNumber);
+  } catch (e) {
+    print(e);
+  }
+  // var whatsappURLIos = "https://wa.me/$phoneNumber?";
+  // if (Platform.isIOS) {
+  //   if (await canLaunchUrlString(_url + phoneNumber)) {
+  //     await launch(_url + phoneNumber, forceSafariVC: false);
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(
+  //         content: Text("Whatsapp is not installed"),
+  //         backgroundColor: Color.fromRGBO(237, 92, 90, 1),
+  //       ),
+  //     );
+  //   }
+  // } else {
+  //   try {
+  //     await launch(_url + phoneNumber);
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  //   // else {
+  //   //   ScaffoldMessenger.of(context).showSnackBar(
+  //   //     const SnackBar(
+  //   //       content: Text("Whatsapp is not installed"),
+  //   //       backgroundColor: Color.fromRGBO(237, 92, 90, 1),
+  //   //     ),
+  //   //   );
+  //   // }
+  // // }
 }
 
 class _ItemDetailScreenState extends State<ItemDetailScreen> {
@@ -256,18 +292,28 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          SvgPicture.asset(
-                            'assets/icons/call.svg',
-                            width: 35,
-                            height: 35,
-                            color: Colors.white,
+                          GestureDetector(
+                            onTap: () {
+                              launchUrl(
+                                  Uri.parse("tel://${profile.phoneNumber}"));
+                            },
+                            child: SvgPicture.asset(
+                              'assets/icons/call.svg',
+                              width: 35,
+                              height: 35,
+                              color: Colors.white,
+                            ),
                           ),
                           const SizedBox(width: 20),
-                          SvgPicture.asset(
-                            'assets/icons/whatsapp.svg',
-                            width: 35,
-                            height: 35,
-                            color: Colors.white,
+                          GestureDetector(
+                            onTap: () =>
+                                openWhatsapp(profile.phoneNumber.toString()),
+                            child: SvgPicture.asset(
+                              'assets/icons/whatsapp.svg',
+                              width: 35,
+                              height: 35,
+                              color: Colors.white,
+                            ),
                           ),
                         ],
                       ),
