@@ -66,30 +66,35 @@ class Items with ChangeNotifier {
   ];
 
   List<Item> get allitems {
+    _items.sort((a, b) => a.price.compareTo(b.price));
     return [
       ..._items
     ]; //returns a copy of the list, so as to not edit it anywhere else in the app
   }
 
   List<Item> get bookitems {
+    _items.sort((a, b) => a.price.compareTo(b.price));
     return [
       ..._items.where((element) => element.category == Category.books)
     ]; //returns a copy of the list, so as to not edit it anywhere else in the app
   }
 
   List<Item> get cycleitems {
+    _items.sort((a, b) => a.price.compareTo(b.price));
     return [
       ..._items.where((element) => element.category == Category.cycles)
     ]; //returns a copy of the list, so as to not edit it anywhere else in the app
   }
 
   List<Item> get electronicsitems {
+    _items.sort((a, b) => a.price.compareTo(b.price));
     return [
       ..._items.where((element) => element.category == Category.electronics)
     ]; //returns a copy of the list, so as to not edit it anywhere else in the app
   }
 
   List<Item> get othersitems {
+    _items.sort((a, b) => a.price.compareTo(b.price));
     return [
       ..._items.where((element) => element.category == Category.others)
     ]; //returns a copy of the list, so as to not edit it anywhere else in the app
@@ -100,6 +105,7 @@ class Items with ChangeNotifier {
     for (String id in ids) {
       temp.add(_items.firstWhere((element) => element.id == id));
     }
+    temp.sort((a, b) => a.price.compareTo(b.price));
     return temp;
   }
 
