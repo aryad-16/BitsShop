@@ -446,9 +446,10 @@ class _NewAdScreenState extends State<NewAdScreen>
                               padding: const EdgeInsets.only(
                                   top: 10, left: 40, right: 40),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   const Text(
-                                    'Expected Price',
+                                    'Price',
                                     style: TextStyle(
                                       fontFamily: 'ManRope Regular',
                                       color: Colors.black,
@@ -457,8 +458,8 @@ class _NewAdScreenState extends State<NewAdScreen>
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
-                                  const Expanded(
-                                    child: SizedBox(),
+                                  const SizedBox(
+                                    width: 20,
                                   ),
                                   Container(
                                     height: 35,
@@ -522,13 +523,13 @@ class _NewAdScreenState extends State<NewAdScreen>
                                     ),
                                     width: 78,
                                   ),
-                                  const Text(
-                                    '/per day',
-                                    style: TextStyle(
-                                      fontFamily: 'ManRope Regular',
-                                      fontSize: 19,
-                                    ),
-                                  )
+                                  // const Text(
+                                  //   '/per day',
+                                  //   style: TextStyle(
+                                  //     fontFamily: 'ManRope Regular',
+                                  //     fontSize: 19,
+                                  //   ),
+                                  // )
                                 ],
                               ),
                             ),

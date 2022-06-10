@@ -427,9 +427,10 @@ class EditScreenState extends State<EditScreen>
                             padding: const EdgeInsets.only(
                                 top: 10, left: 40, right: 40),
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 const Text(
-                                  'Expected Price',
+                                  'Price',
                                   style: TextStyle(
                                     fontFamily: 'ManRope Regular',
                                     color: Colors.black,
@@ -438,8 +439,8 @@ class EditScreenState extends State<EditScreen>
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
-                                const Expanded(
-                                  child: SizedBox(),
+                                const SizedBox(
+                                  width: 20,
                                 ),
                                 Container(
                                   height: 35,
@@ -502,13 +503,6 @@ class EditScreenState extends State<EditScreen>
                                   ),
                                   width: 78,
                                 ),
-                                const Text(
-                                  '/per day',
-                                  style: TextStyle(
-                                    fontFamily: 'ManRope Regular',
-                                    fontSize: 19,
-                                  ),
-                                )
                               ],
                             ),
                           ),
