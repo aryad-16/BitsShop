@@ -43,7 +43,7 @@ class _NewAdScreenState extends State<NewAdScreen>
   @override
   void initState() {
     _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 800));
+        vsync: this, duration: const Duration(milliseconds: 400));
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
     super.initState();
   }
