@@ -2,13 +2,44 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart ';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
 import 'package:login_singup_screen_ui/screens/bottom_nav_bar_screen.dart';
 import 'package:login_singup_screen_ui/screens/signup%20and%20login/register_screen.dart';
 import 'package:login_singup_screen_ui/widgets/signUp_login_top_text.dart';
 
-class LoginScreen extends StatelessWidget {
+import '../main screens/home screen/home_screen.dart';
+
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+ final FirebaseAuth auth = FirebaseAuth.instance;
+
+  Future<void> signUp() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+      final AuthCredential authCredential = GoogleAuthProvider.credential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken);
+      UserCredential result = await auth.signInWithCredential(authCredential);
+      User? user = result.user;
+
+      // Navigator.of(context).pushReplacementNamed(MainScreen.routeName);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -180,12 +211,19 @@ class LoginScreen extends StatelessWidget {
                     SvgPicture.asset(
                       'assets/icons/google.svg',
                     ),
-                    Transform.scale(
-                      scale: 0.37,
-                      child: SvgPicture.asset(
-                        'assets/icons/google_icon.svg',
-                        height: 50,
-                        width: 50,
+                    GestureDetector(
+                      onTap: () async {
+                        await signUp();
+                        await Navigator.of(context)
+                    .pushReplacementNamed(HomeScreen.routename);
+                      },
+                      child: Transform.scale(
+                        scale: 0.37,
+                        child: SvgPicture.asset(
+                          'assets/icons/google_icon.svg',
+                          height: 50,
+                          width: 50,
+                        ),
                       ),
                     ),
                   ],
