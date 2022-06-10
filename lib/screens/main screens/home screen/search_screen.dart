@@ -29,14 +29,17 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final items = widget.category == 'Books'
-        ? Provider.of<Items>(context, listen: false).bookitems
+        ? Provider.of<Items>(context, listen: false).searchBookItems(query)
         : widget.category == 'Cycles'
-            ? Provider.of<Items>(context, listen: false).cycleitems
+            ? Provider.of<Items>(context, listen: false).searchCycleItems(query)
             : widget.category == 'Electronics'
-                ? Provider.of<Items>(context, listen: false).electronicsitems
+                ? Provider.of<Items>(context, listen: false)
+                    .searchElectronicItems(query)
                 : widget.category == 'All'
-                    ? Provider.of<Items>(context, listen: false).allitems
-                    : Provider.of<Items>(context, listen: false).othersitems;
+                    ? Provider.of<Items>(context, listen: false)
+                        .searchAllItems(query)
+                    : Provider.of<Items>(context, listen: false)
+                        .searchOtherItems(query);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark
           .copyWith(statusBarColor: const Color.fromARGB(255, 245, 245, 245)),
@@ -459,9 +462,8 @@ class _SearchScreenState extends State<SearchScreen> {
 //           authorLower.contains(searchLower);
 //     }).toList();
 
-//     setState(() {
-//       this.query = query;
-//       this.books = books;
-//     });
+    setState(() {
+      this.query = query;
+    });
   }
 }

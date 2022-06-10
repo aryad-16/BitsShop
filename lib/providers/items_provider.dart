@@ -73,25 +73,25 @@ class Items with ChangeNotifier {
 
   List<Item> get bookitems {
     return [
-      ..._items
+      ..._items.where((element) => element.category == Category.books)
     ]; //returns a copy of the list, so as to not edit it anywhere else in the app
   }
 
   List<Item> get cycleitems {
     return [
-      ..._items
+      ..._items.where((element) => element.category == Category.cycles)
     ]; //returns a copy of the list, so as to not edit it anywhere else in the app
   }
 
   List<Item> get electronicsitems {
     return [
-      ..._items
+      ..._items.where((element) => element.category == Category.electronics)
     ]; //returns a copy of the list, so as to not edit it anywhere else in the app
   }
 
   List<Item> get othersitems {
     return [
-      ..._items
+      ..._items.where((element) => element.category == Category.others)
     ]; //returns a copy of the list, so as to not edit it anywhere else in the app
   }
 
@@ -130,5 +130,62 @@ class Items with ChangeNotifier {
     notifyListeners();
   }
 
-  void searchItems(String query) {}
+  List<Item> searchBookItems(String query) {
+    return _items.where((item) {
+      final titleLower = item.title.toLowerCase();
+      final descriptionLower = item.description.toLowerCase();
+      final searchLower = query.toLowerCase();
+
+      return (titleLower.contains(searchLower) ||
+              descriptionLower.contains(searchLower)) &&
+          item.category == Category.books;
+    }).toList();
+  }
+
+  List<Item> searchAllItems(String query) {
+    return _items.where((item) {
+      final titleLower = item.title.toLowerCase();
+      final descriptionLower = item.description.toLowerCase();
+      final searchLower = query.toLowerCase();
+
+      return titleLower.contains(searchLower) ||
+          descriptionLower.contains(searchLower);
+    }).toList();
+  }
+
+  List<Item> searchCycleItems(String query) {
+    return _items.where((item) {
+      final titleLower = item.title.toLowerCase();
+      final descriptionLower = item.description.toLowerCase();
+      final searchLower = query.toLowerCase();
+
+      return (titleLower.contains(searchLower) ||
+              descriptionLower.contains(searchLower)) &&
+          item.category == Category.cycles;
+    }).toList();
+  }
+
+  List<Item> searchElectronicItems(String query) {
+    return _items.where((item) {
+      final titleLower = item.title.toLowerCase();
+      final descriptionLower = item.description.toLowerCase();
+      final searchLower = query.toLowerCase();
+
+      return (titleLower.contains(searchLower) ||
+              descriptionLower.contains(searchLower)) &&
+          item.category == Category.electronics;
+    }).toList();
+  }
+
+  List<Item> searchOtherItems(String query) {
+    return _items.where((item) {
+      final titleLower = item.title.toLowerCase();
+      final descriptionLower = item.description.toLowerCase();
+      final searchLower = query.toLowerCase();
+
+      return (titleLower.contains(searchLower) ||
+              descriptionLower.contains(searchLower)) &&
+          item.category == Category.others;
+    }).toList();
+  }
 }

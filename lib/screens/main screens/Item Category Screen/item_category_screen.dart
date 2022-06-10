@@ -406,10 +406,11 @@ class _ItemCategoryScreenState extends State<ItemCategoryScreen> {
         ],
       ),
       body: ItemsGridView(
-          category: widget.category,
-          items: items,
-          isEdit: false,
-          searchInclude: true),
+        category: widget.category,
+        items: items,
+        isEdit: false,
+        searchInclude: true,
+      ),
     );
   }
 }
