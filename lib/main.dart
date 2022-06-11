@@ -9,7 +9,7 @@ import 'providers/items_provider.dart';
 import 'screens/signup and login/register_screen.dart';
 
 void main() async {
-    WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         routes: {
           EditScreen.routeName: (ctx) => const EditScreen(),
           SignUpScreen.routename: (context) => const SignUpScreen(),
-          HomeScreen.routename:(context) => HomeScreen()
+          HomeScreen.routename: (context) => const HomeScreen()
         },
       ),
     );
