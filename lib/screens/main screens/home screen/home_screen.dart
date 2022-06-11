@@ -7,6 +7,7 @@ import 'package:login_singup_screen_ui/screens/main%20screens/home%20screen/sear
 import 'horizontal_list_view.dart';
 
 class HomeScreen extends StatelessWidget {
+  static const routename = 'homescreen';
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
