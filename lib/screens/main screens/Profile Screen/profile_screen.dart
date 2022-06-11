@@ -14,18 +14,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
     FocusNode nameFocusNode = FocusNode();
     FocusNode emailFocusNode = FocusNode();
     FocusNode phoneNumberFocusNode = FocusNode();
-    FocusNode bhawanFocusNode = FocusNode();
     FocusNode roomNoFocusNode = FocusNode();
-    String _bhawanName = 'Shankar bhawan';
     TextEditingController bhawanNameController =
-        TextEditingController(text: _bhawanName);
+        TextEditingController(text: 'Shankar Bhawan');
     final List<String> _bhawanNames = [
-      'Shankar',
-      'vyas',
-      'Ram',
-      'Budh',
-      'Krishna',
-      'Ghandhi'
+      'Shankar Bhawan',
+      'vyas Bhawan',
+      'Ram Bhawan',
+      'Budh Bhawan',
+      'Krishna Bhawan',
+      'Ghandhi Bhawan',
+      'Meera Bhawan'
     ];
     _fieldFocusChange(
         BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
@@ -41,9 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           itemBuilder: (_, index) {
             return GestureDetector(
               onTap: () {
-                setState(() {
-                  _bhawanName = _bhawanNames[index];
-                });
+                bhawanNameController.text = _bhawanNames[index];
                 Navigator.of(context).pop();
               },
               child: Container(
@@ -53,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontFamily: 'ManRope Regular',
-                    fontSize: 14,
+                    fontSize: 16,
                   ),
                 ),
               ),
@@ -198,39 +195,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     controller: TextEditingController()..text = '8220585181',
                     keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.next,
-                    // onSubmitted: (_) {
-                    //   _fieldFocusChange(
-                    //       context, phoneNumberFocusNode, roomNoFocusNode);
-                    // },
+                    onSubmitted: (_) {
+                      _fieldFocusChange(
+                          context, phoneNumberFocusNode, roomNoFocusNode);
+                    },
                   ),
                 ),
-                GestureDetector(
-                  onTap: () => _showModalSheet(),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: TextField(
-                      focusNode: bhawanFocusNode,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        enabledBorder: OutlineInputBorder(),
-                        disabledBorder: OutlineInputBorder(),
-                        labelText: 'Bhawan',
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-                        isDense: true,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: InkWell(
+                    onTap: () => _showModalSheet(),
+                    child: IgnorePointer(
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          enabledBorder: OutlineInputBorder(),
+                          disabledBorder: OutlineInputBorder(),
+                          labelText: 'Bhawan',
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 18, horizontal: 12),
+                          isDense: true,
+                        ),
+                        style: const TextStyle(
+                          fontFamily: 'ManRope Regular',
+                          fontSize: 18,
+                        ),
+                        controller: bhawanNameController,
                       ),
-                      enabled: false,
-                      style: const TextStyle(
-                        fontFamily: 'ManRope Regular',
-                        fontSize: 18,
-                      ),
-                      controller: bhawanNameController,
-                      keyboardType: TextInputType.name,
-                      textInputAction: TextInputAction.next,
-                      onSubmitted: (_) {
-                        _fieldFocusChange(
-                            context, bhawanFocusNode, roomNoFocusNode);
-                      },
                     ),
                   ),
                 ),

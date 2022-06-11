@@ -5,8 +5,8 @@ import 'package:login_singup_screen_ui/screens/main%20screens/home%20screen/sear
 import 'package:login_singup_screen_ui/widgets/animated_indexed_stack.dart';
 
 import 'main screens/New Ad Screen/new_ad_screen.dart';
+import 'main screens/Profile Screen/profile_screen.dart';
 import 'main screens/home screen/home_screen.dart';
-import 'main screens/profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
