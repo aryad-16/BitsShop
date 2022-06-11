@@ -13,7 +13,7 @@ class ManageAds extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ids = Provider.of<Profiles>(context).getProfile(profileID).theirAdIds;
-    final items = Provider.of<Items>(context).getItems(ids);
+    final items = Provider.of<Items>(context).searchYourItems(ids, '');
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 245, 245, 245),
       appBar: AppBar(

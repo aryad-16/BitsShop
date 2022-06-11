@@ -67,13 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 245, 245, 245),
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Navigator.of(context).pop(),
-          icon: const Icon(
-            Icons.arrow_back_ios_new_rounded,
-            color: Color.fromRGBO(14, 20, 70, 1),
-          ),
-        ),
+        leading: const SizedBox(),
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarIconBrightness: Brightness.dark,
           statusBarBrightness: Brightness.dark,
@@ -104,8 +98,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         color: Colors.transparent,
                         child: Image.network(
                           'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-                          width: 135,
-                          height: 135,
+                          width: 150,
+                          height: 150,
                           fit: BoxFit.cover,
                         ),
                       ),

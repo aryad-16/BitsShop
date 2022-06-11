@@ -3,8 +3,8 @@ import 'package:login_singup_screen_ui/providers/items_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Constants/constants.dart';
-import '../Item Category Screen/item_category_screen.dart';
 import 'grid_item.dart';
+import 'search_screen.dart';
 
 class HorizontalListView extends StatelessWidget {
   final String title;
@@ -16,12 +16,12 @@ class HorizontalListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final items = title == 'Books'
-        ? Provider.of<Items>(context).bookitems
+        ? Provider.of<Items>(context).searchBookItems('')
         : title == 'Cycles'
-            ? Provider.of<Items>(context).cycleitems
+            ? Provider.of<Items>(context).searchCycleItems('')
             : title == 'Electronics'
-                ? Provider.of<Items>(context).electronicsitems
-                : Provider.of<Items>(context).othersitems;
+                ? Provider.of<Items>(context).searchElectronicItems('')
+                : Provider.of<Items>(context).searchOtherItems('');
     return Container(
       margin: const EdgeInsets.only(top: 15),
       child: Column(
@@ -45,7 +45,8 @@ class HorizontalListView extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (ctx) => ItemCategoryScreen(category: title),
+                        builder: (ctx) =>
+                            SearchScreen(category: title, isEdit: false),
                       ),
                     );
                   },

@@ -63,51 +63,22 @@ class Items with ChangeNotifier {
       id: '4',
       profileId: 'abcd',
     ),
+    Item(
+      imageList: [
+        'https://m.media-amazon.com/images/I/51fLFFu9leL._SX522_.jpg',
+        'https://m.media-amazon.com/images/I/51fLFFu9leL._SX522_.jpg',
+        'https://m.media-amazon.com/images/I/51l7P1miDoL._SX522_.jpg',
+        'https://m.media-amazon.com/images/I/511iK3XF0oL._SX522_.jpg',
+      ],
+      title: 'Hi bro',
+      description:
+          'Sometimes the scent of seasonal hand wash is all we need to rouse our holiday spirits. Available in an array of festive fragrances, our naturally derived gel hand wash will leave your hands soft, clean and ready to be tucked into a pair of fair isle mittens. It really is the most wonderful time of the year.',
+      price: 249,
+      category: Category.others,
+      id: '5',
+      profileId: 'abcd',
+    ),
   ];
-
-  List<Item> get allitems {
-    _items.sort((a, b) => a.price.compareTo(b.price));
-    return [
-      ..._items
-    ]; //returns a copy of the list, so as to not edit it anywhere else in the app
-  }
-
-  List<Item> get bookitems {
-    _items.sort((a, b) => a.price.compareTo(b.price));
-    return [
-      ..._items.where((element) => element.category == Category.books)
-    ]; //returns a copy of the list, so as to not edit it anywhere else in the app
-  }
-
-  List<Item> get cycleitems {
-    _items.sort((a, b) => a.price.compareTo(b.price));
-    return [
-      ..._items.where((element) => element.category == Category.cycles)
-    ]; //returns a copy of the list, so as to not edit it anywhere else in the app
-  }
-
-  List<Item> get electronicsitems {
-    _items.sort((a, b) => a.price.compareTo(b.price));
-    return [
-      ..._items.where((element) => element.category == Category.electronics)
-    ]; //returns a copy of the list, so as to not edit it anywhere else in the app
-  }
-
-  List<Item> get othersitems {
-    _items.sort((a, b) => a.price.compareTo(b.price));
-    return [
-      ..._items.where((element) => element.category == Category.others)
-    ]; //returns a copy of the list, so as to not edit it anywhere else in the app
-  }
-
-  List<Item> getItems(List<String> ids) {
-    List<Item> temp = [];
-    for (String id in ids) {
-      temp.add(_items.firstWhere((element) => element.id == id));
-    }
-    temp.sort((a, b) => a.price.compareTo(b.price));
-    return temp;
-  }
 
   void addItem(Item item) {
     item.imageList.removeWhere((element) => element == 'a');
@@ -192,6 +163,22 @@ class Items with ChangeNotifier {
       return (titleLower.contains(searchLower) ||
               descriptionLower.contains(searchLower)) &&
           item.category == Category.others;
+    }).toList();
+  }
+
+  List<Item> searchYourItems(List<String> ids, String query) {
+    List<Item> temp = [];
+    for (String id in ids) {
+      temp.add(_items.firstWhere((element) => element.id == id));
+    }
+    temp.sort((a, b) => a.price.compareTo(b.price));
+    return temp.where((item) {
+      final titleLower = item.title.toLowerCase();
+      final descriptionLower = item.description.toLowerCase();
+      final searchLower = query.toLowerCase();
+
+      return titleLower.contains(searchLower) ||
+          descriptionLower.contains(searchLower);
     }).toList();
   }
 }
