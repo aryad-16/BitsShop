@@ -45,6 +45,7 @@ dependencies:
   google_sign_in: ^5.3.3
   firebase_auth: ^3.3.19
   firebase_phone_auth_handler: ^1.0.4
+  pinput: ^2.2.10
 
 dev_dependencies:
   flutter_test:

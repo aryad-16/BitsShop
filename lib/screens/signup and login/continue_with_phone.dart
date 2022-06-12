@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
+import 'package:login_singup_screen_ui/screens/signup%20and%20login/verifyOTP.dart';
 import '../main screens/home screen/home_screen.dart';
 import '/widgets/numeric_pad.dart';
 import 'verifty_phone.dart';
@@ -175,7 +176,7 @@ class _ContinueWithPhoneState extends State<ContinueWithPhone> {
                             if (phoneNumber.length == 10) {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (ctx) => VerifyPhone(
+                                  builder: (ctx) => VerifyOTP(
                                     phoneNumber: phoneNumber,
                                   ),
                                 ),

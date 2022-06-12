@@ -23,54 +23,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
   late String _verificationCode;
   final idToken = FirebaseAuth.instance.currentUser!.getIdToken();
 
-  _verifyPhone() async {
-    final auth = await FirebaseAuth.instance;
-    auth.verifyPhoneNumber(
-      phoneNumber: '+91' + widget.phoneNumber,
-      verificationCompleted: (PhoneAuthCredential phonecredential) async {
-        final googleUser = await GoogleSignIn().signIn();
-        final googleAuth = await googleUser?.authentication;
-
-        final credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth?.accessToken,
-          idToken: googleAuth?.idToken,
-        );
-        try {
-          final userCredential = await FirebaseAuth.instance.currentUser
-              ?.linkWithCredential(credential);
-        } on FirebaseAuthException catch (e) {
-          switch (e.code) {
-            case "provider-already-linked":
-              print("The provider has already been linked to the user.");
-              break;
-            case "invalid-credential":
-              print("The provider's credential is not valid.");
-              break;
-            case "credential-already-in-use":
-              print(
-                  "The account corresponding to the credential already exists, "
-                  "or is already linked to a Firebase User.");
-              break;
-            // See the API reference for the full list of error codes.
-            default:
-              print("Unknown error.");
-          }
-        }
-        await auth.signInWithCredential(credential);
-      },
-      verificationFailed: (FirebaseAuthException e) {},
-      codeSent: (String verificationId, int? resendToken) {},
-      codeAutoRetrievalTimeout: (String verificationId) {},
-    );
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    _verifyPhone();
-    super.initState();
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     final padding = MediaQuery.of(context).padding;
@@ -266,7 +219,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               print(value);
               setState(() {
                 if (value != -1) {
-                  if (code.length < 4) {
+                  if (code.length < 6) {
                     code = code + value.toString();
                   }
                 } else {
