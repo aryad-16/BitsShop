@@ -31,7 +31,6 @@ class SingleItemWidget extends StatelessWidget {
         ),
       ),
       child: Container(
-        // padding: EdgeInsets.only(bottom: isEdit ? 0 : 10, top: isEdit ? 0 : 10),
         margin: const EdgeInsets.symmetric(horizontal: 8),
         width: 200,
         child: Card(

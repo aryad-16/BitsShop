@@ -4,6 +4,7 @@ import 'package:awesome_dropdown/awesome_dropdown.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:login_singup_screen_ui/Constants/tags_dialog.dart';
 import 'package:login_singup_screen_ui/data/data.dart';
 import 'package:login_singup_screen_ui/providers/profiles_provider.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../Constants/constants.dart';
 import '../../../providers/item_model.dart';
 import '../../../providers/items_provider.dart';
-import '../../../widgets/rounded_containers.dart';
 import 'add_photo.dart';
 
 class NewAdScreen extends StatefulWidget {
@@ -54,7 +54,7 @@ class _NewAdScreenState extends State<NewAdScreen>
     super.dispose();
   }
 
-  late StateSetter _setState;
+  StateSetter? _setState;
   String? _selectedYear;
   String? _selectedSem;
   String? _selectedBranch;
@@ -272,7 +272,16 @@ class _NewAdScreenState extends State<NewAdScreen>
                                 numOfListItemToShow: 4,
                                 onDropDownItemClick: (selectedItem) {
                                   selectedItem == 'Books'
-                                      ? _showDialog()
+                                      ? showNewDialog(
+                                          context,
+                                          'Tags',
+                                          'Add Tags',
+                                          _controller,
+                                          _animation,
+                                          _setState,
+                                          _selectedYear,
+                                          _selectedSem,
+                                          _selectedBranch)
                                       : null;
                                   _selectedCategory = selectedItem;
                                   _editeditem = Item(
@@ -295,15 +304,23 @@ class _NewAdScreenState extends State<NewAdScreen>
                             ),
                             _selectedCategory == 'Books'
                                 ? GestureDetector(
-                                    onTap: () => _showDialog(),
+                                    onTap: () => showNewDialog(
+                                      context,
+                                      'Tags',
+                                      'Add Tags',
+                                      _controller,
+                                      _animation,
+                                      _setState,
+                                      _selectedYear,
+                                      _selectedSem,
+                                      _selectedBranch,
+                                    ),
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 3, horizontal: 5),
                                       margin: const EdgeInsets.only(top: 15),
                                       decoration: BoxDecoration(
                                         border: Border.all(
-                                          // color: const Color.fromRGBO(
-                                          //     14, 20, 70, 1),
                                           color: Constant.yellowColor,
                                         ),
                                         borderRadius: BorderRadius.circular(15),
@@ -321,8 +338,10 @@ class _NewAdScreenState extends State<NewAdScreen>
                                   )
                                 : const SizedBox(),
                             Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 40, right: 40),
+                              padding: EdgeInsets.only(
+                                  top: _selectedCategory == 'Books' ? 0 : 12,
+                                  left: 40,
+                                  right: 40),
                               child: TextFormField(
                                 focusNode: _titleFocus,
                                 // controller: titlecontroller,
@@ -625,334 +644,6 @@ class _NewAdScreenState extends State<NewAdScreen>
           ),
         ),
       ),
-    );
-  }
-
-  void _showDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        _controller.forward();
-        return FadeTransition(
-          opacity: _animation,
-          child: AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            content: StatefulBuilder(
-                builder: (BuildContext context, StateSetter setState) {
-              _setState = setState;
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      const Text(
-                        'Add Tags',
-                        style: TextStyle(
-                          fontFamily: 'manRope Regular',
-                          fontSize: 18,
-                          color: Colors.black,
-                        ),
-                      ),
-                      GestureDetector(
-                          onTap: () {
-                            _setState(() {
-                              _selectedBranch = null;
-                              _selectedSem = null;
-                              _selectedYear = null;
-                            });
-                          },
-                          child: const RoundedContainer(
-                            title: 'Reset',
-                            yellowBg: false,
-                          )),
-                    ],
-                  ),
-                  const Divider(
-                    color: Colors.black87,
-                    height: 20,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 5),
-                    child: Text(
-                      'YEAR',
-                      style: TextStyle(
-                        fontFamily: 'manRope Regular',
-                        fontSize: 16,
-                        letterSpacing: 1,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 7),
-                  Wrap(
-                    alignment: WrapAlignment.start,
-                    direction: Axis.horizontal,
-                    runSpacing: 6,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          _setState(() {
-                            _selectedYear = '1st Year';
-                          });
-                        },
-                        child: RoundedContainer(
-                            title: '1st Year',
-                            yellowBg: _selectedYear == '1st Year'),
-                      ),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                        onTap: () {
-                          _setState(() {
-                            _selectedYear = '2nd Year';
-                          });
-                        },
-                        child: RoundedContainer(
-                            title: '2nd Year',
-                            yellowBg: _selectedYear == '2nd Year'),
-                      ),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                        onTap: () {
-                          _setState(() {
-                            _selectedYear = '3rd Year';
-                          });
-                        },
-                        child: RoundedContainer(
-                            title: '3rd Year',
-                            yellowBg: _selectedYear == '3rd Year'),
-                      ),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                        onTap: () {
-                          _setState(() {
-                            _selectedYear = '4th Year';
-                          });
-                        },
-                        child: RoundedContainer(
-                            title: '4th Year',
-                            yellowBg: _selectedYear == '4th Year'),
-                      ),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                        onTap: () {
-                          _setState(() {
-                            _selectedYear = '5th Year';
-                          });
-                        },
-                        child: RoundedContainer(
-                            title: '5th Year',
-                            yellowBg: _selectedYear == '5th Year'),
-                      ),
-                    ],
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 20),
-                    child: Text(
-                      'SEMESTER',
-                      style: TextStyle(
-                        fontFamily: 'manRope Regular',
-                        fontSize: 16,
-                        letterSpacing: 1,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 7),
-                  Wrap(
-                    alignment: WrapAlignment.start,
-                    direction: Axis.horizontal,
-                    runSpacing: 6,
-                    children: [
-                      GestureDetector(
-                          onTap: () {
-                            _setState(() {
-                              _selectedSem = '1st Semester';
-                            });
-                          },
-                          child: RoundedContainer(
-                              title: '1st Semester',
-                              yellowBg: _selectedSem == '1st Semester')),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                          onTap: () {
-                            _setState(() {
-                              _selectedSem = '2nd Semester';
-                            });
-                          },
-                          child: RoundedContainer(
-                              title: '2nd Semester',
-                              yellowBg: _selectedSem == '2nd Semester')),
-                      const SizedBox(width: 10),
-                    ],
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 20),
-                    child: Text(
-                      'BRANCH',
-                      style: TextStyle(
-                        fontFamily: 'manRope Regular',
-                        fontSize: 16,
-                        letterSpacing: 1,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 7),
-                  Wrap(
-                    alignment: WrapAlignment.start,
-                    direction: Axis.horizontal,
-                    runSpacing: 6,
-                    children: [
-                      GestureDetector(
-                          onTap: () {
-                            _setState(() {
-                              _selectedBranch = 'ENI';
-                            });
-                          },
-                          child: RoundedContainer(
-                              title: 'ENI',
-                              yellowBg: _selectedBranch == 'ENI')),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                          onTap: () {
-                            _setState(() {
-                              _selectedBranch = 'ECE';
-                            });
-                          },
-                          child: RoundedContainer(
-                              title: 'ECE',
-                              yellowBg: _selectedBranch == 'ECE')),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                          onTap: () {
-                            _setState(() {
-                              _selectedBranch = 'EEE';
-                            });
-                          },
-                          child: RoundedContainer(
-                              title: 'EEE',
-                              yellowBg: _selectedBranch == 'EEE')),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                          onTap: () {
-                            _setState(() {
-                              _selectedBranch = 'CS';
-                            });
-                          },
-                          child: RoundedContainer(
-                              title: 'CS', yellowBg: _selectedBranch == 'CS')),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                          onTap: () {
-                            _setState(() {
-                              _selectedBranch = 'Chemical';
-                            });
-                          },
-                          child: RoundedContainer(
-                              title: 'Chemical',
-                              yellowBg: _selectedBranch == 'Chemical')),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                          onTap: () {
-                            _setState(() {
-                              _selectedBranch = 'Manufacturing';
-                            });
-                          },
-                          child: RoundedContainer(
-                              title: 'Manufacturing',
-                              yellowBg: _selectedBranch == 'Manufacturing')),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                          onTap: () {
-                            _setState(() {
-                              _selectedBranch = 'Civil';
-                            });
-                          },
-                          child: RoundedContainer(
-                              title: 'Civil',
-                              yellowBg: _selectedBranch == 'Civil')),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                          onTap: () {
-                            _setState(() {
-                              _selectedBranch = 'Bio Dual';
-                            });
-                          },
-                          child: RoundedContainer(
-                              title: 'Bio Dual',
-                              yellowBg: _selectedBranch == 'Bio Dual')),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                          onTap: () {
-                            _setState(() {
-                              _selectedBranch = 'Phy Dual';
-                            });
-                          },
-                          child: RoundedContainer(
-                              title: 'Phy Dual',
-                              yellowBg: _selectedBranch == 'Phy Dual')),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                          onTap: () {
-                            _setState(() {
-                              _selectedBranch = 'Chem Dual';
-                            });
-                          },
-                          child: RoundedContainer(
-                              title: 'Chem Dual',
-                              yellowBg: _selectedBranch == 'Chem Dual')),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                          onTap: () {
-                            _setState(() {
-                              _selectedBranch = 'Eco Dual';
-                            });
-                          },
-                          child: RoundedContainer(
-                              title: 'Eco Dual',
-                              yellowBg: _selectedBranch == 'Eco Dual')),
-                    ],
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [Constant.boxShadow],
-                          gradient: Constant.yellowlinear,
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 18, vertical: 14),
-                        margin: const EdgeInsets.only(top: 28),
-                        child: const Text(
-                          'Add Tags',
-                          style: TextStyle(
-                            fontFamily: 'ManRope Regular',
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 0.9,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              );
-            }),
-          ),
-        );
-      },
     );
   }
 

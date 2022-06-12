@@ -27,33 +27,6 @@ openWhatsapp(String phoneNumber) async {
   } catch (e) {
     print(e);
   }
-  // var whatsappURLIos = "https://wa.me/$phoneNumber?";
-  // if (Platform.isIOS) {
-  //   if (await canLaunchUrlString(_url + phoneNumber)) {
-  //     await launch(_url + phoneNumber, forceSafariVC: false);
-  //   } else {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text("Whatsapp is not installed"),
-  //         backgroundColor: Color.fromRGBO(237, 92, 90, 1),
-  //       ),
-  //     );
-  //   }
-  // } else {
-  //   try {
-  //     await launch(_url + phoneNumber);
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  //   // else {
-  //   //   ScaffoldMessenger.of(context).showSnackBar(
-  //   //     const SnackBar(
-  //   //       content: Text("Whatsapp is not installed"),
-  //   //       backgroundColor: Color.fromRGBO(237, 92, 90, 1),
-  //   //     ),
-  //   //   );
-  //   // }
-  // // }
 }
 
 class _ItemDetailScreenState extends State<ItemDetailScreen> {

@@ -37,9 +37,8 @@ class ItemsGridView extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (ctx) => SearchScreen(
-                              category: category,
-                            ),
+                            builder: (ctx) =>
+                                SearchScreen(category: category, isEdit: false),
                           ),
                         );
                       },
@@ -49,7 +48,7 @@ class ItemsGridView extends StatelessWidget {
                         width: double.infinity,
                         height: 50,
                         padding: const EdgeInsets.only(
-                            top: 3.0, left: 10.0, bottom: 3.0, right: 10.0),
+                            left: 10.0, bottom: 3.0, right: 10.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
@@ -94,6 +93,7 @@ class ItemsGridView extends StatelessWidget {
                 ),
                 itemCount: items.length,
               ),
+              const SizedBox(height: 10),
             ],
           ),
         ),

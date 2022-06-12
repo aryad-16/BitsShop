@@ -83,6 +83,7 @@ flutter:
     - assets/icons/google_icon.svg
     - assets/icons/facebook.svg
     - assets/icons/login.svg
+    - assets/icons/logout.svg
     - assets/icons/location.svg
     - assets/icons/search.svg
     - assets/icons/filter.svg

@@ -43,8 +43,7 @@ class _SearchWidgetState extends State<SearchWidget> {
 
     return Container(
       height: 50,
-      margin: EdgeInsets.fromLTRB(
-          5, 16, widget.hintText.contains('Books') ? 0 : 16, 16),
+      margin: const EdgeInsets.symmetric(horizontal: 32),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -57,7 +56,6 @@ class _SearchWidgetState extends State<SearchWidget> {
       child: TextField(
         cursorColor: Constant.yellowColor,
         textCapitalization: TextCapitalization.words,
-        autofocus: true,
         controller: controller,
         decoration: InputDecoration(
           icon: SvgPicture.asset(

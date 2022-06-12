@@ -12,7 +12,7 @@ import 'providers/items_provider.dart';
 import 'screens/signup and login/register_screen.dart';
 
 void main() async {
-    WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
 }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:login_singup_screen_ui/screens/main%20screens/home%20screen/search_screen.dart';
 import 'package:login_singup_screen_ui/widgets/animated_indexed_stack.dart';
 
-import 'main screens/Manage Ads/manage_ads.dart';
 import 'main screens/New Ad Screen/new_ad_screen.dart';
+import 'main screens/Profile Screen/profile_screen.dart';
 import 'main screens/home screen/home_screen.dart';
-import 'main screens/profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> pagelist = <Widget>[
     const HomeScreen(),
     const NewAdScreen(),
-    const ManageAds(),
+    const SearchScreen(category: 'Manage Ads', isEdit: true),
     const ProfileScreen(),
   ];
   @override
