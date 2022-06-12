@@ -250,7 +250,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         await signUp();
                         print('here2');
                         await Navigator.of(context)
-                            .pushReplacementNamed(HomeScreen.routename);
+                            .pushReplacementNamed(ContinueWithPhone.routeName);
                       },
                       child: Transform.scale(
                         scale: 0.37,

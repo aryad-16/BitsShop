@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
 import '../main screens/home screen/home_screen.dart';
@@ -6,6 +7,8 @@ import 'verifty_phone.dart';
 
 class ContinueWithPhone extends StatefulWidget {
   const ContinueWithPhone({Key? key}) : super(key: key);
+
+  static const routeName = 'continuewithphone';
 
   @override
   _ContinueWithPhoneState createState() => _ContinueWithPhoneState();

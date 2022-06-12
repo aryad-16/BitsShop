@@ -1,8 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:login_singup_screen_ui/providers/profiles_provider.dart';
 import 'package:login_singup_screen_ui/screens/main%20screens/Edit%20Screen/edit_screen.dart';
 import 'package:login_singup_screen_ui/screens/main%20screens/home%20screen/home_screen.dart';
+import 'package:login_singup_screen_ui/screens/signup%20and%20login/continue_with_phone.dart';
+import 'package:login_singup_screen_ui/screens/signup%20and%20login/verifty_phone.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/items_provider.dart';
@@ -24,18 +27,21 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(value: Items()),
         ChangeNotifierProvider.value(value: Profiles())
       ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
+      child: FirebasePhoneAuthProvider(
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: const SignUpScreen(),
+          routes: {
+            EditScreen.routeName: (ctx) => const EditScreen(),
+            SignUpScreen.routename: (context) => const SignUpScreen(),
+            HomeScreen.routename:(context) => HomeScreen(), 
+            ContinueWithPhone.routeName :(context) => ContinueWithPhone()
+          },
         ),
-        home: const SignUpScreen(),
-        routes: {
-          EditScreen.routeName: (ctx) => const EditScreen(),
-          SignUpScreen.routename: (context) => const SignUpScreen(),
-          HomeScreen.routename:(context) => HomeScreen()
-        },
       ),
     );
   }

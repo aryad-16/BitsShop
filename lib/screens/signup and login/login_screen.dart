@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
 import 'package:login_singup_screen_ui/screens/bottom_nav_bar_screen.dart';
+import 'package:login_singup_screen_ui/screens/signup%20and%20login/continue_with_phone.dart';
 import 'package:login_singup_screen_ui/screens/signup%20and%20login/register_screen.dart';
+import 'package:login_singup_screen_ui/screens/signup%20and%20login/verifty_phone.dart';
 import 'package:login_singup_screen_ui/widgets/signUp_login_top_text.dart';
 
 import '../main screens/home screen/home_screen.dart';
@@ -215,7 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onTap: () async {
                         await signUp();
                         await Navigator.of(context)
-                    .pushReplacementNamed(HomeScreen.routename);
+                    .pushReplacementNamed(ContinueWithPhone.routeName);
                       },
                       child: Transform.scale(
                         scale: 0.37,

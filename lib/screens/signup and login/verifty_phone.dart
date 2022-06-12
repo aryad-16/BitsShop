@@ -1,10 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
 import 'package:login_singup_screen_ui/screens/bottom_nav_bar_screen.dart';
+import 'package:login_singup_screen_ui/screens/main%20screens/home%20screen/home_screen.dart';
+import 'package:login_singup_screen_ui/screens/signup%20and%20login/register_screen.dart';
 import '../../widgets/numeric_pad.dart';
+import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 
 class VerifyPhone extends StatefulWidget {
   final String phoneNumber;
+  static const routeName = 'verifyPhone';
 
   const VerifyPhone({Key? key, required this.phoneNumber}) : super(key: key);
 
@@ -14,6 +20,56 @@ class VerifyPhone extends StatefulWidget {
 
 class _VerifyPhoneState extends State<VerifyPhone> {
   String code = "";
+  late String _verificationCode;
+  final idToken = FirebaseAuth.instance.currentUser!.getIdToken();
+
+  _verifyPhone() async {
+    final auth = await FirebaseAuth.instance;
+    auth.verifyPhoneNumber(
+      phoneNumber: '+91' + widget.phoneNumber,
+      verificationCompleted: (PhoneAuthCredential phonecredential) async {
+        final googleUser = await GoogleSignIn().signIn();
+        final googleAuth = await googleUser?.authentication;
+
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth?.accessToken,
+          idToken: googleAuth?.idToken,
+        );
+        try {
+          final userCredential = await FirebaseAuth.instance.currentUser
+              ?.linkWithCredential(credential);
+        } on FirebaseAuthException catch (e) {
+          switch (e.code) {
+            case "provider-already-linked":
+              print("The provider has already been linked to the user.");
+              break;
+            case "invalid-credential":
+              print("The provider's credential is not valid.");
+              break;
+            case "credential-already-in-use":
+              print(
+                  "The account corresponding to the credential already exists, "
+                  "or is already linked to a Firebase User.");
+              break;
+            // See the API reference for the full list of error codes.
+            default:
+              print("Unknown error.");
+          }
+        }
+        await auth.signInWithCredential(credential);
+      },
+      verificationFailed: (FirebaseAuthException e) {},
+      codeSent: (String verificationId, int? resendToken) {},
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _verifyPhone();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +139,10 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                             code.length > 2 ? code.substring(2, 3) : ""),
                         buildCodeNumberBox(
                             code.length > 3 ? code.substring(3, 4) : ""),
+                        buildCodeNumberBox(
+                            code.length > 4 ? code.substring(4, 5) : ""),
+                        buildCodeNumberBox(
+                            code.length > 5 ? code.substring(5, 6) : ""),
                       ],
                     ),
                   ),
@@ -143,13 +203,15 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                   ),
                 );
               },
-              child: const FittedBox(
-                child: Text(
-                  "Verify and Create Account",
-                  style: TextStyle(
-                    fontFamily: 'Poppins Bold',
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+              child: GestureDetector(
+                child: const FittedBox(
+                  child: Text(
+                    "Verify and Create Account",
+                    style: TextStyle(
+                      fontFamily: 'Poppins Bold',
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -223,8 +285,8 @@ class _VerifyPhoneState extends State<VerifyPhone> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: SizedBox(
-        width: 60,
-        height: 60,
+        width: 40,
+        height: 50,
         child: ClipPath(
           clipper: const ShapeBorderClipper(
               shape: RoundedRectangleBorder(
