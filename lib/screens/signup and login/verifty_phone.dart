@@ -5,7 +5,6 @@ import 'package:login_singup_screen_ui/Constants/constants.dart';
 import 'package:login_singup_screen_ui/screens/bottom_nav_bar_screen.dart';
 
 import '../../widgets/numeric_pad.dart';
-import '../main screens/home screen/home_screen.dart';
 
 class VerifyPhone extends StatefulWidget {
   final String phoneNumber;
@@ -52,7 +51,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               .then((value) async {
             if (value.user != null) {
               print('User is logged in.');
-              Navigator.of(context).pushReplacementNamed(HomeScreen.routename);
+              Navigator.of(context).pushReplacementNamed(MainScreen.routename);
             }
           });
         },
@@ -91,9 +90,9 @@ class _VerifyPhoneState extends State<VerifyPhone> {
             Navigator.pop(context);
           },
           icon: const Icon(
-            Icons.arrow_back,
+            Icons.arrow_back_ios_new_rounded,
             size: 30,
-            color: Colors.black,
+            color: Color.fromRGBO(34, 26, 69, 1),
           ),
         ),
         title: const Text(
@@ -101,8 +100,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
           style: TextStyle(
             fontSize: 19,
             fontFamily: 'Poppins Medium',
-            // fontWeight: FontWeight.bold,
-            color: Colors.black,
+            color: Color.fromRGBO(34, 26, 69, 1),
           ),
         ),
         backgroundColor: Colors.white,
@@ -274,13 +272,17 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                     if (value.user != null) {
                       print('correct pin, logging in.');
                       Navigator.of(context)
-                          .pushReplacementNamed(HomeScreen.routename);
+                          .pushReplacementNamed(MainScreen.routename);
                     }
                   });
                 } catch (e) {
                   FocusScope.of(context).unfocus();
                   ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Invalid OTP')));
+                    const SnackBar(
+                      content: Text('Invalid OTP'),
+                      backgroundColor: Color.fromRGBO(237, 92, 90, 1),
+                    ),
+                  );
                 }
               }
             },
@@ -324,6 +326,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                   fontSize: 24,
                   fontFamily: 'ManRope SemiBold',
                   fontWeight: FontWeight.w500,
+                  color: Color.fromRGBO(34, 26, 69, 1),
                 ),
               ),
             ),

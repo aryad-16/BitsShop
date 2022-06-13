@@ -160,7 +160,16 @@ class _ContinueWithPhoneState extends State<ContinueWithPhone> {
                                     // ),
                                     ),
                               );
-                            } else {}
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('Please enter valid phone number'),
+                                  backgroundColor:
+                                      Color.fromRGBO(237, 92, 90, 1),
+                                ),
+                              );
+                            }
                           },
                           child: const FittedBox(
                             child: Text(

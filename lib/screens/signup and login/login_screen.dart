@@ -7,7 +7,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
 import 'package:login_singup_screen_ui/screens/bottom_nav_bar_screen.dart';
-import 'package:login_singup_screen_ui/screens/signup%20and%20login/continue_with_phone.dart';
 import 'package:login_singup_screen_ui/screens/signup%20and%20login/register_screen.dart';
 import 'package:login_singup_screen_ui/widgets/signUp_login_top_text.dart';
 
@@ -120,22 +119,10 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               top_Text(height, 'Welcome Back'),
-              _textFormField('Email', 'assets/icons/email.svg', '', 0),
-              _textFormField('Password', 'assets/icons/password.svg',
-                  'assets/icons/seehidepassword.svg', 1),
-              const SizedBox(
-                height: 15,
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 120),
+                child: Image.asset('assets/images/logo.png'),
               ),
-              const Text(
-                'Forgot your password?',
-                style: TextStyle(
-                  color: Color.fromRGBO(173, 164, 165, 1),
-                  fontFamily: 'Poppins Medium',
-                  fontSize: 14,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-              SizedBox(height: height * 0.1),
               Container(
                 margin: EdgeInsets.only(top: 50, bottom: (10 / 812) * height),
                 decoration: BoxDecoration(
@@ -148,17 +135,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: ElevatedButton(
                   style: Constant.elevatedButtonStyle,
                   onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (ctx) => const MainScreen(),
-                      ),
-                    );
+                    Navigator.of(context)
+                        .pushReplacementNamed(MainScreen.routename);
                   },
                   child: Row(
                     children: <Widget>[
                       SvgPicture.asset('assets/icons/login.svg'),
                       const Text(
-                        '  Login',
+                        '  Login using Google',
                         style: TextStyle(
                           fontFamily: 'Poppins Bold',
                           fontSize: 18,
@@ -202,37 +186,37 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
-              Row(
-                children: <Widget>[
-                  Stack(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/google.svg',
-                      ),
-                      GestureDetector(
-                        onTap: () async {
-                          await signUp();
-                          await Navigator.of(context).pushReplacementNamed(
-                              ContinueWithPhone.routeName);
-                        },
-                        child: Transform.scale(
-                          scale: 0.37,
-                          child: SvgPicture.asset(
-                            'assets/icons/google_icon.svg',
-                            height: 50,
-                            width: 50,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    width: (30 / 375) * width,
-                  ),
-                  SvgPicture.asset('assets/icons/facebook.svg'),
-                ],
-                mainAxisAlignment: MainAxisAlignment.center,
-              ),
+              // Row(
+              //   children: <Widget>[
+              //     Stack(
+              //       children: [
+              //         SvgPicture.asset(
+              //           'assets/icons/google.svg',
+              //         ),
+              //         GestureDetector(
+              //           onTap: () async {
+              //             await signUp();
+              //             await Navigator.of(context).pushReplacementNamed(
+              //                 ContinueWithPhone.routeName);
+              //           },
+              //           child: Transform.scale(
+              //             scale: 0.37,
+              //             child: SvgPicture.asset(
+              //               'assets/icons/google_icon.svg',
+              //               height: 50,
+              //               width: 50,
+              //             ),
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //     SizedBox(
+              //       width: (30 / 375) * width,
+              //     ),
+              //     SvgPicture.asset('assets/icons/facebook.svg'),
+              //   ],
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              // ),
               Padding(
                 padding: EdgeInsets.only(
                     top: (20 / 812) * height, bottom: (20 / 812) * height),

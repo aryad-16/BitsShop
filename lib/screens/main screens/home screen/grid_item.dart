@@ -190,7 +190,8 @@ class SingleItemWidget extends StatelessWidget {
                                               child: Text(
                                                 'Are you sure you want to delete this item?',
                                                 style: TextStyle(
-                                                    color: Constant.greyColor1),
+                                                  color: Constant.greyColor1,
+                                                ),
                                                 overflow: TextOverflow.visible,
                                               ),
                                             ),
