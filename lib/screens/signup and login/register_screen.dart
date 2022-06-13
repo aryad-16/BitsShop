@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
-import 'package:login_singup_screen_ui/screens/main%20screens/home%20screen/home_screen.dart';
 import 'package:login_singup_screen_ui/screens/signup%20and%20login/login_screen.dart';
 import 'package:login_singup_screen_ui/widgets/signUp_login_top_text.dart';
 
@@ -127,7 +126,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             top_Text(height, 'Create an Account'),
             _textFormField('First Name', 'assets/icons/person.svg', '', 0),
@@ -189,11 +187,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: ElevatedButton(
                 style: Constant.elevatedButtonStyle,
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (ctx) => const ContinueWithPhone(),
-                    ),
-                  );
+                  Navigator.of(context)
+                      .pushReplacementNamed(ContinueWithPhone.routeName);
                 },
                 child: const Text(
                   'Register',

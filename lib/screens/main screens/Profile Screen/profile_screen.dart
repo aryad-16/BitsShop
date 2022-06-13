@@ -300,7 +300,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: ElevatedButton(
                       style: Constant.elevatedButtonStyle,
                       onPressed: () {
-                        Navigator.of(context).push(
+                        Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (ctx) => const LoginScreen(),
                           ),

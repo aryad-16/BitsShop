@@ -9,6 +9,7 @@ import 'main screens/Profile Screen/profile_screen.dart';
 import 'main screens/home screen/home_screen.dart';
 
 class MainScreen extends StatefulWidget {
+  static const routename = 'mainscreen';
   const MainScreen({Key? key}) : super(key: key);
 
   @override
