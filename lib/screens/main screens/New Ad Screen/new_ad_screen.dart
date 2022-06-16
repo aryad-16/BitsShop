@@ -61,11 +61,7 @@ class _NewAdScreenState extends State<NewAdScreen>
   String? _selectedSem;
   String? _selectedBranch;
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-  final _addpictureKey1 = GlobalKey<AddPictureState>();
-  final _addpictureKey2 = GlobalKey<AddPictureState>();
-  final _addpictureKey3 = GlobalKey<AddPictureState>();
-  final _addpictureKey4 = GlobalKey<AddPictureState>();
-  final _addpictureKey5 = GlobalKey<AddPictureState>();
+  final _addpictureKey = GlobalKey<AddPictureState>();
   Item _editeditem = Item(
     imageList: ['a', 'a', 'a', 'a', 'a'],
     title: '',
@@ -82,11 +78,7 @@ class _NewAdScreenState extends State<NewAdScreen>
     _selectedBranch = null;
     _selectedYear = null;
     _selectedSem = null;
-    _addpictureKey1.currentState!.clearImage();
-    // _addpictureKey2.currentState!.clearImage();
-    // _addpictureKey3.currentState!.clearImage();
-    // _addpictureKey4.currentState!.clearImage();
-    // _addpictureKey5.currentState!.clearImage();
+    _addpictureKey.currentState!.clearImage();
   }
 
   void _saveForm() {
@@ -111,7 +103,7 @@ class _NewAdScreenState extends State<NewAdScreen>
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
-          key: _addpictureKey1,
+          key: _addpictureKey,
           imageList: _editeditem.imageList,
           context: context,
           index: 0,
@@ -120,7 +112,6 @@ class _NewAdScreenState extends State<NewAdScreen>
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
-          key: _addpictureKey2,
           imageList: _editeditem.imageList,
           context: context,
           index: 1,
@@ -129,7 +120,6 @@ class _NewAdScreenState extends State<NewAdScreen>
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
-          key: _addpictureKey3,
           imageList: _editeditem.imageList,
           context: context,
           index: 2,
@@ -138,7 +128,6 @@ class _NewAdScreenState extends State<NewAdScreen>
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
-          key: _addpictureKey4,
           imageList: _editeditem.imageList,
           context: context,
           index: 3,
@@ -147,7 +136,6 @@ class _NewAdScreenState extends State<NewAdScreen>
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
-          key: _addpictureKey5,
           imageList: _editeditem.imageList,
           context: context,
           index: 4,
