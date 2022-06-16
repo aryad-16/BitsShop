@@ -5,12 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
-import 'package:login_singup_screen_ui/Constants/pick_image.dart';
-import 'package:login_singup_screen_ui/screens/signup%20and%20login/login_screen.dart';
+import 'package:login_singup_screen_ui/widgets/pick_image.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Data/data.dart';
 import '../../../providers/profiles_provider.dart';
+import '../../../widgets/error_snackbar.dart';
+import '../../signup and login/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -19,10 +20,10 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
+final FocusNode _phoneNumberFocusNode = FocusNode();
+final FocusNode _roomNoFocusNode = FocusNode();
+
 class _ProfileScreenState extends State<ProfileScreen> {
-  FocusNode nameFocusNode = FocusNode();
-  FocusNode phoneNumberFocusNode = FocusNode();
-  FocusNode roomNoFocusNode = FocusNode();
   final List<String> _bhawanNames = [
     'Shankar Bhawan',
     'vyas Bhawan',
@@ -39,6 +40,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Provider.of<Profiles>(context, listen: false).getProfile(profileID);
     TextEditingController bhawanNameController =
         TextEditingController(text: _profile.bhawanName);
+    TextEditingController _phoneNumberController =
+        TextEditingController(text: _profile.phoneNumber.toString())
+          ..selection = TextSelection(
+            baseOffset: _profile.phoneNumber.toString().length,
+            extentOffset: _profile.phoneNumber.toString().length,
+          );
+    TextEditingController _roomNumberController =
+        TextEditingController(text: _profile.rommNo.toString())
+          ..selection = TextSelection(
+            baseOffset: _profile.rommNo.toString().length,
+            extentOffset: _profile.rommNo.toString().length,
+          );
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     _fieldFocusChange(
@@ -52,11 +65,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         final image = await ImagePicker().pickImage(source: imageSource);
         if (image == null) return;
         final imagetemp = File(image.path);
+        Provider.of<Profiles>(context, listen: false)
+            .updateProfile(profileID, 1, 'arya d yus boy');
         setState(() {
           this.image = imagetemp;
         });
       } on PlatformException catch (e) {
-        print('Failed to pick image: $e');
+        errorSnackbar(context, 'Failed to pick image: $e');
       }
     }
 
@@ -68,6 +83,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           itemBuilder: (_, index) {
             return GestureDetector(
               onTap: () {
+                Provider.of<Profiles>(context, listen: false)
+                    .updateProfile(profileID, 3, _bhawanNames[index]);
                 bhawanNameController.text = _bhawanNames[index];
                 Navigator.of(context).pop();
               },
@@ -169,27 +186,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: TextField(
-                      focusNode: nameFocusNode,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        enabledBorder: OutlineInputBorder(),
                         labelText: 'Name',
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 18, horizontal: 12),
                         isDense: true,
                       ),
-                      onSubmitted: (_) {
-                        _fieldFocusChange(
-                            context, nameFocusNode, phoneNumberFocusNode);
-                      },
-                      onEditingComplete: () => print('Hi bro '),
-                      style: const TextStyle(
+                      enabled: false,
+                      style: TextStyle(
                         fontFamily: 'ManRope Regular',
                         fontSize: 18,
+                        color: Constant.greyColor1,
                       ),
                       controller: TextEditingController()..text = _profile.name,
-                      keyboardType: TextInputType.name,
-                      textInputAction: TextInputAction.next,
                     ),
                   ),
                   Padding(
@@ -197,7 +207,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: TextField(
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        enabledBorder: OutlineInputBorder(),
                         labelText: 'Email',
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 18, horizontal: 12),
@@ -210,17 +219,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         color: Constant.greyColor1,
                       ),
                       controller: TextEditingController()
-                        ..text = 'f20201556@pilani.bits-pilani.ac.in',
+                        ..text = _profile.email,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: TextField(
-                      focusNode: phoneNumberFocusNode,
+                    child: TextFormField(
+                      focusNode: _phoneNumberFocusNode,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        enabledBorder: OutlineInputBorder(),
-                        disabledBorder: OutlineInputBorder(),
+                        counterText: '',
                         labelText: 'Phone Number',
                         contentPadding:
                             EdgeInsets.symmetric(vertical: 18, horizontal: 12),
@@ -230,13 +238,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontFamily: 'ManRope Regular',
                         fontSize: 18,
                       ),
-                      controller: TextEditingController()
-                        ..text = _profile.phoneNumber.toString(),
+                      maxLength: 10,
+                      onEditingComplete: () {
+                        if (_phoneNumberController.text.length < 10) {
+                          errorSnackbar(
+                              context, 'Please enter valid phone number');
+                          _phoneNumberController.text =
+                              _profile.phoneNumber.toString();
+                        } else {
+                          Provider.of<Profiles>(context, listen: false)
+                              .updateProfile(
+                                  profileID, 2, _phoneNumberController.text);
+                        }
+                      },
+                      controller: _phoneNumberController,
                       keyboardType: TextInputType.phone,
                       textInputAction: TextInputAction.next,
-                      onSubmitted: (_) {
+                      onFieldSubmitted: (_) {
                         _fieldFocusChange(
-                            context, phoneNumberFocusNode, roomNoFocusNode);
+                            context, _phoneNumberFocusNode, _roomNoFocusNode);
                       },
                     ),
                   ),
@@ -251,7 +271,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             enabledBorder: OutlineInputBorder(),
                             labelText: 'Bhawan',
                             contentPadding: EdgeInsets.symmetric(
-                                vertical: 18, horizontal: 12),
+                              vertical: 18,
+                              horizontal: 12,
+                            ),
                             isDense: true,
                           ),
                           style: const TextStyle(
@@ -265,8 +287,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: TextField(
-                      focusNode: roomNoFocusNode,
+                    child: TextFormField(
+                      focusNode: _roomNoFocusNode,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         enabledBorder: OutlineInputBorder(),
@@ -279,11 +301,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontFamily: 'ManRope Regular',
                         fontSize: 18,
                       ),
-                      controller: TextEditingController()
-                        ..text = _profile.rommNo.toString(),
+                      controller: _roomNumberController,
                       keyboardType: TextInputType.phone,
                       textInputAction: TextInputAction.done,
-                      onSubmitted: (_) {
+                      onFieldSubmitted: (_) {
+                        Provider.of<Profiles>(context, listen: false)
+                            .updateProfile(
+                                profileID, 4, _roomNumberController.text);
                         FocusScope.of(context).unfocus();
                       },
                     ),
@@ -300,7 +324,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: ElevatedButton(
                       style: Constant.elevatedButtonStyle,
                       onPressed: () {
-                        Navigator.of(context).push(
+                        Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (ctx) => const LoginScreen(),
                           ),

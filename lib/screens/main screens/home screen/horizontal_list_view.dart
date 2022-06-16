@@ -3,8 +3,8 @@ import 'package:login_singup_screen_ui/providers/items_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Constants/constants.dart';
+import '../Search Screen/search_screen.dart';
 import 'grid_item.dart';
-import 'search_screen.dart';
 
 class HorizontalListView extends StatelessWidget {
   final String title;

@@ -38,7 +38,6 @@ dependencies:
   awesome_dropdown: "0.0.4"
   cupertino_icons: ^1.0.2
   firebase_core: ^1.17.1
-  scroll_snap_list: ^0.9.1
   image_picker: ^0.8.5+3
   provider: ^6.0.3
   url_launcher: ^6.1.3
@@ -47,6 +46,8 @@ dependencies:
   firebase_phone_auth_handler: ^1.0.4
   pinput: ^2.2.10
   cloud_firestore: ^3.1.17
+  font_awesome_flutter: ^10.1.0
+  sqflite: ^2.0.2+1
 
 dev_dependencies:
   flutter_test:
@@ -80,7 +81,7 @@ flutter:
     - assets/icons/whatsapp.svg
     - assets/icons/bookmark.svg
     - assets/icons/password.svg
-    - assets/icons/seehidepassword.svg
+    - assets/icons/edit_profile.svg
     - assets/icons/google.svg
     - assets/icons/google_icon.svg
     - assets/icons/facebook.svg
@@ -98,11 +99,12 @@ flutter:
     - assets/icons/images.svg
     - assets/icons/delete.svg
     - assets/icons/favorite_border.svg
-    - assets/images/holding-phone.png
     - assets/icons/clear_cross.svg
     - assets/icons/arrow_back.svg
     - assets/icons/addimagefromcamera.svg
     - assets/icons/addimagefromgallery.svg
+    - assets/images/holding-phone.png
+    - assets/images/logo.png
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

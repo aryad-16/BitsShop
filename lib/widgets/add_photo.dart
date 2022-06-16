@@ -5,8 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
+import 'package:login_singup_screen_ui/widgets/error_snackbar.dart';
 
-import '../../../Constants/pick_image.dart';
+import 'pick_image.dart';
 
 class AddPicture extends StatefulWidget {
   final BuildContext context;
@@ -20,12 +21,11 @@ class AddPicture extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<AddPicture> createState() => _AddPictureState();
+  State<AddPicture> createState() => AddPictureState();
 }
 
-class _AddPictureState extends State<AddPicture> {
+class AddPictureState extends State<AddPicture> {
   File? image;
-
   Future pickImage(ImageSource imageSource) async {
     try {
       final image = await ImagePicker().pickImage(source: imageSource);
@@ -36,8 +36,16 @@ class _AddPictureState extends State<AddPicture> {
         widget.imageList[widget.index] = image.path;
       });
     } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
+      errorSnackbar(context, 'Failed to pick image: $e');
     }
+  }
+
+  void clearImage() {
+    setState(() {
+      image = null;
+      widget.imageList.clear();
+      widget.imageList.addAll(['a', 'a', 'a', 'a', 'a']);
+    });
   }
 
   @override
@@ -96,7 +104,7 @@ class _AddPictureState extends State<AddPicture> {
                     right: 4,
                     top: 4,
                   )
-                : Container()
+                : const SizedBox()
           ],
         ),
       ),

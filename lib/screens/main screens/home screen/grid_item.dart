@@ -96,6 +96,13 @@ class SingleItemWidget extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       item.toggleFavouriteStatus();
+                      if (item.isFavourite) {
+                        Provider.of<Profiles>(context, listen: false)
+                            .addFavouriteItem(profileID, item.id);
+                      } else {
+                        Provider.of<Profiles>(context, listen: false)
+                            .deleteFavouriteItem(profileID, item.id);
+                      }
                     },
                     child: Consumer<Item>(
                       builder: (context, item, _) => Container(
@@ -190,7 +197,8 @@ class SingleItemWidget extends StatelessWidget {
                                               child: Text(
                                                 'Are you sure you want to delete this item?',
                                                 style: TextStyle(
-                                                    color: Constant.greyColor1),
+                                                  color: Constant.greyColor1,
+                                                ),
                                                 overflow: TextOverflow.visible,
                                               ),
                                             ),

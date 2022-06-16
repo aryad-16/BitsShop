@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
-import 'package:login_singup_screen_ui/screens/main%20screens/home%20screen/search_screen.dart';
+import 'package:login_singup_screen_ui/screens/main%20screens/Search%20Screen/search_screen.dart';
+import 'package:provider/provider.dart';
 
+import '../../../Data/data.dart';
+import '../../../providers/profiles_provider.dart';
+import '../../../widgets/drawer.dart';
 import 'horizontal_list_view.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -12,14 +16,26 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _profile =
+        Provider.of<Profiles>(context, listen: false).getProfile(profileID);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 245, 245, 245),
       appBar: AppBar(
-        backgroundColor: Colors.grey[100],
+        backgroundColor: const Color.fromARGB(255, 245, 245, 245),
         leading: Padding(
           padding: const EdgeInsets.only(left: 20, right: 5),
-          child: SvgPicture.asset(
-            'assets/icons/menu.svg',
+          child: Builder(
+            builder: (context) {
+              return GestureDetector(
+                onTap: () => Scaffold.of(context).openDrawer(),
+                child: Transform.scale(
+                  scale: 0.95,
+                  child: SvgPicture.asset(
+                    'assets/icons/menu.svg',
+                  ),
+                ),
+              );
+            },
           ),
         ),
         title: Text(
@@ -48,6 +64,7 @@ class HomeScreen extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
       ),
+      drawer: DrawerWidget(profile: _profile),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (OverscrollIndicatorNotification? overscroll) {
           overscroll!.disallowIndicator();
@@ -60,8 +77,10 @@ class HomeScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (ctx) =>
-                          const SearchScreen(category: 'All', isEdit: false),
+                      builder: (ctx) => const SearchScreen(
+                        category: 'All Products',
+                        isEdit: false,
+                      ),
                     ),
                   );
                 },
@@ -133,4 +152,16 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget buildCircle(
+          {required Widget child,
+          required Color color,
+          required double padding}) =>
+      ClipOval(
+        child: Container(
+          padding: EdgeInsets.all(padding),
+          color: color,
+          child: child,
+        ),
+      );
 }

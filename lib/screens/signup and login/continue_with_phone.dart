@@ -1,10 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
-import 'package:login_singup_screen_ui/screens/signup%20and%20login/verifyOTP.dart';
-import '../main screens/home screen/home_screen.dart';
+import 'package:login_singup_screen_ui/screens/signup%20and%20login/verifty_phone.dart';
+import 'package:login_singup_screen_ui/widgets/error_snackbar.dart';
+
 import '/widgets/numeric_pad.dart';
-import 'verifty_phone.dart';
 
 class ContinueWithPhone extends StatefulWidget {
   const ContinueWithPhone({Key? key}) : super(key: key);
@@ -26,27 +25,6 @@ class _ContinueWithPhoneState extends State<ContinueWithPhone> {
         MediaQuery.of(context).size.height - padding.top - padding.bottom;
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 15.0, top: 11),
-            child: GestureDetector(
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (ctx) => const HomeScreen(),
-                ),
-              ),
-              child: Text(
-                'SKIP',
-                style: TextStyle(
-                  fontFamily: 'Poppins Medium',
-                  decoration: TextDecoration.underline,
-                  fontSize: 17,
-                  color: Constant.greyColor1,
-                ),
-              ),
-            ),
-          )
-        ],
         title: const Text(
           "Send OTP",
           style: TextStyle(
@@ -176,12 +154,17 @@ class _ContinueWithPhoneState extends State<ContinueWithPhone> {
                             if (phoneNumber.length == 10) {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (ctx) => VerifyOTP(
-                                    phoneNumber: phoneNumber,
-                                  ),
-                                ),
+                                    builder: (ctx) =>
+                                        VerifyPhone(phoneNumber: phoneNumber)
+                                    // VerifyOTP(
+                                    //   phoneNumber: phoneNumber,
+                                    // ),
+                                    ),
                               );
-                            } else {}
+                            } else {
+                              errorSnackbar(
+                                  context, 'Please enter valid phone number');
+                            }
                           },
                           child: const FittedBox(
                             child: Text(

@@ -5,10 +5,10 @@ import 'package:login_singup_screen_ui/providers/profiles_provider.dart';
 import 'package:login_singup_screen_ui/screens/main%20screens/Edit%20Screen/edit_screen.dart';
 import 'package:login_singup_screen_ui/screens/main%20screens/home%20screen/home_screen.dart';
 import 'package:login_singup_screen_ui/screens/signup%20and%20login/continue_with_phone.dart';
-import 'package:login_singup_screen_ui/screens/signup%20and%20login/verifty_phone.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/items_provider.dart';
+import 'screens/bottom_nav_bar_screen.dart';
 import 'screens/signup and login/register_screen.dart';
 
 void main() async {
@@ -38,8 +38,9 @@ class MyApp extends StatelessWidget {
           routes: {
             EditScreen.routeName: (ctx) => const EditScreen(),
             SignUpScreen.routename: (context) => const SignUpScreen(),
-            HomeScreen.routename:(context) => HomeScreen(), 
-            ContinueWithPhone.routeName :(context) => ContinueWithPhone()
+            HomeScreen.routename: (context) => const HomeScreen(),
+            MainScreen.routename: (context) => const MainScreen(),
+            ContinueWithPhone.routeName: (context) => const ContinueWithPhone()
           },
         ),
       ),
