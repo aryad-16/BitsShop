@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:awesome_dropdown/awesome_dropdown.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:login_singup_screen_ui/Constants/tags_dialog.dart';
@@ -9,6 +10,8 @@ import 'package:login_singup_screen_ui/data/data.dart';
 import 'package:login_singup_screen_ui/providers/profiles_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 import '../../../Constants/constants.dart';
 import '../../../providers/item_model.dart';
@@ -69,7 +72,7 @@ class _NewAdScreenState extends State<NewAdScreen>
     profileId: profileID,
   );
 
-  void _saveForm() {
+  Future<String> _saveForm() async {
     _editeditem = Item(
       title: _editeditem.title,
       description: _editeditem.description,
@@ -87,6 +90,21 @@ class _NewAdScreenState extends State<NewAdScreen>
     Provider.of<Items>(context, listen: false).addItem(_editeditem);
     Provider.of<Profiles>(context, listen: false)
         .addItem(_editeditem.profileId, _editeditem.id);
+        final user = await FirebaseAuth.instance.currentUser;
+
+    await FirebaseFirestore.instance
+        .doc('items')
+        .set({
+          'item': _editeditem
+        },)
+        .then((_) {})
+        .catchError((e) {
+          print(e);
+        })
+        .then((value) {
+          Navigator.pop(context);
+        });
+    return "done";
   }
 
   @override
