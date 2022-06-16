@@ -78,7 +78,7 @@ flutter:
     - assets/icons/whatsapp.svg
     - assets/icons/bookmark.svg
     - assets/icons/password.svg
-    - assets/icons/seehidepassword.svg
+    - assets/icons/edit_profile.svg
     - assets/icons/google.svg
     - assets/icons/google_icon.svg
     - assets/icons/facebook.svg

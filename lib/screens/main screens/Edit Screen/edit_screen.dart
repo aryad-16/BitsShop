@@ -9,9 +9,9 @@ import '../../../Constants/constants.dart';
 import '../../../data/data.dart';
 import '../../../providers/item_model.dart';
 import '../../../providers/items_provider.dart';
+import '../../../widgets/add_photo.dart';
 import '../../../widgets/error_snackbar.dart';
 import '../../../widgets/rounded_containers.dart';
-import '../New Ad Screen/add_photo.dart';
 
 class EditScreen extends StatefulWidget {
   const EditScreen({Key? key}) : super(key: key);

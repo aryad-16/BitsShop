@@ -14,8 +14,8 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../Constants/constants.dart';
 import '../../../providers/item_model.dart';
 import '../../../providers/items_provider.dart';
+import '../../../widgets/add_photo.dart';
 import '../../../widgets/rounded_containers.dart';
-import 'add_photo.dart';
 
 class NewAdScreen extends StatefulWidget {
   const NewAdScreen({Key? key}) : super(key: key);

@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
 import 'package:login_singup_screen_ui/widgets/error_snackbar.dart';
 
-import '../../../widgets/pick_image.dart';
+import 'pick_image.dart';
 
 class AddPicture extends StatefulWidget {
   final BuildContext context;

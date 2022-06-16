@@ -66,12 +66,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         if (image == null) return;
         final imagetemp = File(image.path);
         Provider.of<Profiles>(context, listen: false)
-            .updateProfile(profileID, 1, 'arya d');
+            .updateProfile(profileID, 1, 'arya d yus boy');
         setState(() {
           this.image = imagetemp;
         });
       } on PlatformException catch (e) {
-        print('Failed to pick image: $e');
+        errorSnackbar(context, 'Failed to pick image: $e');
       }
     }
 

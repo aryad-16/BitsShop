@@ -3,7 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
 import 'package:login_singup_screen_ui/screens/main%20screens/Search%20Screen/search_screen.dart';
+import 'package:provider/provider.dart';
 
+import '../../../Data/data.dart';
+import '../../../providers/profiles_provider.dart';
+import '../../bottom_nav_bar_screen.dart';
+import '../../signup and login/login_screen.dart';
 import 'horizontal_list_view.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -12,14 +17,26 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _profile =
+        Provider.of<Profiles>(context, listen: false).getProfile(profileID);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 245, 245, 245),
       appBar: AppBar(
         backgroundColor: Colors.grey[100],
         leading: Padding(
           padding: const EdgeInsets.only(left: 20, right: 5),
-          child: SvgPicture.asset(
-            'assets/icons/menu.svg',
+          child: Builder(
+            builder: (context) {
+              return GestureDetector(
+                onTap: () => Scaffold.of(context).openDrawer(),
+                child: Transform.scale(
+                  scale: 0.95,
+                  child: SvgPicture.asset(
+                    'assets/icons/menu.svg',
+                  ),
+                ),
+              );
+            },
           ),
         ),
         title: Text(
@@ -47,6 +64,191 @@ class HomeScreen extends StatelessWidget {
         ),
         centerTitle: true,
         elevation: 0,
+      ),
+      drawer: SafeArea(
+        child: Drawer(
+          backgroundColor: const Color.fromARGB(255, 245, 245, 245),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 28),
+            child: Column(
+              children: <Widget>[
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [
+                //     IconButton(
+                //       onPressed: () => Navigator.of(context).pop(),
+                //       icon: const Icon(
+                //         Icons.clear_rounded,
+                //         size: 30,
+                //         color: Colors.black87,
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                const Spacer(flex: 3),
+                Stack(
+                  children: <Widget>[
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(_profile.profilePicUrl),
+                      radius: 60,
+                    ),
+                    Positioned(
+                      child: buildCircle(
+                        child: GestureDetector(
+                          // onTap: () => showPopUp(context, pickImage),
+                          child: SvgPicture.asset(
+                            'assets/icons/edit_profile.svg',
+                            color: Colors.white,
+                          ),
+                        ),
+                        color: Colors.blue,
+                        padding: 8,
+                      ),
+                      bottom: 5,
+                      right: 0,
+                    )
+                  ],
+                ),
+                const Spacer(flex: 1),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Text(
+                    _profile.name,
+                    style: const TextStyle(
+                      fontFamily: 'ManRope SemiBold',
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                FittedBox(
+                  child: Text(
+                    _profile.email,
+                    style: const TextStyle(
+                      fontFamily: 'ManRope Regular',
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                const Spacer(flex: 1),
+                const Divider(
+                  color: Colors.black45,
+                  height: 22,
+                ),
+                const Spacer(flex: 1),
+                GestureDetector(
+                  onTap: () => Navigator.of(context)
+                      .pushReplacementNamed(MainScreen.routename),
+                  child: ListTile(
+                    leading: SvgPicture.asset(
+                      'assets/icons/home.svg',
+                      width: 28,
+                      height: 28,
+                      color: const Color.fromRGBO(247, 154, 0, 1),
+                    ),
+                    title: const Text(
+                      'Home',
+                      style: TextStyle(
+                        fontFamily: 'ManRope Regular',
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                ),
+                const ListTile(
+                  leading: Icon(
+                    Icons.favorite_border_rounded,
+                    color: Colors.red,
+                    size: 28,
+                  ),
+                  title: Text(
+                    'Favorites',
+                    style: TextStyle(
+                      fontFamily: 'ManRope Regular',
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                const Spacer(flex: 1),
+                const Divider(
+                  color: Colors.black45,
+                  height: 22,
+                ),
+                const Spacer(flex: 1),
+                const ListTile(
+                  leading: Icon(
+                    Icons.developer_mode_rounded,
+                    color: Colors.blue,
+                    size: 28,
+                  ),
+                  title: Text(
+                    'Developers',
+                    style: TextStyle(
+                      fontFamily: 'ManRope Regular',
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                const ListTile(
+                  leading: Icon(
+                    Icons.privacy_tip_rounded,
+                    color: Colors.red,
+                    size: 28,
+                  ),
+                  title: Text(
+                    'Privacy Policy',
+                    style: TextStyle(
+                      fontFamily: 'ManRope Regular',
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+                const Spacer(flex: 1),
+                const Divider(
+                  color: Colors.black45,
+                  height: 22,
+                ),
+                const Spacer(flex: 1),
+                Container(
+                  margin: const EdgeInsets.only(top: 15),
+                  decoration: BoxDecoration(
+                    boxShadow: [Constant.boxShadow],
+                    gradient: Constant.yellowlinear,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  height: 55,
+                  child: ElevatedButton(
+                    style: Constant.elevatedButtonStyle,
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (ctx) => const LoginScreen(),
+                        ),
+                      );
+                    },
+                    child: Row(
+                      children: <Widget>[
+                        SvgPicture.asset(
+                          'assets/icons/logout.svg',
+                          color: Colors.white,
+                        ),
+                        const Text(
+                          '  Logout',
+                          style: TextStyle(
+                            fontFamily: 'Poppins Bold',
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.center,
+                    ),
+                  ),
+                ),
+                const Spacer(flex: 3),
+              ],
+            ),
+          ),
+        ),
       ),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (OverscrollIndicatorNotification? overscroll) {
@@ -135,4 +337,16 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget buildCircle(
+          {required Widget child,
+          required Color color,
+          required double padding}) =>
+      ClipOval(
+        child: Container(
+          padding: EdgeInsets.all(padding),
+          color: color,
+          child: child,
+        ),
+      );
 }
