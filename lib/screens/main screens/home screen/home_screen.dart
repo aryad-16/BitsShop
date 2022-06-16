@@ -86,28 +86,9 @@ class HomeScreen extends StatelessWidget {
                 //   ],
                 // ),
                 const Spacer(flex: 3),
-                Stack(
-                  children: <Widget>[
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(_profile.profilePicUrl),
-                      radius: 60,
-                    ),
-                    Positioned(
-                      child: buildCircle(
-                        child: GestureDetector(
-                          // onTap: () => showPopUp(context, pickImage),
-                          child: SvgPicture.asset(
-                            'assets/icons/edit_profile.svg',
-                            color: Colors.white,
-                          ),
-                        ),
-                        color: Colors.blue,
-                        padding: 8,
-                      ),
-                      bottom: 5,
-                      right: 0,
-                    )
-                  ],
+                CircleAvatar(
+                  backgroundImage: NetworkImage(_profile.profilePicUrl),
+                  radius: 60,
                 ),
                 const Spacer(flex: 1),
                 Padding(
