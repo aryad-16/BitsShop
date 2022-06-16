@@ -3,6 +3,7 @@ import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
 import 'package:login_singup_screen_ui/screens/bottom_nav_bar_screen.dart';
+import 'package:login_singup_screen_ui/widgets/error_snackbar.dart';
 
 import '../../widgets/numeric_pad.dart';
 
@@ -277,12 +278,7 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                   });
                 } catch (e) {
                   FocusScope.of(context).unfocus();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Invalid OTP'),
-                      backgroundColor: Color.fromRGBO(237, 92, 90, 1),
-                    ),
-                  );
+                  errorSnackbar(context, 'Invalid OTP');
                 }
               }
             },

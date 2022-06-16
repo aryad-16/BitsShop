@@ -64,4 +64,35 @@ class Profiles with ChangeNotifier {
     profile.theirAdIds.removeWhere((element) => element == id);
     notifyListeners();
   }
+
+  void updateProfile(String profileId, int number, String change) {
+    final profile =
+        _profiles.firstWhere((element) => element.profileId == profileId);
+    switch (number) {
+      case 1:
+        {
+          profile.profilePicUrl = change;
+        }
+        break;
+
+      case 2:
+        {
+          profile.phoneNumber = int.parse(change);
+        }
+        break;
+
+      case 3:
+        {
+          profile.bhawanName = change;
+        }
+        break;
+
+      case 4:
+        {
+          profile.rommNo = int.parse(change);
+        }
+        break;
+    }
+    notifyListeners();
+  }
 }

@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 
 import '../../../Constants/constants.dart';
 import '../../../providers/item_model.dart';
+import '../Search Screen/search_screen.dart';
 import '../home screen/grid_item.dart';
-import '../home screen/search_screen.dart';
 
 class ItemsGridView extends StatelessWidget {
   final bool isEdit;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
 import 'package:login_singup_screen_ui/screens/signup%20and%20login/verifty_phone.dart';
+import 'package:login_singup_screen_ui/widgets/error_snackbar.dart';
 
 import '/widgets/numeric_pad.dart';
 
@@ -161,14 +162,8 @@ class _ContinueWithPhoneState extends State<ContinueWithPhone> {
                                     ),
                               );
                             } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content:
-                                      Text('Please enter valid phone number'),
-                                  backgroundColor:
-                                      Color.fromRGBO(237, 92, 90, 1),
-                                ),
-                              );
+                              errorSnackbar(
+                                  context, 'Please enter valid phone number');
                             }
                           },
                           child: const FittedBox(

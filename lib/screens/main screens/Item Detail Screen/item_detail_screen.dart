@@ -10,6 +10,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Constants/constants.dart';
+import '../../../widgets/error_snackbar.dart';
 
 class ItemDetailScreen extends StatefulWidget {
   const ItemDetailScreen({
@@ -20,12 +21,12 @@ class ItemDetailScreen extends StatefulWidget {
   State<ItemDetailScreen> createState() => _ItemDetailScreenState();
 }
 
-openWhatsapp(String phoneNumber) async {
+openWhatsapp(String phoneNumber, BuildContext context) async {
   var _url = "https://api.whatsapp.com/send?phone=91";
   try {
     await launch(_url + phoneNumber);
   } catch (e) {
-    print(e);
+    errorSnackbar(context, 'Failed to pick image: $e');
   }
 }
 
@@ -279,8 +280,8 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                           ),
                           const SizedBox(width: 20),
                           GestureDetector(
-                            onTap: () =>
-                                openWhatsapp(profile.phoneNumber.toString()),
+                            onTap: () => openWhatsapp(
+                                profile.phoneNumber.toString(), context),
                             child: SvgPicture.asset(
                               'assets/icons/whatsapp.svg',
                               width: 35,

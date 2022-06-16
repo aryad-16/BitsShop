@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
-import 'package:login_singup_screen_ui/screens/main%20screens/home%20screen/search_screen.dart';
+import 'package:login_singup_screen_ui/screens/main%20screens/Search%20Screen/search_screen.dart';
 
 import 'horizontal_list_view.dart';
 
@@ -60,8 +60,10 @@ class HomeScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (ctx) =>
-                          const SearchScreen(category: 'All', isEdit: false),
+                      builder: (ctx) => const SearchScreen(
+                        category: 'All Products',
+                        isEdit: false,
+                      ),
                     ),
                   );
                 },
