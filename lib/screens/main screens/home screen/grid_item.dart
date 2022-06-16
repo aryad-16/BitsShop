@@ -96,6 +96,13 @@ class SingleItemWidget extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       item.toggleFavouriteStatus();
+                      if (item.isFavourite) {
+                        Provider.of<Profiles>(context, listen: false)
+                            .addFavouriteItem(profileID, item.id);
+                      } else {
+                        Provider.of<Profiles>(context, listen: false)
+                            .deleteFavouriteItem(profileID, item.id);
+                      }
                     },
                     child: Consumer<Item>(
                       builder: (context, item, _) => Container(

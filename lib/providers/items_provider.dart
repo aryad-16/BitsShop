@@ -181,4 +181,20 @@ class Items with ChangeNotifier {
           descriptionLower.contains(searchLower);
     }).toList();
   }
+
+  List<Item> searchYourFavoriteItems(List<String> ids, String query) {
+    List<Item> temp = [];
+    for (String id in ids) {
+      temp.add(_items.firstWhere((element) => element.id == id));
+    }
+    temp.sort((a, b) => a.price.compareTo(b.price));
+    return temp.where((item) {
+      final titleLower = item.title.toLowerCase();
+      final descriptionLower = item.description.toLowerCase();
+      final searchLower = query.toLowerCase();
+
+      return titleLower.contains(searchLower) ||
+          descriptionLower.contains(searchLower);
+    }).toList();
+  }
 }

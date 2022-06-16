@@ -46,9 +46,11 @@ class _SearchScreenState extends State<SearchScreen>
 
   @override
   Widget build(BuildContext context) {
-    final ids = Provider.of<Profiles>(context, listen: false)
-        .getProfile(profileID)
-        .theirAdIds;
+    final List<String> ids = widget.category == 'Manage Ads'
+        ? Provider.of<Profiles>(context, listen: false)
+            .getProfile(profileID)
+            .theirAdIds
+        : [];
     final items = widget.category == 'Books'
         ? Provider.of<Items>(context, listen: false).searchBookItems(query)
         : widget.category == 'Cycles'
@@ -132,10 +134,8 @@ class _SearchScreenState extends State<SearchScreen>
                 const SizedBox(height: 15),
                 Expanded(
                   child: ItemsGridView(
-                    category: widget.category,
                     items: items,
                     isEdit: widget.isEdit,
-                    searchInclude: false,
                   ),
                 ),
               ],

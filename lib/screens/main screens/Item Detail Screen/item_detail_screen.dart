@@ -10,6 +10,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Constants/constants.dart';
+import '../../../Data/data.dart';
 import '../../../widgets/error_snackbar.dart';
 
 class ItemDetailScreen extends StatefulWidget {
@@ -59,6 +60,13 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
             child: GestureDetector(
               onTap: () {
                 item.toggleFavouriteStatus();
+                if (item.isFavourite) {
+                  Provider.of<Profiles>(context, listen: false)
+                      .addFavouriteItem(profileID, item.id);
+                } else {
+                  Provider.of<Profiles>(context, listen: false)
+                      .deleteFavouriteItem(profileID, item.id);
+                }
               },
               child: Consumer<Item>(
                 builder: (context, item, _) => Container(
