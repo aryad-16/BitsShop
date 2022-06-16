@@ -61,6 +61,11 @@ class _NewAdScreenState extends State<NewAdScreen>
   String? _selectedSem;
   String? _selectedBranch;
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  final _addpictureKey1 = GlobalKey<AddPictureState>();
+  final _addpictureKey2 = GlobalKey<AddPictureState>();
+  final _addpictureKey3 = GlobalKey<AddPictureState>();
+  final _addpictureKey4 = GlobalKey<AddPictureState>();
+  final _addpictureKey5 = GlobalKey<AddPictureState>();
   Item _editeditem = Item(
     imageList: ['a', 'a', 'a', 'a', 'a'],
     title: '',
@@ -70,6 +75,19 @@ class _NewAdScreenState extends State<NewAdScreen>
     id: '',
     profileId: profileID,
   );
+
+  void _resetAd() {
+    _formkey.currentState!.reset();
+    _selectedCategory = 'Category';
+    _selectedBranch = null;
+    _selectedYear = null;
+    _selectedSem = null;
+    _addpictureKey1.currentState!.clearImage();
+    // _addpictureKey2.currentState!.clearImage();
+    // _addpictureKey3.currentState!.clearImage();
+    // _addpictureKey4.currentState!.clearImage();
+    // _addpictureKey5.currentState!.clearImage();
+  }
 
   void _saveForm() {
     _editeditem = Item(
@@ -81,11 +99,7 @@ class _NewAdScreenState extends State<NewAdScreen>
       imageList: _editeditem.imageList,
       id: DateTime.now().toString(),
     );
-    _selectedBranch = null;
-    _selectedYear = null;
-    _selectedSem = null;
     _formkey.currentState!.save();
-    _formkey.currentState!.reset();
     Provider.of<Items>(context, listen: false).addItem(_editeditem);
     Provider.of<Profiles>(context, listen: false)
         .addItem(_editeditem.profileId, _editeditem.id);
@@ -97,6 +111,7 @@ class _NewAdScreenState extends State<NewAdScreen>
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
+          key: _addpictureKey1,
           imageList: _editeditem.imageList,
           context: context,
           index: 0,
@@ -105,6 +120,7 @@ class _NewAdScreenState extends State<NewAdScreen>
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
+          key: _addpictureKey2,
           imageList: _editeditem.imageList,
           context: context,
           index: 1,
@@ -113,6 +129,7 @@ class _NewAdScreenState extends State<NewAdScreen>
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
+          key: _addpictureKey3,
           imageList: _editeditem.imageList,
           context: context,
           index: 2,
@@ -121,6 +138,7 @@ class _NewAdScreenState extends State<NewAdScreen>
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
+          key: _addpictureKey4,
           imageList: _editeditem.imageList,
           context: context,
           index: 3,
@@ -129,6 +147,7 @@ class _NewAdScreenState extends State<NewAdScreen>
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
+          key: _addpictureKey5,
           imageList: _editeditem.imageList,
           context: context,
           index: 4,
@@ -162,15 +181,13 @@ class _NewAdScreenState extends State<NewAdScreen>
                 onPressed: () async {
                   bool res = await showExitPopUp(
                       context, 'Are you sure, you want to clear the ad?');
-                  setState(() {
-                    if (res) {
-                      _formkey.currentState!.reset();
-                      _selectedCategory = 'Category';
-                      _selectedBranch = null;
-                      _selectedYear = null;
-                      _selectedSem = null;
-                    }
-                  });
+                  setState(
+                    () {
+                      if (res) {
+                        _resetAd();
+                      }
+                    },
+                  );
                 },
               ),
             )
@@ -202,7 +219,6 @@ class _NewAdScreenState extends State<NewAdScreen>
                         children: [
                           Container(
                             color: const Color.fromARGB(255, 245, 245, 245),
-                            // color: Colors.red,
                             margin: const EdgeInsets.only(left: 60, right: 60),
                             child: CarouselSlider(
                               items: _addPictures,
@@ -582,6 +598,7 @@ class _NewAdScreenState extends State<NewAdScreen>
                                                 _selectedCategory = 'Category';
                                               });
                                               _saveForm();
+                                              _resetAd();
                                             },
                                             child: Container(
                                               padding:

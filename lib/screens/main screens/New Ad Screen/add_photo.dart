@@ -21,12 +21,11 @@ class AddPicture extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<AddPicture> createState() => _AddPictureState();
+  State<AddPicture> createState() => AddPictureState();
 }
 
-class _AddPictureState extends State<AddPicture> {
+class AddPictureState extends State<AddPicture> {
   File? image;
-
   Future pickImage(ImageSource imageSource) async {
     try {
       final image = await ImagePicker().pickImage(source: imageSource);
@@ -39,6 +38,14 @@ class _AddPictureState extends State<AddPicture> {
     } on PlatformException catch (e) {
       errorSnackbar(context, 'Failed to pick image: $e');
     }
+  }
+
+  void clearImage() {
+    setState(() {
+      image = null;
+      widget.imageList.clear();
+      widget.imageList.addAll(['a', 'a', 'a', 'a', 'a']);
+    });
   }
 
   @override
