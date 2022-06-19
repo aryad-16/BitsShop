@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_phone_auth_handler/firebase_phone_auth_handler.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,14 @@ class _VerifyPhoneState extends State<VerifyPhone> {
               .then((value) async {
             if (value.user != null) {
               print('User is logged in.');
-              Navigator.of(context).pushReplacementNamed(MainScreen.routename);
+              final user = await FirebaseAuth.instance.currentUser;
+              await FirebaseFirestore.instance
+                  .collection('Profiles')
+                  .doc(user!.uid)
+                  .set({'phoneNumber': widget.phoneNumber},
+                      SetOptions(merge: true));
+              await Navigator.of(context)
+                  .pushReplacementNamed(MainScreen.routename);
             }
           });
         },
@@ -266,13 +274,20 @@ class _VerifyPhoneState extends State<VerifyPhone> {
                   }
                 }
                 try {
-                  FirebaseAuth.instance
+                  final guser = await FirebaseAuth.instance.currentUser;
+
+                  await FirebaseAuth.instance
                       .signInWithCredential(PhoneAuthProvider.credential(
                           verificationId: _verificationCode, smsCode: code))
                       .then((value) async {
                     if (value.user != null) {
                       print('correct pin, logging in.');
-                      Navigator.of(context)
+                      await FirebaseFirestore.instance
+                          .collection('Profiles')
+                          .doc(guser!.uid)
+                          .set({'phoneNumber': widget.phoneNumber},
+                              SetOptions(merge: true));
+                      await Navigator.of(context)
                           .pushReplacementNamed(MainScreen.routename);
                     }
                   });

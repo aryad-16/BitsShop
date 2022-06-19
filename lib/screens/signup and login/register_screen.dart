@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +36,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
           idToken: googleSignInAuthentication.idToken,
           accessToken: googleSignInAuthentication.accessToken);
       UserCredential result = await auth.signInWithCredential(authCredential);
+      registerUserData(result);
       User? user = result.user;
     }
+  }
+
+  Future<void> registerUserData(UserCredential userCredential) async {
+    var name = userCredential.user!.displayName;
+    var email = userCredential.user!.email;
+    final user = await FirebaseAuth.instance.currentUser;
+    await FirebaseFirestore.instance
+        .collection('Profiles')
+        .doc(user!.uid)
+        .set({'name': name, 'email': email});
   }
 
   @override

@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:io';
+
 
 import 'package:awesome_dropdown/awesome_dropdown.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -13,12 +15,12 @@ import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 import '../../../Constants/constants.dart';
 import '../../../providers/item_model.dart';
 import '../../../providers/items_provider.dart';
 import '../../../widgets/add_photo.dart';
 import '../../../widgets/rounded_containers.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class NewAdScreen extends StatefulWidget {
   const NewAdScreen({Key? key}) : super(key: key);
@@ -45,6 +47,8 @@ class _NewAdScreenState extends State<NewAdScreen>
   late AnimationController _controller;
   late Animation<double> _animation;
 
+  var id = DateTime.now().toString();
+
   @override
   void initState() {
     _controller = AnimationController(
@@ -58,6 +62,7 @@ class _NewAdScreenState extends State<NewAdScreen>
     _controller.dispose();
     super.dispose();
   }
+  FirebaseStorage storageRef = FirebaseStorage.instance;
 
   StateSetter? _setState;
   String? _selectedYear;
@@ -74,6 +79,24 @@ class _NewAdScreenState extends State<NewAdScreen>
     id: '',
     profileId: profileID,
   );
+
+  Future<void> fileUpload(pickedFile, i) async{
+    if (pickedFile != null) {
+      Reference reference = storageRef
+          .ref()
+          .child('items')
+          .child(id+i.toString());
+      UploadTask uploadTask = reference.putFile(File(pickedFile));
+      uploadTask.snapshotEvents.listen((event) {
+        print(event.bytesTransferred.toString() +
+            "\t" +
+            event.totalBytes.toString());
+      });
+      await uploadTask.whenComplete(() async {
+        _editeditem.imageList[i] = await uploadTask.snapshot.ref.getDownloadURL();
+      });
+    }
+  }
 
   void _resetAd() {
     _formkey.currentState!.reset();
@@ -92,26 +115,13 @@ class _NewAdScreenState extends State<NewAdScreen>
       category: _editeditem.category,
       profileId: _editeditem.profileId,
       imageList: _editeditem.imageList,
-      id: DateTime.now().toString(),
+      id: id,
     );
     _formkey.currentState!.save();
     Provider.of<Items>(context, listen: false).addItem(_editeditem);
     Provider.of<Profiles>(context, listen: false)
         .addItem(_editeditem.profileId, _editeditem.id);
-        final user = await FirebaseAuth.instance.currentUser;
 
-    await FirebaseFirestore.instance
-        .doc('items')
-        .set({
-          'item': _editeditem
-        },)
-        .then((_) {})
-        .catchError((e) {
-          print(e);
-        })
-        .then((value) {
-          Navigator.pop(context);
-        });
     return "done";
   }
 
@@ -598,12 +608,59 @@ class _NewAdScreenState extends State<NewAdScreen>
                                             "Ad posted succesfully!"),
                                         actions: [
                                           GestureDetector(
-                                            onTap: () {
+                                            onTap: () async {
                                               Navigator.of(context).pop();
                                               setState(() {
                                                 _selectedCategory = 'Category';
                                               });
                                               _saveForm();
+
+                                              final user = await FirebaseAuth
+                                                  .instance.currentUser;
+                                              _editeditem.imageList.removeWhere(
+                                                  (element) => element == 'a');
+
+                                              var fileList;
+                                              for (int i = 0;
+                                                  i <
+                                                      _editeditem
+                                                          .imageList.length;
+                                                  i++) {
+                                                await fileUpload(_editeditem.imageList[i], i);
+                                                print(_editeditem.imageList[i]);
+                                              }
+                                              await FirebaseFirestore.instance
+                                                  .collection('items')
+                                                  .doc(
+                                                    id,
+                                                  )
+                                                  .set(
+                                                    {
+                                                      'title': _editeditem.title
+                                                          .toString(),
+                                                      'description': _editeditem
+                                                          .description
+                                                          .toString(),
+                                                      'price': _editeditem.price
+                                                          .toString(),
+                                                      'category': _editeditem
+                                                          .category
+                                                          .toString(),
+                                                      'profileId': _editeditem
+                                                          .profileId
+                                                          .toString(),
+                                                      'imageList': _editeditem
+                                                          .imageList
+                                                          .toString(),
+                                                      'id': id,
+                                                      'uid':
+                                                          user!.uid.toString()
+                                                    },
+                                                  )
+                                                  .then((_) {})
+                                                  .catchError((e) {
+                                                    print(e);
+                                                  });
                                               _resetAd();
                                             },
                                             child: Container(
