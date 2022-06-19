@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-
 import 'package:awesome_dropdown/awesome_dropdown.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -62,8 +61,9 @@ class _NewAdScreenState extends State<NewAdScreen>
     _controller.dispose();
     super.dispose();
   }
-  FirebaseStorage storageRef = FirebaseStorage.instance;
 
+  FirebaseStorage storageRef = FirebaseStorage.instance;
+  final user = FirebaseAuth.instance.currentUser;
   StateSetter? _setState;
   String? _selectedYear;
   String? _selectedSem;
@@ -80,12 +80,10 @@ class _NewAdScreenState extends State<NewAdScreen>
     profileId: profileID,
   );
 
-  Future<void> fileUpload(pickedFile, i) async{
+  Future<void> fileUpload(pickedFile, i) async {
     if (pickedFile != null) {
-      Reference reference = storageRef
-          .ref()
-          .child('items')
-          .child(id+i.toString());
+      Reference reference =
+          storageRef.ref().child('items').child(id).child(i.toString());
       UploadTask uploadTask = reference.putFile(File(pickedFile));
       uploadTask.snapshotEvents.listen((event) {
         print(event.bytesTransferred.toString() +
@@ -93,12 +91,14 @@ class _NewAdScreenState extends State<NewAdScreen>
             event.totalBytes.toString());
       });
       await uploadTask.whenComplete(() async {
-        _editeditem.imageList[i] = await uploadTask.snapshot.ref.getDownloadURL();
+        _editeditem.imageList[i] =
+            await uploadTask.snapshot.ref.getDownloadURL();
       });
     }
   }
 
   void _resetAd() {
+    id = DateTime.now().toString();
     _formkey.currentState!.reset();
     _selectedCategory = 'Category';
     _selectedBranch = null;
@@ -615,8 +615,6 @@ class _NewAdScreenState extends State<NewAdScreen>
                                               });
                                               _saveForm();
 
-                                              final user = await FirebaseAuth
-                                                  .instance.currentUser;
                                               _editeditem.imageList.removeWhere(
                                                   (element) => element == 'a');
 
@@ -626,8 +624,9 @@ class _NewAdScreenState extends State<NewAdScreen>
                                                       _editeditem
                                                           .imageList.length;
                                                   i++) {
-                                                await fileUpload(_editeditem.imageList[i], i);
-                                                print(_editeditem.imageList[i]);
+                                                await fileUpload(
+                                                    _editeditem.imageList[i],
+                                                    i);
                                               }
                                               await FirebaseFirestore.instance
                                                   .collection('items')
@@ -654,7 +653,7 @@ class _NewAdScreenState extends State<NewAdScreen>
                                                           .toString(),
                                                       'id': id,
                                                       'uid':
-                                                          user!.uid.toString()
+                                                          user?.uid.toString()
                                                     },
                                                   )
                                                   .then((_) {})
