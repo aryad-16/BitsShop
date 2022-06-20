@@ -3,7 +3,9 @@ import 'dart:io';
 
 import 'package:awesome_dropdown/awesome_dropdown.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:login_singup_screen_ui/data/data.dart';
@@ -12,14 +14,12 @@ import 'package:login_singup_screen_ui/widgets/confirm_popup.dart';
 import 'package:login_singup_screen_ui/widgets/error_snackbar.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../Constants/constants.dart';
 import '../../../providers/item_model.dart';
 import '../../../providers/items_provider.dart';
 import '../../../widgets/add_photo.dart';
 import '../../../widgets/rounded_containers.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 class NewAdScreen extends StatefulWidget {
   const NewAdScreen({Key? key}) : super(key: key);
@@ -65,9 +65,9 @@ class _NewAdScreenState extends State<NewAdScreen>
   FirebaseStorage storageRef = FirebaseStorage.instance;
   final user = FirebaseAuth.instance.currentUser;
   StateSetter? _setState;
-  String? _selectedYear;
-  String? _selectedSem;
-  String? _selectedBranch;
+  YearCategory? _selectedYear;
+  SemesterCategory? _selectedSem;
+  BranchCategory? _selectedBranch;
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final _addpictureKey = GlobalKey<AddPictureState>();
   Item _editeditem = Item(
@@ -108,7 +108,11 @@ class _NewAdScreenState extends State<NewAdScreen>
   }
 
   Future<String> _saveForm() async {
+    _formkey.currentState!.save();
     _editeditem = Item(
+      year: _selectedYear,
+      branch: _selectedBranch,
+      sem: _selectedSem,
       title: _editeditem.title,
       description: _editeditem.description,
       price: _editeditem.price,
@@ -117,7 +121,6 @@ class _NewAdScreenState extends State<NewAdScreen>
       imageList: _editeditem.imageList,
       id: id,
     );
-    _formkey.currentState!.save();
     Provider.of<Items>(context, listen: false).addItem(_editeditem);
     Provider.of<Profiles>(context, listen: false)
         .addItem(_editeditem.profileId, _editeditem.id);
@@ -408,6 +411,9 @@ class _NewAdScreenState extends State<NewAdScreen>
                                     profileId: _editeditem.profileId,
                                     imageList: _editeditem.imageList,
                                     id: _editeditem.id,
+                                    year: _editeditem.year,
+                                    branch: _editeditem.branch,
+                                    sem: _editeditem.sem,
                                   );
                                 },
                                 cursorColor: Constant.yellowColor,
@@ -548,6 +554,9 @@ class _NewAdScreenState extends State<NewAdScreen>
                                           profileId: _editeditem.profileId,
                                           imageList: _editeditem.imageList,
                                           id: _editeditem.id,
+                                          year: _editeditem.year,
+                                          branch: _editeditem.branch,
+                                          sem: _editeditem.sem,
                                         );
                                       },
                                       keyboardType: TextInputType.number,
@@ -749,7 +758,7 @@ class _NewAdScreenState extends State<NewAdScreen>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         const Text(
-                          'Tags',
+                          'Filter',
                           style: TextStyle(
                             fontFamily: 'manRope Regular',
                             fontSize: 18,
@@ -796,60 +805,60 @@ class _NewAdScreenState extends State<NewAdScreen>
                         GestureDetector(
                           onTap: () {
                             _setState!(() {
-                              _selectedYear = '1st Year';
+                              _selectedYear = YearCategory.first;
                             });
                           },
                           child: RoundedContainer(
                             title: '1st Year',
-                            yellowBg: _selectedYear == '1st Year',
+                            yellowBg: _selectedYear == YearCategory.first,
                           ),
                         ),
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
                             _setState!(() {
-                              _selectedYear = '2nd Year';
+                              _selectedYear = YearCategory.second;
                             });
                           },
                           child: RoundedContainer(
                             title: '2nd Year',
-                            yellowBg: _selectedYear == '2nd Year',
+                            yellowBg: _selectedYear == YearCategory.second,
                           ),
                         ),
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
                             _setState!(() {
-                              _selectedYear = '3rd Year';
+                              _selectedYear = YearCategory.third;
                             });
                           },
                           child: RoundedContainer(
                             title: '3rd Year',
-                            yellowBg: _selectedYear == '3rd Year',
+                            yellowBg: _selectedYear == YearCategory.third,
                           ),
                         ),
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
                             _setState!(() {
-                              _selectedYear = '4th Year';
+                              _selectedYear = YearCategory.fourth;
                             });
                           },
                           child: RoundedContainer(
                             title: '4th Year',
-                            yellowBg: _selectedYear == '4th Year',
+                            yellowBg: _selectedYear == YearCategory.fourth,
                           ),
                         ),
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
                             _setState!(() {
-                              _selectedYear = '5th Year';
+                              _selectedYear = YearCategory.fifth;
                             });
                           },
                           child: RoundedContainer(
                             title: '5th Year',
-                            yellowBg: _selectedYear == '5th Year',
+                            yellowBg: _selectedYear == YearCategory.fifth,
                           ),
                         ),
                       ],
@@ -876,23 +885,23 @@ class _NewAdScreenState extends State<NewAdScreen>
                         GestureDetector(
                             onTap: () {
                               _setState!(() {
-                                _selectedSem = '1st Semester';
+                                _selectedSem = SemesterCategory.first;
                               });
                             },
                             child: RoundedContainer(
                               title: '1st Semester',
-                              yellowBg: _selectedSem == '1st Semester',
+                              yellowBg: _selectedSem == SemesterCategory.first,
                             )),
                         const SizedBox(width: 10),
                         GestureDetector(
                             onTap: () {
                               _setState!(() {
-                                _selectedSem = '2nd Semester';
+                                _selectedSem = SemesterCategory.second;
                               });
                             },
                             child: RoundedContainer(
                               title: '2nd Semester',
-                              yellowBg: _selectedSem == '2nd Semester',
+                              yellowBg: _selectedSem == SemesterCategory.second,
                             )),
                         const SizedBox(width: 10),
                       ],
@@ -919,132 +928,134 @@ class _NewAdScreenState extends State<NewAdScreen>
                         GestureDetector(
                           onTap: () {
                             _setState!(() {
-                              _selectedBranch = 'ENI';
+                              _selectedBranch = BranchCategory.eni;
                             });
                           },
                           child: RoundedContainer(
-                            title: 'ENI',
-                            yellowBg: _selectedBranch == 'ENI',
-                          ),
+                              title: 'ENI',
+                              yellowBg: _selectedBranch == BranchCategory.eni),
                         ),
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
                             _setState!(() {
-                              _selectedBranch = 'ECE';
+                              _selectedBranch = BranchCategory.ece;
                             });
                           },
                           child: RoundedContainer(
                             title: 'ECE',
-                            yellowBg: _selectedBranch == 'ECE',
+                            yellowBg: _selectedBranch == BranchCategory.ece,
                           ),
                         ),
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
                             _setState!(() {
-                              _selectedBranch = 'EEE';
+                              _selectedBranch = BranchCategory.eee;
                             });
                           },
                           child: RoundedContainer(
                             title: 'EEE',
-                            yellowBg: _selectedBranch == 'EEE',
+                            yellowBg: _selectedBranch == BranchCategory.eee,
                           ),
                         ),
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
                             _setState!(() {
-                              _selectedBranch = 'CS';
+                              _selectedBranch = BranchCategory.cs;
                             });
                           },
                           child: RoundedContainer(
                             title: 'CS',
-                            yellowBg: _selectedBranch == 'CS',
+                            yellowBg: _selectedBranch == BranchCategory.cs,
                           ),
                         ),
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
                             _setState!(() {
-                              _selectedBranch = 'Chemical';
+                              _selectedBranch = BranchCategory.chemical;
                             });
                           },
                           child: RoundedContainer(
                             title: 'Chemical',
-                            yellowBg: _selectedBranch == 'Chemical',
+                            yellowBg:
+                                _selectedBranch == BranchCategory.chemical,
                           ),
                         ),
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
                             _setState!(() {
-                              _selectedBranch = 'Manufacturing';
+                              _selectedBranch = BranchCategory.manufacturing;
                             });
                           },
                           child: RoundedContainer(
                             title: 'Manufacturing',
-                            yellowBg: _selectedBranch == 'Manufacturing',
+                            yellowBg:
+                                _selectedBranch == BranchCategory.manufacturing,
                           ),
                         ),
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
                             _setState!(() {
-                              _selectedBranch = 'Civil';
+                              _selectedBranch = BranchCategory.civil;
                             });
                           },
                           child: RoundedContainer(
                             title: 'Civil',
-                            yellowBg: _selectedBranch == 'Civil',
+                            yellowBg: _selectedBranch == BranchCategory.civil,
                           ),
                         ),
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
                             _setState!(() {
-                              _selectedBranch = 'Bio Dual';
+                              _selectedBranch = BranchCategory.bioDual;
                             });
                           },
                           child: RoundedContainer(
                             title: 'Bio Dual',
-                            yellowBg: _selectedBranch == 'Bio Dual',
+                            yellowBg: _selectedBranch == BranchCategory.bioDual,
                           ),
                         ),
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
                             _setState!(() {
-                              _selectedBranch = 'Phy Dual';
+                              _selectedBranch = BranchCategory.phyDual;
                             });
                           },
                           child: RoundedContainer(
                             title: 'Phy Dual',
-                            yellowBg: _selectedBranch == 'Phy Dual',
+                            yellowBg: _selectedBranch == BranchCategory.phyDual,
                           ),
                         ),
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
                             _setState!(() {
-                              _selectedBranch = 'Chem Dual';
+                              _selectedBranch = BranchCategory.chemDual;
                             });
                           },
                           child: RoundedContainer(
                             title: 'Chem Dual',
-                            yellowBg: _selectedBranch == 'Chem Dual',
+                            yellowBg:
+                                _selectedBranch == BranchCategory.chemDual,
                           ),
                         ),
                         const SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
                             _setState!(() {
-                              _selectedBranch = 'Eco Dual';
+                              _selectedBranch = BranchCategory.ecoDual;
                             });
                           },
                           child: RoundedContainer(
                             title: 'Eco Dual',
-                            yellowBg: _selectedBranch == 'Eco Dual',
+                            yellowBg: _selectedBranch == BranchCategory.ecoDual,
                           ),
                         ),
                       ],

@@ -17,6 +17,9 @@ class Items with ChangeNotifier {
       category: Category.books,
       id: '1',
       profileId: 'abcd',
+      year: YearCategory.fifth,
+      branch: BranchCategory.ecoDual,
+      sem: SemesterCategory.second,
     ),
     Item(
       imageList: [
@@ -90,6 +93,9 @@ class Items with ChangeNotifier {
       price: item.price,
       imageList: item.imageList,
       profileId: item.profileId,
+      year: item.year,
+      branch: item.branch,
+      sem: item.sem,
     );
     _items.add(newItem);
     notifyListeners();
@@ -107,15 +113,19 @@ class Items with ChangeNotifier {
     notifyListeners();
   }
 
-  List<Item> searchBookItems(String query) {
+  List<Item> searchBookItems(String query, YearCategory? year,
+      SemesterCategory? sem, BranchCategory? branch) {
     return _items.where((item) {
       final titleLower = item.title.toLowerCase();
       final descriptionLower = item.description.toLowerCase();
       final searchLower = query.toLowerCase();
-
-      return (titleLower.contains(searchLower) ||
+      if (year == null) {}
+      return ((titleLower.contains(searchLower) ||
               descriptionLower.contains(searchLower)) &&
-          item.category == Category.books;
+          item.category == Category.books &&
+          year == item.year &&
+          branch == item.branch &&
+          sem == item.sem);
     }).toList();
   }
 

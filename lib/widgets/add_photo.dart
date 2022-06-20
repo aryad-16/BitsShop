@@ -63,14 +63,14 @@ class AddPictureState extends State<AddPicture> {
         child: Stack(
           children: [
             Center(
-              child: widget.imageList[widget.index] != 'a'
+              child: image != null
                   ? ClipRRect(
-                      child: Image.network(widget.imageList[widget.index]),
+                      child: Image.file(image!),
                       borderRadius: BorderRadius.circular(10),
                     )
-                  : image != null
+                  : widget.imageList[widget.index] != 'a'
                       ? ClipRRect(
-                          child: Image.file(image!),
+                          child: Image.network(widget.imageList[widget.index]),
                           borderRadius: BorderRadius.circular(10),
                         )
                       : SvgPicture.asset(
