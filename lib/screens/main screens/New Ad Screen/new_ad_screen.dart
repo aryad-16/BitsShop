@@ -1,11 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:awesome_dropdown/awesome_dropdown.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:login_singup_screen_ui/data/data.dart';
@@ -62,8 +58,8 @@ class _NewAdScreenState extends State<NewAdScreen>
     super.dispose();
   }
 
-  FirebaseStorage storageRef = FirebaseStorage.instance;
-  final user = FirebaseAuth.instance.currentUser;
+  // // FirebaseStorage storageRef = FirebaseStorage.instance;
+  // final user = FirebaseAuth.instance.currentUser;
   StateSetter? _setState;
   YearCategory? _selectedYear;
   SemesterCategory? _selectedSem;
@@ -80,22 +76,22 @@ class _NewAdScreenState extends State<NewAdScreen>
     profileId: profileID,
   );
 
-  Future<void> fileUpload(pickedFile, i) async {
-    if (pickedFile != null) {
-      Reference reference =
-          storageRef.ref().child('items').child(id).child(i.toString());
-      UploadTask uploadTask = reference.putFile(File(pickedFile));
-      uploadTask.snapshotEvents.listen((event) {
-        print(event.bytesTransferred.toString() +
-            "\t" +
-            event.totalBytes.toString());
-      });
-      await uploadTask.whenComplete(() async {
-        _editeditem.imageList[i] =
-            await uploadTask.snapshot.ref.getDownloadURL();
-      });
-    }
-  }
+  // Future<void> fileUpload(pickedFile, i) async {
+  //   if (pickedFile != null) {
+  //     Reference reference =
+  //         storageRef.ref().child('items').child(id).child(i.toString());
+  //     UploadTask uploadTask = reference.putFile(File(pickedFile));
+  //     uploadTask.snapshotEvents.listen((event) {
+  //       print(event.bytesTransferred.toString() +
+  //           "\t" +
+  //           event.totalBytes.toString());
+  //     });
+  //     await uploadTask.whenComplete(() async {
+  //       _editeditem.imageList[i] =
+  //           await uploadTask.snapshot.ref.getDownloadURL();
+  //     });
+  //   }
+  // }
 
   void _resetAd() {
     id = DateTime.now().toString();
@@ -623,52 +619,8 @@ class _NewAdScreenState extends State<NewAdScreen>
                                                 _selectedCategory = 'Category';
                                               });
                                               _saveForm();
-
                                               _editeditem.imageList.removeWhere(
                                                   (element) => element == 'a');
-
-                                              var fileList;
-                                              for (int i = 0;
-                                                  i <
-                                                      _editeditem
-                                                          .imageList.length;
-                                                  i++) {
-                                                await fileUpload(
-                                                    _editeditem.imageList[i],
-                                                    i);
-                                              }
-                                              await FirebaseFirestore.instance
-                                                  .collection('items')
-                                                  .doc(
-                                                    id,
-                                                  )
-                                                  .set(
-                                                    {
-                                                      'title': _editeditem.title
-                                                          .toString(),
-                                                      'description': _editeditem
-                                                          .description
-                                                          .toString(),
-                                                      'price': _editeditem.price
-                                                          .toString(),
-                                                      'category': _editeditem
-                                                          .category
-                                                          .toString(),
-                                                      'profileId': _editeditem
-                                                          .profileId
-                                                          .toString(),
-                                                      'imageList': _editeditem
-                                                          .imageList
-                                                          .toString(),
-                                                      'id': id,
-                                                      'uid':
-                                                          user?.uid.toString()
-                                                    },
-                                                  )
-                                                  .then((_) {})
-                                                  .catchError((e) {
-                                                    print(e);
-                                                  });
                                               _resetAd();
                                             },
                                             child: Container(
