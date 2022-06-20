@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:login_singup_screen_ui/providers/item_model.dart';
 import 'package:login_singup_screen_ui/providers/profiles_provider.dart';
+import 'package:login_singup_screen_ui/widgets/rounded_containers.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -164,6 +165,42 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                               color: Constant.yellowColor,
                             ),
                           ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Wrap(
+                            alignment: WrapAlignment.start,
+                            direction: Axis.horizontal,
+                            runSpacing: 6,
+                            children: [
+                              item.year != null
+                                  ? RoundedContainer(
+                                      title:
+                                          '${item.year.toString().substring(13)[0].toUpperCase() + item.year.toString().substring(14)} Year',
+                                      yellowBg: false,
+                                    )
+                                  : const SizedBox(),
+                              const SizedBox(width: 10),
+                              item.sem != null
+                                  ? RoundedContainer(
+                                      title:
+                                          '${item.sem.toString().substring(17)[0].toUpperCase() + item.sem.toString().substring(18)} Sem',
+                                      yellowBg: false,
+                                    )
+                                  : const SizedBox(),
+                              const SizedBox(width: 10),
+                              item.branch != null
+                                  ? RoundedContainer(
+                                      title: item.branch
+                                              .toString()
+                                              .substring(15)[0]
+                                              .toUpperCase() +
+                                          item.branch.toString().substring(16),
+                                      yellowBg: false,
+                                    )
+                                  : const SizedBox(),
+                            ],
+                          )
                         ],
                       ),
                     ),
