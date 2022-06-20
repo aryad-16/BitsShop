@@ -30,9 +30,6 @@ class _SearchScreenState extends State<SearchScreen>
   YearCategory? _selectedYear;
   SemesterCategory? _selectedSem;
   BranchCategory? _selectedBranch;
-  YearCategory? _selectedRealYear;
-  SemesterCategory? _selectedRealSem;
-  BranchCategory? _selectedRealBranch;
   String query = '';
   @override
   void initState() {
@@ -57,7 +54,7 @@ class _SearchScreenState extends State<SearchScreen>
         : [];
     final items = widget.category == 'Books'
         ? Provider.of<Items>(context, listen: false).searchBookItems(
-            query, _selectedRealYear, _selectedRealSem, _selectedRealBranch)
+            query, _selectedYear, _selectedSem, _selectedBranch)
         : widget.category == 'Cycles'
             ? Provider.of<Items>(context, listen: false).searchCycleItems(query)
             : widget.category == 'Electronics'
@@ -152,13 +149,8 @@ class _SearchScreenState extends State<SearchScreen>
   }
 
   void searchBook(String query) {
-    print('The value of demo branch is $_selectedBranch');
-    print('The value of real branch is $_selectedRealBranch');
     setState(() {
       this.query = query;
-      _selectedRealBranch = _selectedBranch;
-      _selectedRealSem = _selectedSem;
-      _selectedRealYear = _selectedYear;
     });
   }
 

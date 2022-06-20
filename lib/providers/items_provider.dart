@@ -119,13 +119,18 @@ class Items with ChangeNotifier {
       final titleLower = item.title.toLowerCase();
       final descriptionLower = item.description.toLowerCase();
       final searchLower = query.toLowerCase();
-      if (year == null) {}
-      return ((titleLower.contains(searchLower) ||
+      if (year != null && year != item.year) {
+        return false;
+      }
+      if (sem != null && sem != item.sem) {
+        return false;
+      }
+      if (branch != null && branch != item.branch) {
+        return false;
+      }
+      return (titleLower.contains(searchLower) ||
               descriptionLower.contains(searchLower)) &&
-          item.category == Category.books &&
-          year == item.year &&
-          branch == item.branch &&
-          sem == item.sem);
+          item.category == Category.books;
     }).toList();
   }
 
