@@ -5,12 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
-import 'package:login_singup_screen_ui/widgets/pick_image.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Data/data.dart';
 import '../../../providers/profiles_provider.dart';
 import '../../../widgets/error_snackbar.dart';
+import '../../../widgets/pick_image.dart';
 import '../../signup and login/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -227,7 +227,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: TextFormField(
                       focusNode: _phoneNumberFocusNode,
                       decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
+                        enabledBorder: OutlineInputBorder(),
                         counterText: '',
                         labelText: 'Phone Number',
                         contentPadding:
@@ -267,7 +267,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: IgnorePointer(
                         child: TextField(
                           decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
                             enabledBorder: OutlineInputBorder(),
                             labelText: 'Bhawan',
                             contentPadding: EdgeInsets.symmetric(
@@ -290,7 +289,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: TextFormField(
                       focusNode: _roomNoFocusNode,
                       decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
                         enabledBorder: OutlineInputBorder(),
                         labelText: 'Room Number',
                         contentPadding:

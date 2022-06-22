@@ -99,7 +99,29 @@ class _NewAdScreenState extends State<NewAdScreen>
       imageList: _editeditem.imageList,
       id: id,
     );
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => WillPopScope(
+        onWillPop: () => Future.value(false),
+        child: AlertDialog(
+          content: Row(
+            children: [
+              CircularProgressIndicator(
+                color: Constant.yellowColor,
+              ),
+              const SizedBox(width: 15),
+              const Text(
+                "Posting Ad",
+                style: TextStyle(fontSize: 18),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
     await Provider.of<Items>(context, listen: false).addItem(_editeditem);
+    Navigator.pop(context);
     Provider.of<Profiles>(context, listen: false)
         .addItem(_editeditem.profileId, _editeditem.id);
 
