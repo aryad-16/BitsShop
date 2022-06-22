@@ -106,7 +106,7 @@ class Items with ChangeNotifier {
     }
   }
 
-  void addItem(Item item) async {
+  Future<void> addItem(Item item) async {
     item.imageList.removeWhere((element) => element == 'a');
     final newItem = Item(
       category: item.category,
@@ -123,7 +123,7 @@ class Items with ChangeNotifier {
     for (int i = 0; i < newItem.imageList.length; i++) {
       await fileUpload(newItem.imageList[i], i, newItem.id, newItem);
     }
-    await FirebaseFirestore.instance
+    FirebaseFirestore.instance
         .collection('items')
         .doc(
           newItem.id,

@@ -59,8 +59,6 @@ class _NewAdScreenState extends State<NewAdScreen>
     super.dispose();
   }
 
-  // // FirebaseStorage storageRef = FirebaseStorage.instance;
-  // final user = FirebaseAuth.instance.currentUser;
   StateSetter? _setState;
   YearCategory? _selectedYear;
   SemesterCategory? _selectedSem;
@@ -76,23 +74,6 @@ class _NewAdScreenState extends State<NewAdScreen>
     id: '',
     profileId: profileID,
   );
-
-  // Future<void> fileUpload(pickedFile, i) async {
-  //   if (pickedFile != null) {
-  //     Reference reference =
-  //         storageRef.ref().child('items').child(id).child(i.toString());
-  //     UploadTask uploadTask = reference.putFile(File(pickedFile));
-  //     uploadTask.snapshotEvents.listen((event) {
-  //       print(event.bytesTransferred.toString() +
-  //           "\t" +
-  //           event.totalBytes.toString());
-  //     });
-  //     await uploadTask.whenComplete(() async {
-  //       _editeditem.imageList[i] =
-  //           await uploadTask.snapshot.ref.getDownloadURL();
-  //     });
-  //   }
-  // }
 
   void _resetAd() {
     id = DateTime.now().toString();
@@ -118,7 +99,7 @@ class _NewAdScreenState extends State<NewAdScreen>
       imageList: _editeditem.imageList,
       id: id,
     );
-    Provider.of<Items>(context, listen: false).addItem(_editeditem);
+    await Provider.of<Items>(context, listen: false).addItem(_editeditem);
     Provider.of<Profiles>(context, listen: false)
         .addItem(_editeditem.profileId, _editeditem.id);
 
@@ -604,7 +585,7 @@ class _NewAdScreenState extends State<NewAdScreen>
                                 right: 25,
                               ),
                               child: GestureDetector(
-                                onTap: () {
+                                onTap: () async {
                                   FocusScope.of(context).unfocus();
                                   if (_selectedCategory == null) {
                                     errorSnackbar(
@@ -614,6 +595,7 @@ class _NewAdScreenState extends State<NewAdScreen>
                                         context, "Add Atleast 1 image");
                                   } else if (_formkey.currentState!
                                       .validate()) {
+                                    await _saveForm();
                                     showDialog(
                                       context: context,
                                       builder: (context) => AlertDialog(
@@ -622,13 +604,10 @@ class _NewAdScreenState extends State<NewAdScreen>
                                         actions: [
                                           GestureDetector(
                                             onTap: () async {
-                                              Navigator.of(context).pop();
                                               setState(() {
                                                 _selectedCategory = 'Category';
                                               });
-                                              _saveForm();
-                                              _editeditem.imageList.removeWhere(
-                                                  (element) => element == 'a');
+                                              Navigator.of(context).pop();
                                               await _carouselController
                                                   .animateToPage(0);
                                               _resetAd();
