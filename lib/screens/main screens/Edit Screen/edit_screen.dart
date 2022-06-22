@@ -112,6 +112,7 @@ class EditScreenState extends State<EditScreen>
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
+          isEdit: true,
           imageList: _editeditem.imageList,
           context: context,
           index: 0,
@@ -120,6 +121,7 @@ class EditScreenState extends State<EditScreen>
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
+          isEdit: true,
           imageList: _editeditem.imageList,
           context: context,
           index: 1,
@@ -128,6 +130,7 @@ class EditScreenState extends State<EditScreen>
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
+          isEdit: true,
           imageList: _editeditem.imageList,
           context: context,
           index: 2,
@@ -136,6 +139,7 @@ class EditScreenState extends State<EditScreen>
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
+          isEdit: true,
           imageList: _editeditem.imageList,
           context: context,
           index: 3,
@@ -144,6 +148,7 @@ class EditScreenState extends State<EditScreen>
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
+          isEdit: true,
           imageList: _editeditem.imageList,
           context: context,
           index: 4,

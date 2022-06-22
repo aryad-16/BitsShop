@@ -12,9 +12,11 @@ import 'pick_image.dart';
 class AddPicture extends StatefulWidget {
   final BuildContext context;
   final int index;
+  final bool isEdit;
   final List<String> imageList;
   const AddPicture({
     Key? key,
+    required this.isEdit,
     required this.imageList,
     required this.context,
     required this.index,
@@ -68,16 +70,23 @@ class AddPictureState extends State<AddPicture> {
                       child: Image.file(image!),
                       borderRadius: BorderRadius.circular(10),
                     )
-                  : widget.imageList[widget.index] != 'a'
+                  : (widget.imageList[widget.index] != 'a' && widget.isEdit)
                       ? ClipRRect(
                           child: Image.network(widget.imageList[widget.index]),
                           borderRadius: BorderRadius.circular(10),
                         )
-                      : SvgPicture.asset(
-                          'assets/icons/images.svg',
-                          color: const Color.fromRGBO(34, 26, 69, 1),
-                          width: 30,
-                        ),
+                      : (widget.imageList[widget.index] != 'a' &&
+                              !widget.isEdit)
+                          ? ClipRRect(
+                              child: Image.file(
+                                  File(widget.imageList[widget.index])),
+                              borderRadius: BorderRadius.circular(10),
+                            )
+                          : SvgPicture.asset(
+                              'assets/icons/images.svg',
+                              color: const Color.fromRGBO(34, 26, 69, 1),
+                              width: 30,
+                            ),
             ),
             image != null || widget.imageList[widget.index] != 'a'
                 ? Positioned(

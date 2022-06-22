@@ -41,6 +41,7 @@ class _NewAdScreenState extends State<NewAdScreen>
     with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+  final CarouselController _carouselController = CarouselController();
 
   var id = DateTime.now().toString();
 
@@ -131,6 +132,7 @@ class _NewAdScreenState extends State<NewAdScreen>
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
           key: _addpictureKey,
+          isEdit: false,
           imageList: _editeditem.imageList,
           context: context,
           index: 0,
@@ -139,6 +141,7 @@ class _NewAdScreenState extends State<NewAdScreen>
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
+          isEdit: false,
           imageList: _editeditem.imageList,
           context: context,
           index: 1,
@@ -147,6 +150,7 @@ class _NewAdScreenState extends State<NewAdScreen>
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
+          isEdit: false,
           imageList: _editeditem.imageList,
           context: context,
           index: 2,
@@ -155,6 +159,7 @@ class _NewAdScreenState extends State<NewAdScreen>
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
+          isEdit: false,
           imageList: _editeditem.imageList,
           context: context,
           index: 3,
@@ -163,6 +168,7 @@ class _NewAdScreenState extends State<NewAdScreen>
       ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: AddPicture(
+          isEdit: false,
           imageList: _editeditem.imageList,
           context: context,
           index: 4,
@@ -197,8 +203,9 @@ class _NewAdScreenState extends State<NewAdScreen>
                   bool res = await showExitPopUp(
                       context, 'Are you sure, you want to clear the ad?');
                   setState(
-                    () {
+                    () async {
                       if (res) {
+                        await _carouselController.animateToPage(0);
                         _resetAd();
                       }
                     },
@@ -236,6 +243,7 @@ class _NewAdScreenState extends State<NewAdScreen>
                             color: const Color.fromARGB(255, 245, 245, 245),
                             margin: const EdgeInsets.only(left: 60, right: 60),
                             child: CarouselSlider(
+                              carouselController: _carouselController,
                               items: _addPictures,
                               options: CarouselOptions(
                                 onPageChanged: (index, reason) {
@@ -621,6 +629,8 @@ class _NewAdScreenState extends State<NewAdScreen>
                                               _saveForm();
                                               _editeditem.imageList.removeWhere(
                                                   (element) => element == 'a');
+                                              await _carouselController
+                                                  .animateToPage(0);
                                               _resetAd();
                                             },
                                             child: Container(
