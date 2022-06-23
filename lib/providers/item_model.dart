@@ -1,8 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 enum Category { books, cycles, electronics, others }
+
 enum YearCategory { first, second, third, fourth, fifth }
+
 enum SemesterCategory { first, second }
+
 enum BranchCategory {
   eni,
   ece,
@@ -48,4 +53,9 @@ class Item with ChangeNotifier {
     isFavourite = !isFavourite;
     notifyListeners();
   }
-}
+
+
+
+    
+  }
+
