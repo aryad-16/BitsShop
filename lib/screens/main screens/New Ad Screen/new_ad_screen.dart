@@ -643,7 +643,7 @@ class _NewAdScreenState extends State<NewAdScreen>
                                                       'price': _editeditem.price
                                                           .toString(),
                                                       'category': _editeditem
-                                                          .category
+                                                          .category.name
                                                           .toString(),
                                                       'profileId': _editeditem
                                                           .profileId
