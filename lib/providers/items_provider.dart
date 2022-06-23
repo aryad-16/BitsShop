@@ -1,8 +1,15 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 import 'item_model.dart';
 
 class Items with ChangeNotifier {
+  final user = FirebaseAuth.instance.currentUser;
+  FirebaseStorage storageRef = FirebaseStorage.instance;
   final List<Item> _items = [
     Item(
       imageList: [
@@ -17,6 +24,9 @@ class Items with ChangeNotifier {
       category: Category.books,
       id: '1',
       profileId: 'abcd',
+      year: YearCategory.fifth,
+      branch: BranchCategory.ecoDual,
+      sem: SemesterCategory.second,
     ),
     Item(
       imageList: [
@@ -79,8 +89,24 @@ class Items with ChangeNotifier {
       profileId: 'abcd',
     ),
   ];
+  Future<void> fileUpload(pickedFile, i, String id, Item editedItem) async {
+    if (pickedFile != null) {
+      Reference reference =
+          storageRef.ref().child('items').child(id).child(i.toString());
+      UploadTask uploadTask = reference.putFile(File(pickedFile));
+      uploadTask.snapshotEvents.listen((event) {
+        print(event.bytesTransferred.toString() +
+            "\t" +
+            event.totalBytes.toString());
+      });
+      await uploadTask.whenComplete(() async {
+        editedItem.imageList[i] =
+            await uploadTask.snapshot.ref.getDownloadURL();
+      });
+    }
+  }
 
-  void addItem(Item item) {
+  Future<void> addItem(Item item) async {
     item.imageList.removeWhere((element) => element == 'a');
     final newItem = Item(
       category: item.category,
@@ -90,7 +116,34 @@ class Items with ChangeNotifier {
       price: item.price,
       imageList: item.imageList,
       profileId: item.profileId,
+      year: item.year,
+      branch: item.branch,
+      sem: item.sem,
     );
+    for (int i = 0; i < newItem.imageList.length; i++) {
+      await fileUpload(newItem.imageList[i], i, newItem.id, newItem);
+    }
+    FirebaseFirestore.instance
+        .collection('items')
+        .doc(
+          newItem.id,
+        )
+        .set(
+          {
+            'title': newItem.title.toString(),
+            'description': newItem.description.toString(),
+            'price': newItem.price.toString(),
+            'category': newItem.category.toString(),
+            'profileId': newItem.profileId.toString(),
+            'imageList': newItem.imageList.toString(),
+            'id': newItem.id,
+            'uid': user?.uid.toString()
+          },
+        )
+        .then((_) {})
+        .catchError((e) {
+          print(e);
+        });
     _items.add(newItem);
     notifyListeners();
   }
@@ -107,12 +160,21 @@ class Items with ChangeNotifier {
     notifyListeners();
   }
 
-  List<Item> searchBookItems(String query) {
+  List<Item> searchBookItems(String query, YearCategory? year,
+      SemesterCategory? sem, BranchCategory? branch) {
     return _items.where((item) {
       final titleLower = item.title.toLowerCase();
       final descriptionLower = item.description.toLowerCase();
       final searchLower = query.toLowerCase();
-
+      if (year != null && year != item.year) {
+        return false;
+      }
+      if (sem != null && sem != item.sem) {
+        return false;
+      }
+      if (branch != null && branch != item.branch) {
+        return false;
+      }
       return (titleLower.contains(searchLower) ||
               descriptionLower.contains(searchLower)) &&
           item.category == Category.books;

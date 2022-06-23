@@ -16,7 +16,7 @@ class HorizontalListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final items = title == 'Books'
-        ? Provider.of<Items>(context).searchBookItems('')
+        ? Provider.of<Items>(context).searchBookItems('', null, null, null)
         : title == 'Cycles'
             ? Provider.of<Items>(context).searchCycleItems('')
             : title == 'Electronics'
