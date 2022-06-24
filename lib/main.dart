@@ -24,23 +24,39 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-  void getFeedItems() async {
+  Future<List> getFeedItems() async {
+    var feedItems;
     final user = FirebaseAuth.instance.currentUser;
     await FirebaseFirestore.instance.collection('items').get().then((ds) {
-      List feedItems = ds.docs
+      feedItems = ds.docs
           .map((doc) => Item(
-              category: Category.values.firstWhere((e) => e.toString() == 'Category.' + doc['category'].toString().substring(9)),
-              price: int.parse(doc['price'] ),
+              category: Category.values
+                  .firstWhere((e) => e.toString() == doc['category']),
+              price: int.parse(doc['price']),
               profileId: doc['profileId'],
               title: doc['title'],
               id: doc['id'],
               description: doc['description'],
-              imageList: doc['imageList'].split(',')))
+              imageList: doc['imageList'].split(','),
+              year: doc.data().toString().contains('year')
+                  ? YearCategory.values
+                      .firstWhere((e) => e.toString() == doc['year'])
+                  : null,
+              sem: doc.data().toString().contains('semester')
+                  ? SemesterCategory.values
+                      .firstWhere((e) => e.toString() == doc['semester'])
+                  : null,
+              branch: doc.data().toString().contains('branch')
+                  ? BranchCategory.values
+                      .firstWhere((e) => e.toString() == doc['branch'])
+                  : null))
           .toList();
-      print(feedItems[0].category);
+      Items().setItemsList(feedItems);
+      print(feedItems[0].branch);
     }).catchError((e) {
       print(e);
     }).then((value) {});
+    return feedItems;
   }
 
   @override
