@@ -1,4 +1,4 @@
-# login_singup_screen_ui
+# BitsShop
 
 A new Flutter project.
 
