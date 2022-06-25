@@ -4,7 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:login_singup_screen_ui/screens/main%20screens/Search%20Screen/search_screen.dart';
 import 'package:login_singup_screen_ui/widgets/animated_indexed_stack.dart';
 import 'package:login_singup_screen_ui/widgets/confirm_popup.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/items_provider.dart';
 import 'main screens/New Ad Screen/new_ad_screen.dart';
 import 'main screens/Profile Screen/profile_screen.dart';
 import 'main screens/home screen/home_screen.dart';
@@ -25,6 +27,17 @@ class _MainScreenState extends State<MainScreen> {
     const SearchScreen(category: 'Manage Ads', isEdit: true),
     const ProfileScreen(),
   ];
+
+  bool _isInit = true;
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      Provider.of<Items>(context).setItemsList();
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
