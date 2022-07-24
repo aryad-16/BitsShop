@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -7,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
 import 'package:login_singup_screen_ui/screens/signup%20and%20login/login_screen.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../widgets/signUp_login_top_text.dart';
 import 'continue_with_phone.dart';
@@ -21,6 +23,12 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  int _activeindex = 0;
+  final List<String> _links = [
+    'assets/images/onboarding.jpeg',
+    'assets/images/onboarding.jpeg',
+    'assets/images/onboarding.jpeg'
+  ];
   bool _value = false;
 
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -44,7 +52,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Future<void> registerUserData(UserCredential userCredential) async {
     var name = userCredential.user!.displayName;
     var email = userCredential.user!.email;
-    final user = await FirebaseAuth.instance.currentUser;
+    final user = FirebaseAuth.instance.currentUser;
     await FirebaseFirestore.instance
         .collection('Profiles')
         .doc(user!.uid)
@@ -73,10 +81,54 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            top_Text(height, 'Create an Account'),
+            topText(height, 'Create an Account'),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 120),
-              child: Image.asset('assets/images/logo.png'),
+              padding: const EdgeInsets.only(top: 50, bottom: 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    child: CarouselSlider.builder(
+                      itemCount: _links.length,
+                      itemBuilder: (context, index, realindex) => ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.asset(_links[index]),
+                      ),
+                      options: CarouselOptions(
+                        onPageChanged: (index, reason) {
+                          setState(() {
+                            _activeindex = index;
+                          });
+                        },
+                        height: 380,
+                        viewportFraction: 1,
+                        enableInfiniteScroll: false,
+                      ),
+                    ),
+                  ),
+                  AnimatedSmoothIndicator(
+                    activeIndex: _activeindex,
+                    count: _links.length,
+                    effect: CustomizableEffect(
+                      activeDotDecoration: DotDecoration(
+                        width: 22,
+                        height: 3.5,
+                        color: const Color.fromRGBO(247, 154, 0, 1),
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      dotDecoration: DotDecoration(
+                        width: 10,
+                        height: 3.5,
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(16),
+                        verticalOffset: 0,
+                      ),
+                      spacing: 6.0,
+                    ),
+                  ),
+                ],
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(
@@ -191,39 +243,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
             ),
-            // Row(
-            //   children: <Widget>[
-            //     Stack(
-            //       children: [
-            //         SvgPicture.asset(
-            //           'assets/icons/google.svg',
-            //         ),
-            //         GestureDetector(
-            //           onTap: () async {
-            //             print('here1');
-            //             await signUp();
-            //             print('here2');
-            //             await Navigator.of(context)
-            //                 .pushReplacementNamed(ContinueWithPhone.routeName);
-            //           },
-            //           child: Transform.scale(
-            //             scale: 0.37,
-            //             child: SvgPicture.asset(
-            //               'assets/icons/google_icon.svg',
-            //               height: 50,
-            //               width: 50,
-            //             ),
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //     SizedBox(
-            //       width: (30 / 375) * width,
-            //     ),
-            //     SvgPicture.asset('assets/icons/facebook.svg'),
-            //   ],
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            // ),
             Padding(
               padding: EdgeInsets.only(
                   top: (20 / 812) * height, bottom: (20 / 812) * height),

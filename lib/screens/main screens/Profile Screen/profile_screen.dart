@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +10,6 @@ import '../../../Data/data.dart';
 import '../../../providers/profiles_provider.dart';
 import '../../../widgets/error_snackbar.dart';
 import '../../../widgets/pick_image.dart';
-import '../../signup and login/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -310,43 +308,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 15),
-                    decoration: BoxDecoration(
-                      boxShadow: [Constant.boxShadow],
-                      gradient: Constant.yellowlinear,
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    width: (315 / 375) * width,
-                    height: (60 / 812) * height,
-                    child: ElevatedButton(
-                      style: Constant.elevatedButtonStyle,
-                      onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (ctx) => const LoginScreen(),
-                          ),
-                        );
-                      },
-                      child: Row(
-                        children: <Widget>[
-                          SvgPicture.asset(
-                            'assets/icons/logout.svg',
-                            color: Colors.white,
-                          ),
-                          const Text(
-                            '  Logout',
-                            style: TextStyle(
-                              fontFamily: 'Poppins Bold',
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                        mainAxisAlignment: MainAxisAlignment.center,
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   margin: const EdgeInsets.only(top: 15),
+                  //   decoration: BoxDecoration(
+                  //     boxShadow: [Constant.boxShadow],
+                  //     gradient: Constant.yellowlinear,
+                  //     borderRadius: BorderRadius.circular(100),
+                  //   ),
+                  //   width: (315 / 375) * width,
+                  //   height: (60 / 812) * height,
+                  //   child: ElevatedButton(
+                  //     style: Constant.elevatedButtonStyle,
+                  //     onPressed: () {
+                  //       Navigator.of(context).pushReplacement(
+                  //         MaterialPageRoute(
+                  //           builder: (ctx) => const LoginScreen(),
+                  //         ),
+                  //       );
+                  //     },
+                  //     child: Row(
+                  //       children: <Widget>[
+                  //         SvgPicture.asset(
+                  //           'assets/icons/logout.svg',
+                  //           color: Colors.white,
+                  //         ),
+                  //         const Text(
+                  //           '  Logout',
+                  //           style: TextStyle(
+                  //             fontFamily: 'Poppins Bold',
+                  //             fontSize: 18,
+                  //             fontWeight: FontWeight.bold,
+                  //           ),
+                  //         ),
+                  //       ],
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

@@ -1,7 +1,7 @@
-import 'package:login_singup_screen_ui/Constants/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:login_singup_screen_ui/Constants/constants.dart';
 
-Widget top_Text(double height, String title) {
+Widget topText(double height, String title) {
   return Column(
     children: [
       Padding(
@@ -21,6 +21,11 @@ Widget top_Text(double height, String title) {
       ),
       Text(
         title,
+        // style: GoogleFonts.inter(
+        //   fontWeight: FontWeight.bold,
+        //   fontSize: 24,
+        //   color: Constant.blackColor,
+        // ),
         style: TextStyle(
           fontFamily: 'Poppins Bold',
           fontWeight: FontWeight.bold,

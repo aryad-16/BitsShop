@@ -118,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              top_Text(height, 'Welcome Back'),
+              topText(height, 'Welcome Back'),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 120),
                 child: Image.asset('assets/images/logo.png'),
