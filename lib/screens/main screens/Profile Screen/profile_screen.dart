@@ -125,228 +125,231 @@ class _ProfileScreenState extends State<ProfileScreen> {
         backgroundColor: Colors.transparent,
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: GestureDetector(
-            onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Stack(
-                    children: [
-                      ClipOval(
-                        child: Material(
-                          color: Colors.transparent,
-                          child: image == null
-                              ? Image.network(
-                                  _profile.profilePicUrl,
-                                  width: 150,
-                                  height: 150,
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.file(
-                                  image!,
-                                  width: 150,
-                                  height: 150,
-                                  fit: BoxFit.cover,
-                                ),
-                        ),
-                      ),
-                      Positioned(
-                        child: buildCircle(
-                          child: buildCircle(
-                            child: GestureDetector(
-                              onTap: () => showPopUp(context, pickImage),
-                              child: const Icon(
-                                Icons.edit,
-                                color: Colors.white,
-                                size: 20,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Stack(
+                  children: [
+                    ClipOval(
+                      child: Material(
+                        color: Colors.transparent,
+                        child: image == null
+                            ? Image.network(
+                                _profile.profilePicUrl,
+                                width: 180,
+                                height: 180,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.file(
+                                image!,
+                                width: 150,
+                                height: 150,
+                                fit: BoxFit.cover,
                               ),
+                      ),
+                    ),
+                    Positioned(
+                      child: buildCircle(
+                        child: buildCircle(
+                          child: GestureDetector(
+                            onTap: () => showPopUp(context, pickImage),
+                            child: const Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                              size: 20,
                             ),
-                            color: Colors.blue,
-                            padding: 8,
                           ),
-                          color: Colors.white,
-                          padding: 3,
+                          color: Colors.blue,
+                          padding: 8,
                         ),
-                        bottom: 12,
-                        right: 0,
-                      )
-                    ],
-                  ),
-                  const Divider(
-                    color: Colors.black87,
-                    indent: 22,
-                    height: 25,
-                    endIndent: 22,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: TextField(
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Name',
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-                        isDense: true,
+                        color: Colors.white,
+                        padding: 3,
                       ),
-                      enabled: false,
-                      style: TextStyle(
-                        fontFamily: 'ManRope Regular',
-                        fontSize: 18,
-                        color: Constant.greyColor1,
-                      ),
-                      controller: TextEditingController()..text = _profile.name,
+                      bottom: 12,
+                      right: 0,
+                    )
+                  ],
+                ),
+                const Divider(
+                  color: Colors.black87,
+                  indent: 22,
+                  height: 25,
+                  endIndent: 22,
+                ),
+                const Spacer(flex: 1),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 0),
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Name',
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+                      isDense: true,
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: TextField(
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Email',
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-                        isDense: true,
-                      ),
-                      enabled: false,
-                      style: TextStyle(
-                        fontFamily: 'ManRope Regular',
-                        fontSize: 18,
-                        color: Constant.greyColor1,
-                      ),
-                      controller: TextEditingController()
-                        ..text = _profile.email,
+                    enabled: false,
+                    style: TextStyle(
+                      fontFamily: 'ManRope Regular',
+                      fontSize: 18,
+                      color: Constant.greyColor1,
                     ),
+                    controller: TextEditingController()..text = _profile.name,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: TextFormField(
-                      focusNode: _phoneNumberFocusNode,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(),
-                        counterText: '',
-                        labelText: 'Phone Number',
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-                        isDense: true,
-                      ),
-                      style: const TextStyle(
-                        fontFamily: 'ManRope Regular',
-                        fontSize: 18,
-                      ),
-                      maxLength: 10,
-                      onEditingComplete: () {
-                        if (_phoneNumberController.text.length < 10) {
-                          errorSnackbar(
-                              context, 'Please enter valid phone number');
-                          _phoneNumberController.text =
-                              _profile.phoneNumber.toString();
-                        } else {
-                          Provider.of<Profiles>(context, listen: false)
-                              .updateProfile(
-                                  profileID, 2, _phoneNumberController.text);
-                        }
-                      },
-                      controller: _phoneNumberController,
-                      keyboardType: TextInputType.phone,
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (_) {
-                        _fieldFocusChange(
-                            context, _phoneNumberFocusNode, _roomNoFocusNode);
-                      },
+                ),
+                const Spacer(flex: 1),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 0),
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Email',
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+                      isDense: true,
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: InkWell(
-                      onTap: () => _showModalSheet(),
-                      child: IgnorePointer(
-                        child: TextField(
-                          decoration: const InputDecoration(
-                            enabledBorder: OutlineInputBorder(),
-                            labelText: 'Bhawan',
-                            contentPadding: EdgeInsets.symmetric(
-                              vertical: 18,
-                              horizontal: 12,
-                            ),
-                            isDense: true,
-                          ),
-                          style: const TextStyle(
-                            fontFamily: 'ManRope Regular',
-                            fontSize: 18,
-                          ),
-                          controller: bhawanNameController,
-                        ),
-                      ),
+                    enabled: false,
+                    style: TextStyle(
+                      fontFamily: 'ManRope Regular',
+                      fontSize: 18,
+                      color: Constant.greyColor1,
                     ),
+                    controller: TextEditingController()..text = _profile.email,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: TextFormField(
-                      focusNode: _roomNoFocusNode,
-                      decoration: const InputDecoration(
-                        enabledBorder: OutlineInputBorder(),
-                        labelText: 'Room Number',
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-                        isDense: true,
-                      ),
-                      style: const TextStyle(
-                        fontFamily: 'ManRope Regular',
-                        fontSize: 18,
-                      ),
-                      controller: _roomNumberController,
-                      keyboardType: TextInputType.phone,
-                      textInputAction: TextInputAction.done,
-                      onFieldSubmitted: (_) {
+                ),
+                const Spacer(flex: 1),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 0),
+                  child: TextFormField(
+                    focusNode: _phoneNumberFocusNode,
+                    decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(),
+                      counterText: '',
+                      labelText: 'Phone Number',
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+                      isDense: true,
+                    ),
+                    style: const TextStyle(
+                      fontFamily: 'ManRope Regular',
+                      fontSize: 18,
+                    ),
+                    maxLength: 10,
+                    onEditingComplete: () {
+                      if (_phoneNumberController.text.length < 10) {
+                        errorSnackbar(
+                            context, 'Please enter valid phone number');
+                        _phoneNumberController.text =
+                            _profile.phoneNumber.toString();
+                      } else {
                         Provider.of<Profiles>(context, listen: false)
                             .updateProfile(
-                                profileID, 4, _roomNumberController.text);
-                        FocusScope.of(context).unfocus();
-                      },
+                                profileID, 2, _phoneNumberController.text);
+                      }
+                    },
+                    controller: _phoneNumberController,
+                    keyboardType: TextInputType.phone,
+                    textInputAction: TextInputAction.next,
+                    onFieldSubmitted: (_) {
+                      _fieldFocusChange(
+                          context, _phoneNumberFocusNode, _roomNoFocusNode);
+                    },
+                  ),
+                ),
+                const Spacer(flex: 1),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 0),
+                  child: InkWell(
+                    onTap: () => _showModalSheet(),
+                    child: IgnorePointer(
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          enabledBorder: OutlineInputBorder(),
+                          labelText: 'Bhawan',
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 18,
+                            horizontal: 12,
+                          ),
+                          isDense: true,
+                        ),
+                        style: const TextStyle(
+                          fontFamily: 'ManRope Regular',
+                          fontSize: 18,
+                        ),
+                        controller: bhawanNameController,
+                      ),
                     ),
                   ),
-                  // Container(
-                  //   margin: const EdgeInsets.only(top: 15),
-                  //   decoration: BoxDecoration(
-                  //     boxShadow: [Constant.boxShadow],
-                  //     gradient: Constant.yellowlinear,
-                  //     borderRadius: BorderRadius.circular(100),
-                  //   ),
-                  //   width: (315 / 375) * width,
-                  //   height: (60 / 812) * height,
-                  //   child: ElevatedButton(
-                  //     style: Constant.elevatedButtonStyle,
-                  //     onPressed: () {
-                  //       Navigator.of(context).pushReplacement(
-                  //         MaterialPageRoute(
-                  //           builder: (ctx) => const LoginScreen(),
-                  //         ),
-                  //       );
-                  //     },
-                  //     child: Row(
-                  //       children: <Widget>[
-                  //         SvgPicture.asset(
-                  //           'assets/icons/logout.svg',
-                  //           color: Colors.white,
-                  //         ),
-                  //         const Text(
-                  //           '  Logout',
-                  //           style: TextStyle(
-                  //             fontFamily: 'Poppins Bold',
-                  //             fontSize: 18,
-                  //             fontWeight: FontWeight.bold,
-                  //           ),
-                  //         ),
-                  //       ],
-                  //       mainAxisAlignment: MainAxisAlignment.center,
-                  //     ),
-                  //   ),
-                  // ),
-                ],
-              ),
+                ),
+                const Spacer(flex: 1),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 0),
+                  child: TextFormField(
+                    focusNode: _roomNoFocusNode,
+                    decoration: const InputDecoration(
+                      enabledBorder: OutlineInputBorder(),
+                      labelText: 'Room Number',
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+                      isDense: true,
+                    ),
+                    style: const TextStyle(
+                      fontFamily: 'ManRope Regular',
+                      fontSize: 18,
+                    ),
+                    controller: _roomNumberController,
+                    keyboardType: TextInputType.phone,
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (_) {
+                      Provider.of<Profiles>(context, listen: false)
+                          .updateProfile(
+                              profileID, 4, _roomNumberController.text);
+                      FocusScope.of(context).unfocus();
+                    },
+                  ),
+                ),
+                const Spacer(flex: 2),
+                // Container(
+                //   margin: const EdgeInsets.only(top: 15),
+                //   decoration: BoxDecoration(
+                //     boxShadow: [Constant.boxShadow],
+                //     gradient: Constant.yellowlinear,
+                //     borderRadius: BorderRadius.circular(100),
+                //   ),
+                //   width: (315 / 375) * width,
+                //   height: (60 / 812) * height,
+                //   child: ElevatedButton(
+                //     style: Constant.elevatedButtonStyle,
+                //     onPressed: () {
+                //       Navigator.of(context).pushReplacement(
+                //         MaterialPageRoute(
+                //           builder: (ctx) => const LoginScreen(),
+                //         ),
+                //       );
+                //     },
+                //     child: Row(
+                //       children: <Widget>[
+                //         SvgPicture.asset(
+                //           'assets/icons/logout.svg',
+                //           color: Colors.white,
+                //         ),
+                //         const Text(
+                //           '  Logout',
+                //           style: TextStyle(
+                //             fontFamily: 'Poppins Bold',
+                //             fontSize: 18,
+                //             fontWeight: FontWeight.bold,
+                //           ),
+                //         ),
+                //       ],
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //     ),
+                //   ),
+                // ),
+              ],
             ),
           ),
         ),
