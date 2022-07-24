@@ -12,43 +12,48 @@ class Items with ChangeNotifier {
   FirebaseStorage storageRef = FirebaseStorage.instance;
   List<Item> _items = [];
 
-  Future<void> setItemsList() async {
-    print("Hello guys have a good fking day");
-    List<Item> feedItems = [];
+  // Future<void> setItemsList() async {
+  //   print("Hello guys have a good fking day");
+  //   List<Item> feedItems = [];
 
-    await FirebaseFirestore.instance.collection("items").get().then((ds) {
-      feedItems = ds.docs
-          .map(
-            (doc) => Item(
-                category: Category.values
-                    .firstWhere((e) => e.toString() == doc['category']),
-                price: int.parse(doc['price']),
-                profileId: doc['profileId'],
-                title: doc['title'],
-                id: doc['id'],
-                description: doc['description'],
-                imageList: doc['imageList'].split(','),
-                year: doc.data().toString().contains('year')
-                    ? YearCategory.values
-                        .firstWhere((e) => e.toString() == doc['year'])
-                    : null,
-                sem: doc.data().toString().contains('semester')
-                    ? SemesterCategory.values
-                        .firstWhere((e) => e.toString() == doc['semester'])
-                    : null,
-                branch: doc.data().toString().contains('branch')
-                    ? BranchCategory.values
-                        .firstWhere((e) => e.toString() == doc['branch'])
-                    : null),
-          )
-          .toList();
-      print("Have a good day  ${feedItems[0].branch}");
-      _items = feedItems;
-      notifyListeners();
-      print("Have a good day  ${feedItems[0].branch}");
-    }).catchError((e) {
-      print(e);
-    });
+  //   await FirebaseFirestore.instance.collection("items").get().then((ds) {
+  //     feedItems = ds.docs
+  //         .map(
+  //           (doc) => Item(
+  //               category: Category.values
+  //                   .firstWhere((e) => e.toString() == doc['category']),
+  //               price: int.parse(doc['price']),
+  //               profileId: doc['profileId'],
+  //               title: doc['title'],
+  //               id: doc['id'],
+  //               description: doc['description'],
+  //               imageList: doc['imageList'].split(','),
+  //               year: doc.data().toString().contains('year')
+  //                   ? YearCategory.values
+  //                       .firstWhere((e) => e.toString() == doc['year'])
+  //                   : null,
+  //               sem: doc.data().toString().contains('semester')
+  //                   ? SemesterCategory.values
+  //                       .firstWhere((e) => e.toString() == doc['semester'])
+  //                   : null,
+  //               branch: doc.data().toString().contains('branch')
+  //                   ? BranchCategory.values
+  //                       .firstWhere((e) => e.toString() == doc['branch'])
+  //                   : null),
+  //         )
+  //         .toList();
+  //     print("Have a good day  ${feedItems[0].branch}");
+  //     _items = feedItems;
+  //     notifyListeners();
+  //     print("Have a good day  ${feedItems[0].branch}");
+  //   }).catchError((e) {
+  //     print(e);
+  //   });
+  // }
+
+  void setItemsList(List<Item> firebaseList) {
+    _items = firebaseList;
+    notifyListeners();
   }
 
   Future<void> fileUpload(pickedFile, i, String id, Item editedItem) async {

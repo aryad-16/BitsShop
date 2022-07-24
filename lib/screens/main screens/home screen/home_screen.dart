@@ -10,9 +10,59 @@ import '../../../providers/profiles_provider.dart';
 import '../../../widgets/drawer.dart';
 import 'horizontal_list_view.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const routename = 'homescreen';
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  // bool _isInit = true;
+  // Future<void> getFeedItems(BuildContext context) async {
+  //   print("Hello guys have a good day");
+  //   List<Item> feedItems = [];
+  //   await FirebaseFirestore.instance.collection('items').get().then((ds) {
+  //     feedItems = ds.docs
+  //         .map((doc) => Item(
+  //             category: Category.values
+  //                 .firstWhere((e) => e.toString() == doc['category']),
+  //             price: int.parse(doc['price']),
+  //             profileId: doc['profileId'],
+  //             title: doc['title'],
+  //             id: doc['id'],
+  //             description: doc['description'],
+  //             imageList: doc['imageList'].split(','),
+  //             year: doc.data().toString().contains('year')
+  //                 ? YearCategory.values
+  //                     .firstWhere((e) => e.toString() == doc['year'])
+  //                 : null,
+  //             sem: doc.data().toString().contains('semester')
+  //                 ? SemesterCategory.values
+  //                     .firstWhere((e) => e.toString() == doc['semester'])
+  //                 : null,
+  //             branch: doc.data().toString().contains('branch')
+  //                 ? BranchCategory.values
+  //                     .firstWhere((e) => e.toString() == doc['branch'])
+  //                 : null))
+  //         .toList();
+  //     // Provider.of<Items>(context).setItemsList(feedItems);
+  //     print("Hello guys have a good fking day ${feedItems[0].branch}");
+  //     // print("Hello guys have a good fking day");
+  //   }).catchError((e) {
+  //     print(e);
+  //   }).then((value) {});
+  // }
+
+  // @override
+  // void didChangeDependencies() {
+  //   if (_isInit) {
+  //     getFeedItems(context);
+  //   }
+  //   _isInit = false;
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
