@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:login_singup_screen_ui/widgets/search_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:string_extensions/string_extensions.dart';
 
 import '../../../Constants/constants.dart';
 import '../../../Data/data.dart';
@@ -47,13 +48,19 @@ class _SearchScreenState extends State<SearchScreen>
 
   @override
   Widget build(BuildContext context) {
-    final List<String> ids = widget.category == ItemCategory.yourItems
-        ? Provider.of<Profiles>(context, listen: false)
-            .getProfile(profileID)
-            .theirAdIds
-        : [];
-    final items = Provider.of<Items>(context, listen: false).searchItems(
-        widget.category, query, _selectedYear, _selectedSem, _selectedBranch);
+    final List<String> ids = Provider.of<Profiles>(context, listen: false)
+        .getProfile(profileID)
+        .theirAdIds;
+    final items = widget.category == ItemCategory.yourItems
+        ? Provider.of<Items>(context, listen: false).searchYourItems(ids, query)
+        : Provider.of<Items>(context, listen: false).searchItems(
+            widget.category,
+            query,
+            _selectedYear,
+            _selectedSem,
+            _selectedBranch,
+          );
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark
           .copyWith(statusBarColor: const Color.fromARGB(255, 245, 245, 245)),
@@ -85,7 +92,9 @@ class _SearchScreenState extends State<SearchScreen>
           title: Text(
             widget.category == ItemCategory.yourItems
                 ? 'Manage Ads'
-                : widget.category.toString().substring(13),
+                : widget.category == ItemCategory.all
+                    ? 'All Items'
+                    : widget.category.toString().substring(13).capitalize ?? '',
             style: const TextStyle(
               fontSize: 21,
               fontFamily: 'Poppins Medium',
@@ -119,7 +128,9 @@ class _SearchScreenState extends State<SearchScreen>
                   text: query,
                   hintText: widget.category == ItemCategory.yourItems
                       ? 'Search Ads'
-                      : 'Search ${widget.category.toString().substring(13)}',
+                      : widget.category == ItemCategory.all
+                          ? 'Search All Items'
+                          : 'Search ${widget.category.toString().substring(13).capitalize ?? ''}',
                   onChanged: searchBook,
                 ),
                 const SizedBox(height: 15),

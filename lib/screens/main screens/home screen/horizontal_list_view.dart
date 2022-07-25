@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:login_singup_screen_ui/providers/items_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:string_extensions/string_extensions.dart';
 
 import '../../../Constants/constants.dart';
 import '../../../providers/item_model.dart';
@@ -16,13 +17,6 @@ class HorizontalListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final items = category == 'Books'
-    //     ? Provider.of<Items>(context).searchBookItems('', null, null, null)
-    //     : category == 'Cycles'
-    //         ? Provider.of<Items>(context).searchCycleItems('')
-    //         : category == 'Electronics'
-    //             ? Provider.of<Items>(context).searchElectronicItems('')
-    //             : Provider.of<Items>(context).searchOtherItems('');
     final items =
         Provider.of<Items>(context).searchItems(category, '', null, null, null);
     return Container(
@@ -35,7 +29,7 @@ class HorizontalListView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  category.toString().substring(13),
+                  category.toString().substring(13).capitalize ?? '',
                   style: const TextStyle(
                     fontFamily: 'ManRope Regular',
                     fontSize: 18,

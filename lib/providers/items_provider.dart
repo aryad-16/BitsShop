@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
@@ -87,33 +86,33 @@ class Items with ChangeNotifier {
       branch: item.branch,
       sem: item.sem,
     );
-    for (int i = 0; i < newItem.imageList.length; i++) {
-      await fileUpload(newItem.imageList[i], i, newItem.id, newItem);
-    }
-    FirebaseFirestore.instance
-        .collection('items')
-        .doc(
-          newItem.id,
-        )
-        .set(
-          {
-            'title': newItem.title.toString(),
-            'description': newItem.description.toString(),
-            'price': newItem.price.toString(),
-            'category': newItem.category.toString(),
-            'profileId': newItem.profileId.toString(),
-            'imageList': newItem.imageList.toString(),
-            'id': newItem.id,
-            'uid': user?.uid.toString(),
-            'year': newItem.year,
-            'branch': newItem.branch.toString(),
-            'semester': newItem.sem.toString()
-          },
-        )
-        .then((_) {})
-        .catchError((e) {
-          print(e);
-        });
+    // for (int i = 0; i < newItem.imageList.length; i++) {
+    //   await fileUpload(newItem.imageList[i], i, newItem.id, newItem);
+    // }
+    // FirebaseFirestore.instance
+    //     .collection('items')
+    //     .doc(
+    //       newItem.id,
+    //     )
+    //     .set(
+    //       {
+    //         'title': newItem.title.toString(),
+    //         'description': newItem.description.toString(),
+    //         'price': newItem.price.toString(),
+    //         'category': newItem.category.toString(),
+    //         'profileId': newItem.profileId.toString(),
+    //         'imageList': newItem.imageList.toString(),
+    //         'id': newItem.id,
+    //         'uid': user?.uid.toString(),
+    //         'year': newItem.year,
+    //         'branch': newItem.branch.toString(),
+    //         'semester': newItem.sem.toString()
+    //       },
+    //     )
+    //     .then((_) {})
+    //     .catchError((e) {
+    //       print(e);
+    //     });
     _items.add(newItem);
     notifyListeners();
   }
@@ -129,74 +128,6 @@ class Items with ChangeNotifier {
     _items.removeWhere((element) => element.id == id);
     notifyListeners();
   }
-
-  // List<Item> searchAllItems(String query) {
-  //   return _items.where((item) {
-  //     final titleLower = item.title.toLowerCase();
-  //     final descriptionLower = item.description.toLowerCase();
-  //     final searchLower = query.toLowerCase();
-
-  //     return titleLower.contains(searchLower) ||
-  //         descriptionLower.contains(searchLower);
-  //   }).toList();
-  // }
-
-  // List<im.Item> searchBookItems(String query, im.YearCategory? year,
-  //     im.SemesterCategory? sem, im.BranchCategory? branch) {
-  //   return _items.where((item) {
-  //     final titleLower = item.title.toLowerCase();
-  //     final descriptionLower = item.description.toLowerCase();
-  //     final searchLower = query.toLowerCase();
-  //     if (year != null && year != item.year) {
-  //       return false;
-  //     }
-  //     if (sem != null && sem != item.sem) {
-  //       return false;
-  //     }
-  //     if (branch != null && branch != item.branch) {
-  //       return false;
-  //     }
-  //     return (titleLower.contains(searchLower) ||
-  //             descriptionLower.contains(searchLower)) &&
-  //         item.category == im.Category.books;
-  //   }).toList();
-  // }
-
-  // List<im.Item> searchCycleItems(String query) {
-  //   return _items.where((item) {
-  //     final titleLower = item.title.toLowerCase();
-  //     final descriptionLower = item.description.toLowerCase();
-  //     final searchLower = query.toLowerCase();
-
-  //     return (titleLower.contains(searchLower) ||
-  //             descriptionLower.contains(searchLower)) &&
-  //         item.category == im.Category.cycles;
-  //   }).toList();
-  // }
-
-  // List<im.Item> searchElectronicItems(String query) {
-  //   return _items.where((item) {
-  //     final titleLower = item.title.toLowerCase();
-  //     final descriptionLower = item.description.toLowerCase();
-  //     final searchLower = query.toLowerCase();
-
-  //     return (titleLower.contains(searchLower) ||
-  //             descriptionLower.contains(searchLower)) &&
-  //         item.category == im.Category.electronics;
-  //   }).toList();
-  // }
-
-  // List<im.Item> searchOtherItems(String query) {
-  //   return _items.where((item) {
-  //     final titleLower = item.title.toLowerCase();
-  //     final descriptionLower = item.description.toLowerCase();
-  //     final searchLower = query.toLowerCase();
-
-  //     return (titleLower.contains(searchLower) ||
-  //             descriptionLower.contains(searchLower)) &&
-  //         item.category == im.Category.others;
-  //   }).toList();
-  // }
 
   List<Item> searchItems(ItemCategory category, String query,
       YearCategory? year, SemesterCategory? sem, BranchCategory? branch) {
