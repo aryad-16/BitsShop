@@ -13,7 +13,7 @@ import '../../../widgets/rounded_containers.dart';
 import '../Item Category Screen/items_grid_view.dart';
 
 class SearchScreen extends StatefulWidget {
-  final String category;
+  final ItemCategory category;
   final bool isEdit;
   const SearchScreen({Key? key, required this.category, required this.isEdit})
       : super(key: key);
@@ -47,27 +47,13 @@ class _SearchScreenState extends State<SearchScreen>
 
   @override
   Widget build(BuildContext context) {
-    final List<String> ids = widget.category == 'Manage Ads'
+    final List<String> ids = widget.category == ItemCategory.yourItems
         ? Provider.of<Profiles>(context, listen: false)
             .getProfile(profileID)
             .theirAdIds
         : [];
-    final items = widget.category == 'Books'
-        ? Provider.of<Items>(context, listen: false).searchBookItems(
-            query, _selectedYear, _selectedSem, _selectedBranch)
-        : widget.category == 'Cycles'
-            ? Provider.of<Items>(context, listen: false).searchCycleItems(query)
-            : widget.category == 'Electronics'
-                ? Provider.of<Items>(context, listen: false)
-                    .searchElectronicItems(query)
-                : widget.category == 'All'
-                    ? Provider.of<Items>(context, listen: false)
-                        .searchAllItems(query)
-                    : widget.category == 'Other'
-                        ? Provider.of<Items>(context, listen: false)
-                            .searchOtherItems(query)
-                        : Provider.of<Items>(context)
-                            .searchYourItems(ids, query);
+    final items = Provider.of<Items>(context, listen: false).searchItems(
+        widget.category, query, _selectedYear, _selectedSem, _selectedBranch);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark
           .copyWith(statusBarColor: const Color.fromARGB(255, 245, 245, 245)),
@@ -97,7 +83,9 @@ class _SearchScreenState extends State<SearchScreen>
                 ),
           centerTitle: true,
           title: Text(
-            widget.category,
+            widget.category == ItemCategory.yourItems
+                ? 'Manage Ads'
+                : widget.category.toString().substring(13),
             style: const TextStyle(
               fontSize: 21,
               fontFamily: 'Poppins Medium',
@@ -105,7 +93,8 @@ class _SearchScreenState extends State<SearchScreen>
             ),
           ),
           actions: [
-            widget.category == 'Books' || widget.category == 'All Products'
+            widget.category == ItemCategory.books ||
+                    widget.category == ItemCategory.all
                 ? GestureDetector(
                     onTap: () => _showFiltersDialog(context),
                     child: Container(
@@ -128,9 +117,9 @@ class _SearchScreenState extends State<SearchScreen>
               children: <Widget>[
                 SearchWidget(
                   text: query,
-                  hintText: widget.category == 'Manage Ads'
+                  hintText: widget.category == ItemCategory.yourItems
                       ? 'Search Ads'
-                      : 'Search ${widget.category}',
+                      : 'Search ${widget.category.toString().substring(13)}',
                   onChanged: searchBook,
                 ),
                 const SizedBox(height: 15),

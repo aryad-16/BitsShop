@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-enum Category { books, cycles, electronics, others }
+enum ItemCategory { books, cycles, electronics, others, all, yourItems }
 
 enum YearCategory { first, second, third, fourth, fifth }
 
@@ -25,7 +25,7 @@ class Item with ChangeNotifier {
   final String title;
   final String description;
   final int price;
-  final Category category;
+  final ItemCategory category;
   bool isFavourite;
   final String id;
   final String profileId;

@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
     await FirebaseFirestore.instance.collection('items').get().then((ds) {
       feedItems = ds.docs
           .map((doc) => Item(
-              category: Category.values
+              category: ItemCategory.values
                   .firstWhere((e) => e.toString() == doc['category']),
               price: int.parse(doc['price']),
               profileId: doc['profileId'],

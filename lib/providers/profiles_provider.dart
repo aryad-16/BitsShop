@@ -13,7 +13,7 @@ class Profiles with ChangeNotifier {
           'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
       phoneNumber: 8220585181,
       favouriteItemsId: [],
-      theirAdIds: ['1'],
+      theirAdIds: [],
       email: 'f20200425@pilani.bits-pilani.ac.in',
     ),
     Profile(
@@ -25,7 +25,7 @@ class Profiles with ChangeNotifier {
           'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
       phoneNumber: 7888209001,
       favouriteItemsId: [],
-      theirAdIds: ['3'],
+      theirAdIds: [],
       email: 'f20201039@pilani.bits-pilani.ac.in',
     ),
     Profile(
@@ -37,7 +37,7 @@ class Profiles with ChangeNotifier {
           'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
       phoneNumber: 9756127573,
       favouriteItemsId: [],
-      theirAdIds: ['4', '2', '1', '3', '5'],
+      theirAdIds: [],
       email: 'f20201556@pilani.bits-pilani.ac.in',
     ),
   ];

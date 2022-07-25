@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 import 'item_model.dart';
 
@@ -130,8 +130,76 @@ class Items with ChangeNotifier {
     notifyListeners();
   }
 
-  List<Item> searchBookItems(String query, YearCategory? year,
-      SemesterCategory? sem, BranchCategory? branch) {
+  // List<Item> searchAllItems(String query) {
+  //   return _items.where((item) {
+  //     final titleLower = item.title.toLowerCase();
+  //     final descriptionLower = item.description.toLowerCase();
+  //     final searchLower = query.toLowerCase();
+
+  //     return titleLower.contains(searchLower) ||
+  //         descriptionLower.contains(searchLower);
+  //   }).toList();
+  // }
+
+  // List<im.Item> searchBookItems(String query, im.YearCategory? year,
+  //     im.SemesterCategory? sem, im.BranchCategory? branch) {
+  //   return _items.where((item) {
+  //     final titleLower = item.title.toLowerCase();
+  //     final descriptionLower = item.description.toLowerCase();
+  //     final searchLower = query.toLowerCase();
+  //     if (year != null && year != item.year) {
+  //       return false;
+  //     }
+  //     if (sem != null && sem != item.sem) {
+  //       return false;
+  //     }
+  //     if (branch != null && branch != item.branch) {
+  //       return false;
+  //     }
+  //     return (titleLower.contains(searchLower) ||
+  //             descriptionLower.contains(searchLower)) &&
+  //         item.category == im.Category.books;
+  //   }).toList();
+  // }
+
+  // List<im.Item> searchCycleItems(String query) {
+  //   return _items.where((item) {
+  //     final titleLower = item.title.toLowerCase();
+  //     final descriptionLower = item.description.toLowerCase();
+  //     final searchLower = query.toLowerCase();
+
+  //     return (titleLower.contains(searchLower) ||
+  //             descriptionLower.contains(searchLower)) &&
+  //         item.category == im.Category.cycles;
+  //   }).toList();
+  // }
+
+  // List<im.Item> searchElectronicItems(String query) {
+  //   return _items.where((item) {
+  //     final titleLower = item.title.toLowerCase();
+  //     final descriptionLower = item.description.toLowerCase();
+  //     final searchLower = query.toLowerCase();
+
+  //     return (titleLower.contains(searchLower) ||
+  //             descriptionLower.contains(searchLower)) &&
+  //         item.category == im.Category.electronics;
+  //   }).toList();
+  // }
+
+  // List<im.Item> searchOtherItems(String query) {
+  //   return _items.where((item) {
+  //     final titleLower = item.title.toLowerCase();
+  //     final descriptionLower = item.description.toLowerCase();
+  //     final searchLower = query.toLowerCase();
+
+  //     return (titleLower.contains(searchLower) ||
+  //             descriptionLower.contains(searchLower)) &&
+  //         item.category == im.Category.others;
+  //   }).toList();
+  // }
+
+  List<Item> searchItems(ItemCategory category, String query,
+      YearCategory? year, SemesterCategory? sem, BranchCategory? branch) {
     return _items.where((item) {
       final titleLower = item.title.toLowerCase();
       final descriptionLower = item.description.toLowerCase();
@@ -145,56 +213,14 @@ class Items with ChangeNotifier {
       if (branch != null && branch != item.branch) {
         return false;
       }
-      return (titleLower.contains(searchLower) ||
-              descriptionLower.contains(searchLower)) &&
-          item.category == Category.books;
-    }).toList();
-  }
-
-  List<Item> searchAllItems(String query) {
-    return _items.where((item) {
-      final titleLower = item.title.toLowerCase();
-      final descriptionLower = item.description.toLowerCase();
-      final searchLower = query.toLowerCase();
-
-      return titleLower.contains(searchLower) ||
-          descriptionLower.contains(searchLower);
-    }).toList();
-  }
-
-  List<Item> searchCycleItems(String query) {
-    return _items.where((item) {
-      final titleLower = item.title.toLowerCase();
-      final descriptionLower = item.description.toLowerCase();
-      final searchLower = query.toLowerCase();
-
-      return (titleLower.contains(searchLower) ||
-              descriptionLower.contains(searchLower)) &&
-          item.category == Category.cycles;
-    }).toList();
-  }
-
-  List<Item> searchElectronicItems(String query) {
-    return _items.where((item) {
-      final titleLower = item.title.toLowerCase();
-      final descriptionLower = item.description.toLowerCase();
-      final searchLower = query.toLowerCase();
-
-      return (titleLower.contains(searchLower) ||
-              descriptionLower.contains(searchLower)) &&
-          item.category == Category.electronics;
-    }).toList();
-  }
-
-  List<Item> searchOtherItems(String query) {
-    return _items.where((item) {
-      final titleLower = item.title.toLowerCase();
-      final descriptionLower = item.description.toLowerCase();
-      final searchLower = query.toLowerCase();
-
-      return (titleLower.contains(searchLower) ||
-              descriptionLower.contains(searchLower)) &&
-          item.category == Category.others;
+      if (category == ItemCategory.all) {
+        return (titleLower.contains(searchLower) ||
+            descriptionLower.contains(searchLower));
+      } else {
+        return (titleLower.contains(searchLower) ||
+                descriptionLower.contains(searchLower)) &&
+            item.category == category;
+      }
     }).toList();
   }
 

@@ -114,7 +114,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                           },
                           height: 300,
                           viewportFraction: 1,
-                          enableInfiniteScroll: false,
+                          enableInfiniteScroll: true,
                         ),
                       ),
                     ),

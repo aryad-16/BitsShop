@@ -64,7 +64,7 @@ class EditScreenState extends State<EditScreen>
     title: '',
     description: '',
     price: 0,
-    category: Category.books,
+    category: ItemCategory.books,
     id: '',
     profileId: profileID,
   );
@@ -307,12 +307,12 @@ class EditScreenState extends State<EditScreen>
                                   description: _editeditem.description,
                                   price: _editeditem.price,
                                   category: selectedItem == 'Books'
-                                      ? Category.books
+                                      ? ItemCategory.books
                                       : selectedItem == 'Cycles'
-                                          ? Category.cycles
+                                          ? ItemCategory.cycles
                                           : selectedItem == 'Electronics'
-                                              ? Category.electronics
-                                              : Category.others,
+                                              ? ItemCategory.electronics
+                                              : ItemCategory.others,
                                   profileId: _editeditem.profileId,
                                   imageList: _editeditem.imageList,
                                   id: _editeditem.id,

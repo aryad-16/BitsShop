@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
+import 'package:login_singup_screen_ui/providers/item_model.dart';
 import 'package:login_singup_screen_ui/screens/main%20screens/Search%20Screen/search_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -128,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (ctx) => const SearchScreen(
-                        category: 'All Products',
+                        category: ItemCategory.all,
                         isEdit: false,
                       ),
                     ),
@@ -191,10 +192,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              const HorizontalListView(title: 'Books'),
-              const HorizontalListView(title: 'Cycles'),
-              const HorizontalListView(title: 'Electronics'),
-              const HorizontalListView(title: 'Other'),
+              const HorizontalListView(category: ItemCategory.books),
+              const HorizontalListView(category: ItemCategory.cycles),
+              const HorizontalListView(category: ItemCategory.electronics),
+              const HorizontalListView(category: ItemCategory.others),
             ],
           ),
           padding: const EdgeInsets.only(bottom: 15),
