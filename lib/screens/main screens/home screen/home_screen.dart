@@ -111,6 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Color.fromARGB(255, 245, 245, 245),
+          statusBarIconBrightness: Brightness.dark,
         ),
         centerTitle: true,
         elevation: 0,
