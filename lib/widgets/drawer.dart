@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:login_singup_screen_ui/screens/main%20screens/Favorites%20Screen/favorite_items.dart';
+import 'package:login_singup_screen_ui/widgets/initializer.dart';
 
 import '../Constants/constants.dart';
 import '../model/profile_model.dart';
@@ -159,10 +162,12 @@ class DrawerWidget extends StatelessWidget {
                 height: 55,
                 child: ElevatedButton(
                   style: Constant.elevatedButtonStyle,
-                  onPressed: () {
-                    Navigator.of(context).pushReplacement(
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
+                    await GoogleSignIn().signOut();
+                    await Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (ctx) => const LoginScreen(),
+                        builder: (ctx) => const InitializerWidget(),
                       ),
                     );
                   },

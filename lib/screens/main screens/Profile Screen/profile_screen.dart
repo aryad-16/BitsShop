@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' as rp;
 import 'package:image_picker/image_picker.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
+import 'package:login_singup_screen_ui/model/userDataModel.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Data/data.dart';
@@ -11,17 +13,17 @@ import '../../../providers/profiles_provider.dart';
 import '../../../widgets/error_snackbar.dart';
 import '../../../widgets/pick_image.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends rp.ConsumerStatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  rp.ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 final FocusNode _phoneNumberFocusNode = FocusNode();
 final FocusNode _roomNoFocusNode = FocusNode();
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends rp.ConsumerState<ProfileScreen> {
   final List<String> _bhawanNames = [
     'Shankar Bhawan',
     'vyas Bhawan',
@@ -35,9 +37,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final _profile =
-        Provider.of<Profiles>(context, listen: false).getProfile(profileID);
+        ref.read(currentUserDataProvider.state).state;
     TextEditingController bhawanNameController =
-        TextEditingController(text: _profile.bhawanName);
+        TextEditingController(text: _profile!.bhawanName);
     TextEditingController _phoneNumberController =
         TextEditingController(text: _profile.phoneNumber.toString())
           ..selection = TextSelection(
@@ -45,10 +47,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             extentOffset: _profile.phoneNumber.toString().length,
           );
     TextEditingController _roomNumberController =
-        TextEditingController(text: _profile.rommNo.toString())
+        TextEditingController(text: _profile.roomNo.toString())
           ..selection = TextSelection(
-            baseOffset: _profile.rommNo.toString().length,
-            extentOffset: _profile.rommNo.toString().length,
+            baseOffset: _profile.roomNo.toString().length,
+            extentOffset: _profile.roomNo.toString().length,
           );
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
@@ -197,7 +199,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       fontSize: 18,
                       color: Constant.greyColor1,
                     ),
-                    controller: TextEditingController()..text = _profile.name,
+                    controller: TextEditingController()..text = _profile.username,
                   ),
                 ),
                 const Spacer(flex: 1),
