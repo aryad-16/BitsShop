@@ -36,8 +36,7 @@ class _ProfileScreenState extends rp.ConsumerState<ProfileScreen> {
   File? image;
   @override
   Widget build(BuildContext context) {
-    final _profile =
-        ref.read(currentUserDataProvider.state).state;
+    final _profile = ref.read(currentUserDataProvider.state).state;
     TextEditingController bhawanNameController =
         TextEditingController(text: _profile!.bhawanName);
     TextEditingController _phoneNumberController =
@@ -52,8 +51,6 @@ class _ProfileScreenState extends rp.ConsumerState<ProfileScreen> {
             baseOffset: _profile.roomNo.toString().length,
             extentOffset: _profile.roomNo.toString().length,
           );
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
     _fieldFocusChange(
         BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
       currentFocus.unfocus();
@@ -199,7 +196,8 @@ class _ProfileScreenState extends rp.ConsumerState<ProfileScreen> {
                       fontSize: 18,
                       color: Constant.greyColor1,
                     ),
-                    controller: TextEditingController()..text = _profile.username,
+                    controller: TextEditingController()
+                      ..text = _profile.username,
                   ),
                 ),
                 const Spacer(flex: 1),
