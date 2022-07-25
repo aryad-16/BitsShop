@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
@@ -86,33 +87,33 @@ class Items with ChangeNotifier {
       branch: item.branch,
       sem: item.sem,
     );
-    // for (int i = 0; i < newItem.imageList.length; i++) {
-    //   await fileUpload(newItem.imageList[i], i, newItem.id, newItem);
-    // }
-    // FirebaseFirestore.instance
-    //     .collection('items')
-    //     .doc(
-    //       newItem.id,
-    //     )
-    //     .set(
-    //       {
-    //         'title': newItem.title.toString(),
-    //         'description': newItem.description.toString(),
-    //         'price': newItem.price.toString(),
-    //         'category': newItem.category.toString(),
-    //         'profileId': newItem.profileId.toString(),
-    //         'imageList': newItem.imageList.toString(),
-    //         'id': newItem.id,
-    //         'uid': user?.uid.toString(),
-    //         'year': newItem.year,
-    //         'branch': newItem.branch.toString(),
-    //         'semester': newItem.sem.toString()
-    //       },
-    //     )
-    //     .then((_) {})
-    //     .catchError((e) {
-    //       print(e);
-    //     });
+    for (int i = 0; i < newItem.imageList.length; i++) {
+      await fileUpload(newItem.imageList[i], i, newItem.id, newItem);
+    }
+    FirebaseFirestore.instance
+        .collection('items')
+        .doc(
+          newItem.id,
+        )
+        .set(
+          {
+            'title': newItem.title.toString(),
+            'description': newItem.description.toString(),
+            'price': newItem.price.toString(),
+            'category': newItem.category.toString(),
+            'profileId': newItem.profileId.toString(),
+            'imageList': newItem.imageList.toString(),
+            'id': newItem.id,
+            'uid': user?.uid.toString(),
+            'year': newItem.year,
+            'branch': newItem.branch.toString(),
+            'semester': newItem.sem.toString()
+          },
+        )
+        .then((_) {})
+        .catchError((e) {
+          print(e);
+        });
     _items.add(newItem);
     notifyListeners();
   }
