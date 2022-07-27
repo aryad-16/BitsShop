@@ -31,7 +31,7 @@ class UserData {
     var docData = doc.data().toString();
     return UserData(
       email: docData.contains('email') ? doc.get('email') : 'not set',
-      username: docData.contains('username') ? doc.get('username') : 'not set',
+      username: docData.contains('name') ? doc.get('name') : 'not set',
       profilePicUrl: docData.contains('profilePicUrl')
           ? doc.get('profilePicUrl')
           : 'not set',
