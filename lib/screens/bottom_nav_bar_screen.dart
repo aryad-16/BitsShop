@@ -1,10 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:login_singup_screen_ui/screens/main%20screens/Search%20Screen/search_screen.dart';
 import 'package:login_singup_screen_ui/widgets/animated_indexed_stack.dart';
 import 'package:login_singup_screen_ui/widgets/confirm_popup.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/item_model.dart';
+import '../providers/items_provider.dart';
 import 'main screens/New Ad Screen/new_ad_screen.dart';
 import 'main screens/Profile Screen/profile_screen.dart';
 import 'main screens/home screen/home_screen.dart';
@@ -22,54 +26,54 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> pagelist = <Widget>[
     const HomeScreen(),
     const NewAdScreen(),
-    const SearchScreen(category: 'Manage Ads', isEdit: true),
+    const SearchScreen(category: ItemCategory.yourItems, isEdit: true),
     const ProfileScreen(),
   ];
 
-  // bool _isInit = true;
-  // Future<void> getFeedItems(BuildContext context) async {
-  //   print("Hello guys have a good day");
-  //   List<Item> feedItems = [];
-  //   await FirebaseFirestore.instance.collection('items').get().then((ds) {
-  //     feedItems = ds.docs
-  //         .map((doc) => Item(
-  //             category: Category.values
-  //                 .firstWhere((e) => e.toString() == doc['category']),
-  //             price: int.parse(doc['price']),
-  //             profileId: doc['profileId'],
-  //             title: doc['title'],
-  //             id: doc['id'],
-  //             description: doc['description'],
-  //             imageList: doc['imageList'].split(','),
-  //             year: doc.data().toString().contains('year')
-  //                 ? YearCategory.values
-  //                     .firstWhere((e) => e.toString() == doc['year'])
-  //                 : null,
-  //             sem: doc.data().toString().contains('semester')
-  //                 ? SemesterCategory.values
-  //                     .firstWhere((e) => e.toString() == doc['semester'])
-  //                 : null,
-  //             branch: doc.data().toString().contains('branch')
-  //                 ? BranchCategory.values
-  //                     .firstWhere((e) => e.toString() == doc['branch'])
-  //                 : null))
-  //         .toList();
-  //     Provider.of<Items>(context).setItemsList(feedItems);
-  //     print(feedItems[0].branch);
-  //     print("Hello guys have a good fking day");
-  //   }).catchError((e) {
-  //     print(e);
-  //   }).then((value) {});
-  // }
+  bool _isInit = true;
+  Future<void> getFeedItems(BuildContext context) async {
+    print("Hello guys have a good day");
+    List<Item> feedItems = [];
+    await FirebaseFirestore.instance.collection('items').get().then((ds) {
+      feedItems = ds.docs
+          .map((doc) => Item(
+              category: ItemCategory.values
+                  .firstWhere((e) => e.toString() == doc['category']),
+              price: int.parse(doc['price']),
+              profileId: doc['profileId'],
+              title: doc['title'],
+              id: doc['id'],
+              description: doc['description'],
+              imageList: doc['imageList'].split(','),
+              year: doc.data().toString().contains('year')
+                  ? YearCategory.values
+                      .firstWhere((e) => e.toString() == doc['year'])
+                  : null,
+              sem: doc.data().toString().contains('semester')
+                  ? SemesterCategory.values
+                      .firstWhere((e) => e.toString() == doc['semester'])
+                  : null,
+              branch: doc.data().toString().contains('branch')
+                  ? BranchCategory.values
+                      .firstWhere((e) => e.toString() == doc['branch'])
+                  : null))
+          .toList();
+      Provider.of<Items>(context).setItemsList(feedItems);
+      print(feedItems[0].branch);
+      print("Hello guys have a good fking day");
+    }).catchError((e) {
+      print(e);
+    }).then((value) {});
+  }
 
-  // @override
-  // void didChangeDependencies() {
-  //   if (_isInit) {
-  //     getFeedItems(context);
-  //   }
-  //   _isInit = false;
-  //   super.didChangeDependencies();
-  // }
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      getFeedItems(context);
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {

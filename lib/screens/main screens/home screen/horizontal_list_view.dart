@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:login_singup_screen_ui/providers/items_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:string_extensions/string_extensions.dart';
 
 import '../../../Constants/constants.dart';
+import '../../../providers/item_model.dart';
 import '../Search Screen/search_screen.dart';
 import 'grid_item.dart';
 
 class HorizontalListView extends StatelessWidget {
-  final String title;
+  final ItemCategory category;
   const HorizontalListView({
     Key? key,
-    required this.title,
+    required this.category,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final items = title == 'Books'
-        ? Provider.of<Items>(context).searchBookItems('', null, null, null)
-        : title == 'Cycles'
-            ? Provider.of<Items>(context).searchCycleItems('')
-            : title == 'Electronics'
-                ? Provider.of<Items>(context).searchElectronicItems('')
-                : Provider.of<Items>(context).searchOtherItems('');
+    final items =
+        Provider.of<Items>(context).searchItems(category, '', null, null, null);
     return Container(
       margin: const EdgeInsets.only(top: 15),
       child: Column(
@@ -32,7 +29,7 @@ class HorizontalListView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  title,
+                  category.toString().substring(13).capitalize ?? '',
                   style: const TextStyle(
                     fontFamily: 'ManRope Regular',
                     fontSize: 18,
@@ -46,7 +43,7 @@ class HorizontalListView extends StatelessWidget {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (ctx) =>
-                            SearchScreen(category: title, isEdit: false),
+                            SearchScreen(category: category, isEdit: false),
                       ),
                     );
                   },

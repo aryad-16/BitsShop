@@ -8,6 +8,7 @@ import 'package:login_singup_screen_ui/providers/profiles_provider.dart';
 import 'package:login_singup_screen_ui/widgets/rounded_containers.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:string_extensions/string_extensions.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Constants/constants.dart';
@@ -114,7 +115,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                           },
                           height: 300,
                           viewportFraction: 1,
-                          enableInfiniteScroll: false,
+                          enableInfiniteScroll: true,
                         ),
                       ),
                     ),
@@ -176,7 +177,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                               item.year != null
                                   ? RoundedContainer(
                                       title:
-                                          '${item.year.toString().substring(13)[0].toUpperCase() + item.year.toString().substring(14)} Year',
+                                          '${item.year.toString().substring(13)[0].capitalize} Year',
                                       yellowBg: false,
                                     )
                                   : const SizedBox(),
@@ -184,7 +185,7 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                               item.sem != null
                                   ? RoundedContainer(
                                       title:
-                                          '${item.sem.toString().substring(17)[0].toUpperCase() + item.sem.toString().substring(18)} Sem',
+                                          '${item.sem.toString().substring(17)[0].capitalize} Sem',
                                       yellowBg: false,
                                     )
                                   : const SizedBox(),
@@ -193,9 +194,9 @@ class _ItemDetailScreenState extends State<ItemDetailScreen> {
                                   ? RoundedContainer(
                                       title: item.branch
                                               .toString()
-                                              .substring(15)[0]
-                                              .toUpperCase() +
-                                          item.branch.toString().substring(16),
+                                              .substring(15)
+                                              .capitalize ??
+                                          '',
                                       yellowBg: false,
                                     )
                                   : const SizedBox(),

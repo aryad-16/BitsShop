@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:string_extensions/string_extensions.dart';
 
 import '../../../Constants/constants.dart';
 import '../../../data/data.dart';
@@ -64,7 +65,7 @@ class EditScreenState extends State<EditScreen>
     title: '',
     description: '',
     price: 0,
-    category: Category.books,
+    category: ItemCategory.books,
     id: '',
     profileId: profileID,
   );
@@ -268,7 +269,7 @@ class EditScreenState extends State<EditScreen>
                                 });
                               },
                               selectedItem: _selectedCategory ??
-                                  '${_editeditem.category.toString().substring(9)[0].toUpperCase()}${_editeditem.category.toString().substring(9).substring(1)}',
+                                  '${_editeditem.category.toString().substring(9).capitalize}',
                               dropDownBorderRadius: 0,
                               dropDownTopBorderRadius: 10,
                               dropDownBottomBorderRadius: 10,
@@ -307,12 +308,12 @@ class EditScreenState extends State<EditScreen>
                                   description: _editeditem.description,
                                   price: _editeditem.price,
                                   category: selectedItem == 'Books'
-                                      ? Category.books
+                                      ? ItemCategory.books
                                       : selectedItem == 'Cycles'
-                                          ? Category.cycles
+                                          ? ItemCategory.cycles
                                           : selectedItem == 'Electronics'
-                                              ? Category.electronics
-                                              : Category.others,
+                                              ? ItemCategory.electronics
+                                              : ItemCategory.others,
                                   profileId: _editeditem.profileId,
                                   imageList: _editeditem.imageList,
                                   id: _editeditem.id,

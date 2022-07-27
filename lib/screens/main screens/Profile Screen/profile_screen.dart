@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as rp;
 import 'package:image_picker/image_picker.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
-import 'package:login_singup_screen_ui/model/userDataModel.dart';
+import 'package:login_singup_screen_ui/model/user_data_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Data/data.dart';
@@ -36,8 +36,7 @@ class _ProfileScreenState extends rp.ConsumerState<ProfileScreen> {
   File? image;
   @override
   Widget build(BuildContext context) {
-    final _profile =
-        ref.read(currentUserDataProvider.state).state;
+    final _profile = ref.read(currentUserDataProvider.state).state;
     TextEditingController bhawanNameController =
         TextEditingController(text: _profile!.bhawanName);
     TextEditingController _phoneNumberController =
@@ -52,8 +51,6 @@ class _ProfileScreenState extends rp.ConsumerState<ProfileScreen> {
             baseOffset: _profile.roomNo.toString().length,
             extentOffset: _profile.roomNo.toString().length,
           );
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
     _fieldFocusChange(
         BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
       currentFocus.unfocus();
@@ -199,7 +196,8 @@ class _ProfileScreenState extends rp.ConsumerState<ProfileScreen> {
                       fontSize: 18,
                       color: Constant.greyColor1,
                     ),
-                    controller: TextEditingController()..text = _profile.username,
+                    controller: TextEditingController()
+                      ..text = _profile.username,
                   ),
                 ),
                 const Spacer(flex: 1),
@@ -207,6 +205,7 @@ class _ProfileScreenState extends rp.ConsumerState<ProfileScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 0),
                   child: TextField(
                     decoration: const InputDecoration(
+                      focusedBorder: OutlineInputBorder(),
                       border: OutlineInputBorder(),
                       labelText: 'Email',
                       contentPadding:
@@ -228,9 +227,11 @@ class _ProfileScreenState extends rp.ConsumerState<ProfileScreen> {
                   child: TextFormField(
                     focusNode: _phoneNumberFocusNode,
                     decoration: const InputDecoration(
+                      focusedBorder: OutlineInputBorder(),
                       enabledBorder: OutlineInputBorder(),
                       counterText: '',
                       labelText: 'Phone Number',
+                      labelStyle: TextStyle(color: Colors.black),
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 18, horizontal: 12),
                       isDense: true,
@@ -269,8 +270,10 @@ class _ProfileScreenState extends rp.ConsumerState<ProfileScreen> {
                     child: IgnorePointer(
                       child: TextField(
                         decoration: const InputDecoration(
+                          focusedBorder: OutlineInputBorder(),
                           enabledBorder: OutlineInputBorder(),
                           labelText: 'Bhawan',
+                          labelStyle: TextStyle(color: Colors.black),
                           contentPadding: EdgeInsets.symmetric(
                             vertical: 18,
                             horizontal: 12,
@@ -292,8 +295,10 @@ class _ProfileScreenState extends rp.ConsumerState<ProfileScreen> {
                   child: TextFormField(
                     focusNode: _roomNoFocusNode,
                     decoration: const InputDecoration(
+                      focusedBorder: OutlineInputBorder(),
                       enabledBorder: OutlineInputBorder(),
                       labelText: 'Room Number',
+                      labelStyle: TextStyle(color: Colors.black),
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 18, horizontal: 12),
                       isDense: true,
