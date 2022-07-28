@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as rp;
@@ -24,6 +25,8 @@ final FocusNode _phoneNumberFocusNode = FocusNode();
 final FocusNode _roomNoFocusNode = FocusNode();
 
 class _ProfileScreenState extends rp.ConsumerState<ProfileScreen> {
+  bool editMode = false;
+  var _formKey = GlobalKey<FormState>();
   final List<String> _bhawanNames = [
     'Shankar Bhawan',
     'vyas Bhawan',
@@ -34,13 +37,34 @@ class _ProfileScreenState extends rp.ConsumerState<ProfileScreen> {
     'Meera Bhawan'
   ];
   File? image;
+
+  Future pickImage(ImageSource imageSource) async {
+    try {
+      final image = await ImagePicker().pickImage(source: imageSource);
+      if (image == null) return;
+      final imagetemp = File(image.path);
+      Provider.of<Profiles>(context, listen: false)
+          .updateProfile(profileID, 1, 'arya d yus boy');
+      setState(() {
+        this.image = imagetemp;
+      });
+    } on PlatformException catch (e) {
+      errorSnackbar(context, 'Failed to pick image: $e');
+    }
+  }
+
+  _fieldFocusChange(
+      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+    currentFocus.unfocus();
+    FocusScope.of(context).requestFocus(nextFocus);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final _profile = ref.read(currentUserDataProvider.state).state;
-    TextEditingController bhawanNameController =
-        TextEditingController(text: _profile!.bhawanName);
+    var userdata = ref.read(currentUserDataProvider.state).state;
+    final _profile = ref.watch(currentUserDataProvider.state).state;
     TextEditingController _phoneNumberController =
-        TextEditingController(text: _profile.phoneNumber.toString())
+        TextEditingController(text: _profile!.phoneNumber.toString())
           ..selection = TextSelection(
             baseOffset: _profile.phoneNumber.toString().length,
             extentOffset: _profile.phoneNumber.toString().length,
@@ -51,26 +75,6 @@ class _ProfileScreenState extends rp.ConsumerState<ProfileScreen> {
             baseOffset: _profile.roomNo.toString().length,
             extentOffset: _profile.roomNo.toString().length,
           );
-    _fieldFocusChange(
-        BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-      currentFocus.unfocus();
-      FocusScope.of(context).requestFocus(nextFocus);
-    }
-
-    Future pickImage(ImageSource imageSource) async {
-      try {
-        final image = await ImagePicker().pickImage(source: imageSource);
-        if (image == null) return;
-        final imagetemp = File(image.path);
-        Provider.of<Profiles>(context, listen: false)
-            .updateProfile(profileID, 1, 'arya d yus boy');
-        setState(() {
-          this.image = imagetemp;
-        });
-      } on PlatformException catch (e) {
-        errorSnackbar(context, 'Failed to pick image: $e');
-      }
-    }
 
     void _showModalSheet() {
       showModalBottomSheet(
@@ -80,9 +84,9 @@ class _ProfileScreenState extends rp.ConsumerState<ProfileScreen> {
           itemBuilder: (_, index) {
             return GestureDetector(
               onTap: () {
-                Provider.of<Profiles>(context, listen: false)
-                    .updateProfile(profileID, 3, _bhawanNames[index]);
-                bhawanNameController.text = _bhawanNames[index];
+                setState(() {
+                  userdata!.bhawanName = _bhawanNames[index];
+                });
                 Navigator.of(context).pop();
               },
               child: Container(
@@ -128,239 +132,244 @@ class _ProfileScreenState extends rp.ConsumerState<ProfileScreen> {
           onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Stack(
-                  children: [
-                    ClipOval(
-                      child: Material(
-                        color: Colors.transparent,
-                        child: image == null
-                            ? Image.network(
-                                _profile.profilePicUrl,
-                                width: 180,
-                                height: 180,
-                                fit: BoxFit.cover,
-                              )
-                            : Image.file(
-                                image!,
-                                width: 150,
-                                height: 150,
-                                fit: BoxFit.cover,
-                              ),
-                      ),
-                    ),
-                    Positioned(
-                      child: buildCircle(
-                        child: buildCircle(
-                          child: GestureDetector(
-                            onTap: () => showPopUp(context, pickImage),
-                            child: const Icon(
-                              Icons.edit,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                          ),
-                          color: Colors.blue,
-                          padding: 8,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Stack(
+                    children: [
+                      ClipOval(
+                        child: Material(
+                          color: Colors.transparent,
+                          child: image == null
+                              ? Image.network(
+                                  _profile.profilePicUrl,
+                                  width: 180,
+                                  height: 180,
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.file(
+                                  image!,
+                                  width: 150,
+                                  height: 150,
+                                  fit: BoxFit.cover,
+                                ),
                         ),
-                        color: Colors.white,
-                        padding: 3,
                       ),
-                      bottom: 12,
-                      right: 0,
-                    )
-                  ],
-                ),
-                const Divider(
-                  color: Colors.black87,
-                  indent: 22,
-                  height: 25,
-                  endIndent: 22,
-                ),
-                const Spacer(flex: 1),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 0),
-                  child: TextField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Name',
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-                      isDense: true,
-                    ),
-                    enabled: false,
-                    style: TextStyle(
-                      fontFamily: 'ManRope Regular',
-                      fontSize: 18,
-                      color: Constant.greyColor1,
-                    ),
-                    controller: TextEditingController()
-                      ..text = _profile.username,
+                      Positioned(
+                        child: buildCircle(
+                          child: buildCircle(
+                            child: GestureDetector(
+                              onTap: () => showPopUp(context, pickImage),
+                              child: const Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                            ),
+                            color: Colors.blue,
+                            padding: 8,
+                          ),
+                          color: Colors.white,
+                          padding: 3,
+                        ),
+                        bottom: 12,
+                        right: 0,
+                      )
+                    ],
                   ),
-                ),
-                const Spacer(flex: 1),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 0),
-                  child: TextField(
-                    decoration: const InputDecoration(
-                      focusedBorder: OutlineInputBorder(),
-                      border: OutlineInputBorder(),
-                      labelText: 'Email',
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-                      isDense: true,
-                    ),
-                    enabled: false,
-                    style: TextStyle(
-                      fontFamily: 'ManRope Regular',
-                      fontSize: 18,
-                      color: Constant.greyColor1,
-                    ),
-                    controller: TextEditingController()..text = _profile.email,
+                  const Divider(
+                    color: Colors.black87,
+                    indent: 22,
+                    height: 25,
+                    endIndent: 22,
                   ),
-                ),
-                const Spacer(flex: 1),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 0),
-                  child: TextFormField(
-                    focusNode: _phoneNumberFocusNode,
-                    decoration: const InputDecoration(
-                      focusedBorder: OutlineInputBorder(),
-                      enabledBorder: OutlineInputBorder(),
-                      counterText: '',
-                      labelText: 'Phone Number',
-                      labelStyle: TextStyle(color: Colors.black),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-                      isDense: true,
+                  const Spacer(flex: 1),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 0),
+                    child: TextField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Name',
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+                        isDense: true,
+                      ),
+                      enabled: false,
+                      style: TextStyle(
+                        fontFamily: 'ManRope Regular',
+                        fontSize: 18,
+                        color: Constant.greyColor1,
+                      ),
+                      controller: TextEditingController()
+                        ..text = _profile.username,
                     ),
-                    style: const TextStyle(
-                      fontFamily: 'ManRope Regular',
-                      fontSize: 18,
+                  ),
+                  const Spacer(flex: 1),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 0),
+                    child: TextField(
+                      decoration: const InputDecoration(
+                        focusedBorder: OutlineInputBorder(),
+                        border: OutlineInputBorder(),
+                        labelText: 'Email',
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+                        isDense: true,
+                      ),
+                      enabled: false,
+                      style: TextStyle(
+                        fontFamily: 'ManRope Regular',
+                        fontSize: 18,
+                        color: Constant.greyColor1,
+                      ),
+                      controller: TextEditingController()
+                        ..text = _profile.email,
                     ),
-                    maxLength: 10,
-                    onEditingComplete: () {
-                      if (_phoneNumberController.text.length < 10) {
-                        errorSnackbar(
-                            context, 'Please enter valid phone number');
-                        _phoneNumberController.text =
-                            _profile.phoneNumber.toString();
-                      } else {
+                  ),
+                  const Spacer(flex: 1),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 0),
+                    child: TextFormField(
+                      enabled: editMode,
+                      focusNode: _phoneNumberFocusNode,
+                      decoration: const InputDecoration(
+                        focusedBorder: OutlineInputBorder(),
+                        enabledBorder: OutlineInputBorder(),
+                        counterText: '',
+                        labelText: 'Phone Number',
+                        labelStyle: TextStyle(color: Colors.black),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+                        isDense: true,
+                      ),
+                      style: const TextStyle(
+                        fontFamily: 'ManRope Regular',
+                        fontSize: 18,
+                      ),
+                      maxLength: 10,
+                      validator: (value) {
+                        if (value == null || value.length < 10) {
+                          return 'Please enter a valid phone number';
+                        }
+                      },
+                      controller: _phoneNumberController,
+                      keyboardType: TextInputType.phone,
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (_) {
+                        _fieldFocusChange(
+                            context, _phoneNumberFocusNode, _roomNoFocusNode);
+                      },
+                    ),
+                  ),
+                  const Spacer(flex: 1),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 0),
+                    child: InkWell(
+                      onTap: editMode ? _showModalSheet : null,
+                      child: IgnorePointer(
+                        child: TextFormField(
+                          initialValue: userdata!.bhawanName,
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Please select a bhawan';
+                            }
+                          },
+                          enabled: editMode,
+                          decoration: const InputDecoration(
+                            focusedBorder: OutlineInputBorder(),
+                            enabledBorder: OutlineInputBorder(),
+                            labelText: 'Bhawan',
+                            labelStyle: TextStyle(color: Colors.black),
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 18,
+                              horizontal: 12,
+                            ),
+                            isDense: true,
+                          ),
+                          style: const TextStyle(
+                            fontFamily: 'ManRope Regular',
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Spacer(flex: 1),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 0),
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value == null ||
+                            value.length < 4 ||
+                            value.length > 4) {
+                          return 'Please select a room number (4 digits)';
+                        }
+                      },
+                      enabled: editMode,
+                      focusNode: _roomNoFocusNode,
+                      decoration: const InputDecoration(
+                        focusedBorder: OutlineInputBorder(),
+                        enabledBorder: OutlineInputBorder(),
+                        labelText: 'Room Number',
+                        labelStyle: TextStyle(color: Colors.black),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+                        isDense: true,
+                      ),
+                      style: const TextStyle(
+                        fontFamily: 'ManRope Regular',
+                        fontSize: 18,
+                      ),
+                      controller: _roomNumberController,
+                      keyboardType: TextInputType.phone,
+                      textInputAction: TextInputAction.done,
+                      onFieldSubmitted: (_) {
                         Provider.of<Profiles>(context, listen: false)
                             .updateProfile(
-                                profileID, 2, _phoneNumberController.text);
-                      }
-                    },
-                    controller: _phoneNumberController,
-                    keyboardType: TextInputType.phone,
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (_) {
-                      _fieldFocusChange(
-                          context, _phoneNumberFocusNode, _roomNoFocusNode);
-                    },
-                  ),
-                ),
-                const Spacer(flex: 1),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 0),
-                  child: InkWell(
-                    onTap: () => _showModalSheet(),
-                    child: IgnorePointer(
-                      child: TextField(
-                        decoration: const InputDecoration(
-                          focusedBorder: OutlineInputBorder(),
-                          enabledBorder: OutlineInputBorder(),
-                          labelText: 'Bhawan',
-                          labelStyle: TextStyle(color: Colors.black),
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: 18,
-                            horizontal: 12,
-                          ),
-                          isDense: true,
-                        ),
-                        style: const TextStyle(
-                          fontFamily: 'ManRope Regular',
-                          fontSize: 18,
-                        ),
-                        controller: bhawanNameController,
-                      ),
+                                profileID, 4, _roomNumberController.text);
+                        FocusScope.of(context).unfocus();
+                      },
                     ),
                   ),
-                ),
-                const Spacer(flex: 1),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 0),
-                  child: TextFormField(
-                    focusNode: _roomNoFocusNode,
-                    decoration: const InputDecoration(
-                      focusedBorder: OutlineInputBorder(),
-                      enabledBorder: OutlineInputBorder(),
-                      labelText: 'Room Number',
-                      labelStyle: TextStyle(color: Colors.black),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-                      isDense: true,
-                    ),
-                    style: const TextStyle(
-                      fontFamily: 'ManRope Regular',
-                      fontSize: 18,
-                    ),
-                    controller: _roomNumberController,
-                    keyboardType: TextInputType.phone,
-                    textInputAction: TextInputAction.done,
-                    onFieldSubmitted: (_) {
-                      Provider.of<Profiles>(context, listen: false)
-                          .updateProfile(
-                              profileID, 4, _roomNumberController.text);
-                      FocusScope.of(context).unfocus();
-                    },
-                  ),
-                ),
-                const Spacer(flex: 2),
-                // Container(
-                //   margin: const EdgeInsets.only(top: 15),
-                //   decoration: BoxDecoration(
-                //     boxShadow: [Constant.boxShadow],
-                //     gradient: Constant.yellowlinear,
-                //     borderRadius: BorderRadius.circular(100),
-                //   ),
-                //   width: (315 / 375) * width,
-                //   height: (60 / 812) * height,
-                //   child: ElevatedButton(
-                //     style: Constant.elevatedButtonStyle,
-                //     onPressed: () {
-                //       Navigator.of(context).pushReplacement(
-                //         MaterialPageRoute(
-                //           builder: (ctx) => const LoginScreen(),
-                //         ),
-                //       );
-                //     },
-                //     child: Row(
-                //       children: <Widget>[
-                //         SvgPicture.asset(
-                //           'assets/icons/logout.svg',
-                //           color: Colors.white,
-                //         ),
-                //         const Text(
-                //           '  Logout',
-                //           style: TextStyle(
-                //             fontFamily: 'Poppins Bold',
-                //             fontSize: 18,
-                //             fontWeight: FontWeight.bold,
-                //           ),
-                //         ),
-                //       ],
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //     ),
-                //   ),
-                // ),
-              ],
+                  const Spacer(flex: 2),
+                ],
+              ),
             ),
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          if (editMode == false)
+            setState(() {
+              editMode = !editMode;
+            });
+          else {
+            if (_formKey.currentState!.validate()) {
+              _formKey.currentState!.save();
+              userdata.roomNo = _roomNumberController.text;
+              userdata.phoneNumber = _phoneNumberController.text;
+              await FirebaseFirestore.instance
+                  .collection('Profiles')
+                  .doc(userdata.uid)
+                  .update(
+                {
+                  'bhawanName': userdata.bhawanName,
+                  'roomNo': userdata.roomNo,
+                  'phoneNumber': userdata.phoneNumber,
+                },
+              );
+              setState(() {
+                editMode = !editMode;
+              });
+            }
+          }
+        },
+        child: !editMode ? Icon(Icons.edit) : Icon(Icons.check),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }
 

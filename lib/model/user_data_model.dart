@@ -34,7 +34,7 @@ class UserData {
       username: docData.contains('name') ? doc.get('name') : 'not set',
       profilePicUrl: docData.contains('profilePicUrl')
           ? doc.get('profilePicUrl')
-          : 'not set',
+          : null,
       uid: docData.contains('uid') ? doc.get('uid') : 'not set',
       phoneNumber:
           docData.contains('phoneNumber') ? doc.get('phoneNumber') : 'not set',
