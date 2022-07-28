@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 enum ItemCategory { books, cycles, electronics, others, all, yourItems }
@@ -50,5 +51,33 @@ class Item with ChangeNotifier {
   void toggleFavouriteStatus() {
     isFavourite = !isFavourite;
     notifyListeners();
+  }
+
+  factory Item.fromDocument(DocumentSnapshot doc) {
+    var docData = doc.data().toString();
+    return Item(
+      title: docData.contains('title') ? doc.get('title') : 'not set',
+      description:
+          docData.contains('description') ? doc.get('description') : 'not set',
+      price: docData.contains('price') ? doc.get('price') : 0,
+      category: docData.contains('category')
+          ? ItemCategory.values[doc.get('category')]
+          : ItemCategory.others,
+      isFavourite:
+          docData.contains('isFavourite') ? doc.get('isFavourite') : false,
+      id: docData.contains('id') ? doc.get('id') : 'not set',
+      profileId:
+          docData.contains('profileId') ? doc.get('profileId') : 'not set',
+      imageList: docData.contains('imageList') ? doc.get('imageList') : [],
+      branch: docData.contains('branch')
+          ? BranchCategory.values[doc.get('branch')]
+          : null,
+      year: docData.contains('year')
+          ? YearCategory.values[doc.get('year')]
+          : null,
+      sem: docData.contains('sem')
+          ? SemesterCategory.values[doc.get('sem')]
+          : null,
+    );
   }
 }
