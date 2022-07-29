@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as rp;
@@ -37,14 +38,27 @@ class _ProfileScreenState extends rp.ConsumerState<ProfileScreen> {
     'Meera Bhawan'
   ];
   File? image;
-
+  var userdata;
   Future pickImage(ImageSource imageSource) async {
     try {
       final image = await ImagePicker().pickImage(source: imageSource);
       if (image == null) return;
       final imagetemp = File(image.path);
-      Provider.of<Profiles>(context, listen: false)
-          .updateProfile(profileID, 1, 'arya d yus boy');
+      final ref = FirebaseStorage.instance.ref();
+      debugPrint('got file');
+      print(userdata?.uid.toString());
+      await ref
+          .child('profilePics/${userdata!.uid}')
+          .putFile(imagetemp)
+          .whenComplete(() async {
+        debugPrint('uploading');
+        await ref.child('profilePics/${userdata!.uid}').getDownloadURL().then((value) async {
+          await FirebaseFirestore.instance
+              .collection('Profiles')
+              .doc(userdata!.uid)
+              .set({'profilePicUrl': value}, SetOptions(merge: true));
+        });
+      });
       setState(() {
         this.image = imagetemp;
       });
@@ -61,7 +75,7 @@ class _ProfileScreenState extends rp.ConsumerState<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var userdata = ref.read(currentUserDataProvider.state).state;
+    userdata = ref.read(currentUserDataProvider.state).state;
     final _profile = ref.watch(currentUserDataProvider.state).state;
     TextEditingController _phoneNumberController =
         TextEditingController(text: _profile!.phoneNumber.toString())
