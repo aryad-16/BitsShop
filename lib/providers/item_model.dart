@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum ItemCategory { books, cycles, electronics, others, all, yourItems }
 
@@ -21,15 +22,18 @@ enum BranchCategory {
   ecoDual
 }
 
+List itemsList = [];
+final itemsListProvider = StateProvider((ref) => itemsList);
+
 class Item with ChangeNotifier {
-  final List<String> imageList;
-  final String title;
-  final String description;
-  final int price;
+  var imageList;
+  var title;
+  var description;
+  var price;
   final ItemCategory category;
-  bool isFavourite;
-  final String id;
-  final String profileId;
+  var isFavourite;
+  var id;
+  var profileId;
   final YearCategory? year;
   final SemesterCategory? sem;
   final BranchCategory? branch;
@@ -59,22 +63,22 @@ class Item with ChangeNotifier {
       title: docData.contains('title') ? doc.get('title') : 'not set',
       description:
           docData.contains('description') ? doc.get('description') : 'not set',
-      price: docData.contains('price') ? doc.get('price') : 0,
+      price: docData.contains('price') ? doc.get('price').toString() : '0',
       category: docData.contains('category')
           ? ItemCategory.values[doc.get('category')]
           : ItemCategory.others,
       isFavourite:
-          docData.contains('isFavourite') ? doc.get('isFavourite') : false,
-      id: docData.contains('id') ? doc.get('id') : 'not set',
+          false,
+      id: docData.contains('id') ? doc.get('id').toString() : 'not set',
       profileId:
-          docData.contains('profileId') ? doc.get('profileId') : 'not set',
-      imageList: docData.contains('imageList') ? doc.get('imageList') : [],
+          docData.contains('profileId') ? doc.get('profileId').toString() : 'not set',
+      imageList: docData.contains('imageList') ? doc.get('imageList') : '',
       branch: docData.contains('branch')
           ? BranchCategory.values[doc.get('branch')]
           : null,
-      year: docData.contains('year')
-          ? YearCategory.values[doc.get('year')]
-          : null,
+      // year: docData.contains('year')
+      //     ? YearCategory.values[doc.get('year')]
+      //     : null,
       sem: docData.contains('sem')
           ? SemesterCategory.values[doc.get('sem')]
           : null,
