@@ -10,7 +10,7 @@ import 'item_model.dart';
 class Items with ChangeNotifier {
   final user = FirebaseAuth.instance.currentUser;
   FirebaseStorage storageRef = FirebaseStorage.instance;
-  List<Item> _items = [];
+  final List<Item> _items = [];
 
   // Future<void> setItemsList() async {
   //   print("Hello guys have a good fking day");
@@ -50,11 +50,47 @@ class Items with ChangeNotifier {
   //     print(e);
   //   });
   // }
-
-  void setItemsList(List<Item> firebaseList) {
-    _items = firebaseList;
-    notifyListeners();
+  void getItemsList() async {
+    Stream<List<Item>> res = FirebaseFirestore.instance
+        .collection('items')
+        .snapshots()
+        .map((snapshot) =>
+            snapshot.docs.map((doc) => Items.fromJson(doc.data())).toList());
+    res.listen((listOfItems) {
+      for (Item newItem in listOfItems) {
+        _items.add(newItem);
+      }
+    });
   }
+
+  static Item fromJson(Map<String, dynamic> json) {
+    final string2Itemcategory =
+        ItemCategory.values.asMap().map((k, v) => MapEntry("$v", v));
+    final string2Sem =
+        SemesterCategory.values.asMap().map((k, v) => MapEntry("$v", v));
+    final string2year =
+        YearCategory.values.asMap().map((k, v) => MapEntry("$v", v));
+    final string2Branch =
+        BranchCategory.values.asMap().map((k, v) => MapEntry("$v", v));
+    print(
+        "Have a fucking bad day u bitch ${string2Itemcategory[json['category']]}");
+    return Item(
+      category: string2Itemcategory[json['category']] ?? ItemCategory.all,
+      description: json['description'],
+      id: json['id'],
+      imageList: json['imageList'],
+      title: json['title'],
+      price: json['price'],
+      profileId: json['profileId'],
+      sem: string2Sem[json['semester']],
+      branch: string2Branch[json['branch']],
+      year: string2year[json['year']],
+    );
+  }
+  // void setItemsList(List<Item> firebaseList) {
+  //   _items = firebaseList;
+  //   notifyListeners();
+  // }
 
   Future<void> fileUpload(pickedFile, i, String id, Item editedItem) async {
     if (pickedFile != null) {
