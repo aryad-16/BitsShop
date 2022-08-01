@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:login_singup_screen_ui/providers/item_model.dart';
+import 'package:login_singup_screen_ui/providers/items_provider.dart';
 import 'package:login_singup_screen_ui/widgets/userCheck.dart';
+
+final itemsStreamProvider = StreamProvider.autoDispose<List<Item>>((ref)async* {
+  final _stream =  Items().getItemsList();
+  await for (var event in _stream) {
+    yield event;
+  }
+});
 
 class InitializerWidget extends ConsumerStatefulWidget {
   const InitializerWidget({Key? key}) : super(key: key);

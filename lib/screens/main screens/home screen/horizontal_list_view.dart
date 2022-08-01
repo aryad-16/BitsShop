@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' as rp;
+import 'package:login_singup_screen_ui/main.dart';
 import 'package:login_singup_screen_ui/providers/items_provider.dart';
+import 'package:login_singup_screen_ui/widgets/initializer.dart';
 import 'package:provider/provider.dart';
 import 'package:string_extensions/string_extensions.dart';
 
@@ -8,7 +11,7 @@ import '../../../providers/item_model.dart';
 import '../Search Screen/search_screen.dart';
 import 'grid_item.dart';
 
-class HorizontalListView extends StatelessWidget {
+class HorizontalListView extends rp.ConsumerWidget {
   final ItemCategory category;
   const HorizontalListView({
     Key? key,
@@ -16,9 +19,7 @@ class HorizontalListView extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final items =
-        Provider.of<Items>(context).searchItems(category, '', null, null, null);
+  Widget build(BuildContext context, ref) {
     return Container(
       margin: const EdgeInsets.only(top: 15),
       child: Column(
@@ -62,24 +63,26 @@ class HorizontalListView extends StatelessWidget {
             ),
           ),
           StreamBuilder(
-              stream: Items().getItemsList(),
+              stream: ref.read(itemsStreamProvider.stream),
               builder: (context, snapshot) {
                 var it = snapshot.data as List<Item>;
                 print(it.length);
-                return SizedBox(
-                  height: 310,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: it.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return ChangeNotifierProvider.value(
-                        value: it[index],
-                        child: const SingleItemWidget(isEdit: false),
-                      );
-                    },
-                  ),
-                );
+                return snapshot.hasData && snapshot.data != 0
+                    ? SizedBox(
+                        height: 310,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: it.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return ChangeNotifierProvider.value(
+                              value: it[index],
+                              child: const SingleItemWidget(isEdit: false),
+                            );
+                          },
+                        ),
+                      )
+                    : CircularProgressIndicator();
               }),
         ],
       ),
