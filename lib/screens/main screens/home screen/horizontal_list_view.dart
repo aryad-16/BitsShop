@@ -61,20 +61,26 @@ class HorizontalListView extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
-            height: 310,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: items.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return ChangeNotifierProvider.value(
-                  value: items[index],
-                  child: const SingleItemWidget(isEdit: false),
+          StreamBuilder(
+              stream: Items().getItemsList(),
+              builder: (context, snapshot) {
+                var it = snapshot.data as List<Item>;
+                print(it.length);
+                return SizedBox(
+                  height: 310,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: it.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return ChangeNotifierProvider.value(
+                        value: it[index],
+                        child: const SingleItemWidget(isEdit: false),
+                      );
+                    },
+                  ),
                 );
-              },
-            ),
-          ),
+              }),
         ],
       ),
     );

@@ -50,7 +50,7 @@ class Items with ChangeNotifier {
   //     print(e);
   //   });
   // }
-  void getItemsList() async {
+  Stream<List<Item>> getItemsList() {
     Stream<List<Item>> res = FirebaseFirestore.instance
         .collection('items')
         .snapshots()
@@ -61,6 +61,7 @@ class Items with ChangeNotifier {
         _items.add(newItem);
       }
     });
+    return res;
   }
 
   static Item fromJson(Map<String, dynamic> json) {
