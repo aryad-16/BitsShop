@@ -61,16 +61,18 @@ class HorizontalListView extends StatelessWidget {
               ],
             ),
           ),
-          StreamBuilder(
-              stream: Items().getItemsList(),
-              builder: (context, snapshot) {
-                var it = snapshot.data as List<Item>;
-                print(it.length);
+          StreamBuilder<List<Item>>(
+            stream: Items().getItemsList(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text('Something went worng ${snapshot.error}');
+              } else if (snapshot.hasData) {
+                final it = snapshot.data as List<Item>;
                 return SizedBox(
                   height: 310,
                   child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: it.length,
+                    itemCount: it.length < 5 ? it.length : 5,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return ChangeNotifierProvider.value(
@@ -80,7 +82,11 @@ class HorizontalListView extends StatelessWidget {
                     },
                   ),
                 );
-              }),
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
         ],
       ),
     );

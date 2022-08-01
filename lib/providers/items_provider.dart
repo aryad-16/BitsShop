@@ -50,19 +50,11 @@ class Items with ChangeNotifier {
   //     print(e);
   //   });
   // }
-  Stream<List<Item>> getItemsList() {
-    Stream<List<Item>> res = FirebaseFirestore.instance
-        .collection('items')
-        .snapshots()
-        .map((snapshot) =>
-            snapshot.docs.map((doc) => Items.fromJson(doc.data())).toList());
-    res.listen((listOfItems) {
-      for (Item newItem in listOfItems) {
-        _items.add(newItem);
-      }
-    });
-    return res;
-  }
+  Stream<List<Item>> getItemsList() => FirebaseFirestore.instance
+      .collection('items')
+      .snapshots()
+      .map((snapshot) =>
+          snapshot.docs.map((doc) => Items.fromJson(doc.data())).toList());
 
   static Item fromJson(Map<String, dynamic> json) {
     final string2Itemcategory =
@@ -88,10 +80,6 @@ class Items with ChangeNotifier {
       year: string2year[json['year']],
     );
   }
-  // void setItemsList(List<Item> firebaseList) {
-  //   _items = firebaseList;
-  //   notifyListeners();
-  // }
 
   Future<void> fileUpload(pickedFile, i, String id, Item editedItem) async {
     if (pickedFile != null) {

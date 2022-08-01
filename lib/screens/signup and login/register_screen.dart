@@ -92,7 +92,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               options: CarouselOptions(
                 autoPlay: true,
                 autoPlayAnimationDuration: const Duration(milliseconds: 1500),
-                autoPlayInterval: const Duration(seconds: 8),
+                autoPlayInterval: const Duration(seconds: 5),
                 onPageChanged: (index, reason) {
                   setState(() {
                     _activeindex = index;

@@ -86,7 +86,6 @@ class SingleItemWidget extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 17,
                       fontFamily: 'Poppins Medium',
-                      // fontWeight: FontWeight.bold,
                       color: Constant.yellowColor,
                     ),
                   ),
