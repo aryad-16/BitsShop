@@ -8,7 +8,6 @@ import 'package:login_singup_screen_ui/widgets/initializer.dart';
 import '../Constants/constants.dart';
 import '../model/profile_model.dart';
 import '../screens/bottom_nav_bar_screen.dart';
-import '../screens/signup and login/login_screen.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({

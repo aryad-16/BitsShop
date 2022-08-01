@@ -14,7 +14,6 @@ import 'providers/items_provider.dart';
 import 'screens/bottom_nav_bar_screen.dart';
 import 'screens/signup and login/register_screen.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);

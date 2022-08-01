@@ -11,45 +11,6 @@ class Items with ChangeNotifier {
   final user = FirebaseAuth.instance.currentUser;
   FirebaseStorage storageRef = FirebaseStorage.instance;
   final List<Item> _items = [];
-
-  // Future<void> setItemsList() async {
-  //   print("Hello guys have a good fking day");
-  //   List<Item> feedItems = [];
-
-  //   await FirebaseFirestore.instance.collection("items").get().then((ds) {
-  //     feedItems = ds.docs
-  //         .map(
-  //           (doc) => Item(
-  //               category: Category.values
-  //                   .firstWhere((e) => e.toString() == doc['category']),
-  //               price: int.parse(doc['price']),
-  //               profileId: doc['profileId'],
-  //               title: doc['title'],
-  //               id: doc['id'],
-  //               description: doc['description'],
-  //               imageList: doc['imageList'].split(','),
-  //               year: doc.data().toString().contains('year')
-  //                   ? YearCategory.values
-  //                       .firstWhere((e) => e.toString() == doc['year'])
-  //                   : null,
-  //               sem: doc.data().toString().contains('semester')
-  //                   ? SemesterCategory.values
-  //                       .firstWhere((e) => e.toString() == doc['semester'])
-  //                   : null,
-  //               branch: doc.data().toString().contains('branch')
-  //                   ? BranchCategory.values
-  //                       .firstWhere((e) => e.toString() == doc['branch'])
-  //                   : null),
-  //         )
-  //         .toList();
-  //     print("Have a good day  ${feedItems[0].branch}");
-  //     _items = feedItems;
-  //     notifyListeners();
-  //     print("Have a good day  ${feedItems[0].branch}");
-  //   }).catchError((e) {
-  //     print(e);
-  //   });
-  // }
   Stream<List<Item>> getItemsList() => FirebaseFirestore.instance
       .collection('items')
       .snapshots()
@@ -65,13 +26,18 @@ class Items with ChangeNotifier {
         YearCategory.values.asMap().map((k, v) => MapEntry("$v", v));
     final string2Branch =
         BranchCategory.values.asMap().map((k, v) => MapEntry("$v", v));
-    print(
-        "Have a fucking bad day u bitch ${string2Itemcategory[json['category']]}");
+    List<String> imageList = json['imageList']
+        .toString()
+        .substring(1, json['imageList'].toString().length - 1)
+        .split(',');
+    for (var url in imageList) {
+      url.trim();
+    }
     return Item(
       category: string2Itemcategory[json['category']] ?? ItemCategory.all,
       description: json['description'],
       id: json['id'],
-      imageList: json['imageList'],
+      imageList: imageList,
       title: json['title'],
       price: json['price'],
       profileId: json['profileId'],

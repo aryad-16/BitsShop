@@ -61,26 +61,31 @@ class HorizontalListView extends rp.ConsumerWidget {
             ),
           ),
           StreamBuilder(
-            stream: ref.read(itemsStreamProvider.stream),
+            stream: ref.watch(itemsStreamProvider.stream),
             builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const SizedBox(
+                  height: 310,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
               var it = snapshot.data as List<Item>;
-              print(it.length);
-              return snapshot.hasData && snapshot.data != 0
-                  ? SizedBox(
-                      height: 310,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: it.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return ChangeNotifierProvider.value(
-                            value: it[index],
-                            child: const SingleItemWidget(isEdit: false),
-                          );
-                        },
-                      ),
-                    )
-                  : const CircularProgressIndicator();
+              return SizedBox(
+                height: 310,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: it.length > 5 ? 5 : it.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return ChangeNotifierProvider.value(
+                      value: it[index],
+                      child: const SingleItemWidget(isEdit: false),
+                    );
+                  },
+                ),
+              );
             },
           ),
         ],
