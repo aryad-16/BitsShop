@@ -7,6 +7,7 @@ import 'package:login_singup_screen_ui/screens/main%20screens/Search%20Screen/se
 import 'package:provider/provider.dart';
 
 import '../../../Data/data.dart';
+import '../../../providers/items_provider.dart';
 import '../../../providers/profiles_provider.dart';
 import '../../../widgets/drawer.dart';
 import 'horizontal_list_view.dart';
@@ -64,6 +65,11 @@ class _HomeScreenState extends State<HomeScreen> {
   //   _isInit = false;
   //   super.didChangeDependencies();
   // }
+  @override
+  void initState() {
+    Items().getItemsList();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

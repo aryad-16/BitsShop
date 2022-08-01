@@ -31,7 +31,7 @@ class Item with ChangeNotifier {
   var description;
   var price;
   final ItemCategory category;
-  var isFavourite;
+  bool isFavourite;
   var id;
   var profileId;
   final YearCategory? year;
@@ -67,11 +67,11 @@ class Item with ChangeNotifier {
       category: docData.contains('category')
           ? ItemCategory.values[doc.get('category')]
           : ItemCategory.others,
-      isFavourite:
-          false,
+      isFavourite: false,
       id: docData.contains('id') ? doc.get('id').toString() : 'not set',
-      profileId:
-          docData.contains('profileId') ? doc.get('profileId').toString() : 'not set',
+      profileId: docData.contains('profileId')
+          ? doc.get('profileId').toString()
+          : 'not set',
       imageList: docData.contains('imageList') ? doc.get('imageList') : '',
       branch: docData.contains('branch')
           ? BranchCategory.values[doc.get('branch')]

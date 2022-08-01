@@ -1,7 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:login_singup_screen_ui/providers/item_model.dart';
 import 'package:login_singup_screen_ui/widgets/userCheck.dart';
 
 class InitializerWidget extends ConsumerStatefulWidget {
@@ -17,18 +15,20 @@ class _InitializerWidgetState extends ConsumerState<InitializerWidget> {
   @override
   void initState() {
     userCheck(ref, context);
-    getItemsList();
+    // getItemsList();
     super.initState();
   }
 
-  Future<void> getItemsList() async {
-    await FirebaseFirestore.instance.collection('items').get().then((value) {
-      print(value.docs[0].data());
-      value.docs.forEach((element) {
-        itemsList.add(Item.fromDocument(element));
-      });
-    });
-  }
+  // Stream<List<Item>> getItemsList() =>
+  //     // await FirebaseFirestore.instance.collection('items').get().then((value) {
+  //     //   print(value.docs[0].data());
+  //     //   value.docs.forEach((element) {
+  //     //     itemsList.add(Item.fromDocument(element));
+  //     //   });
+  //     // });
+  //     FirebaseFirestore.instance.collection('items').snapshots().map(
+  //         (snapshot) =>
+  //             snapshot.docs.map((doc) => Items.fromJson(doc.data())).toList());
 
   @override
   Widget build(BuildContext context) {
