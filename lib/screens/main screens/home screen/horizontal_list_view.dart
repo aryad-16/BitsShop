@@ -75,10 +75,7 @@ class HorizontalListView extends rp.ConsumerWidget {
                           itemCount: it.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
-                            return ChangeNotifierProvider.value(
-                              value: it[index],
-                              child: const SingleItemWidget(isEdit: false),
-                            );
+                            return const SingleItemWidget(isEdit: false);
                           },
                         ),
                       )
