@@ -22,11 +22,11 @@ enum BranchCategory {
   ecoDual
 }
 
-List itemsList = [];
+List<Item> itemsList = [];
 final itemsListProvider = StateProvider((ref) => itemsList);
 
 class Item with ChangeNotifier {
-  var imageList;
+  List<String> imageList;
   var title;
   var description;
   var price;

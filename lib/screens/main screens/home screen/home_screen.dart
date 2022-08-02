@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' as rp;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:login_singup_screen_ui/Constants/constants.dart';
 import 'package:login_singup_screen_ui/providers/item_model.dart';
 import 'package:login_singup_screen_ui/screens/main%20screens/Search%20Screen/search_screen.dart';
+import 'package:login_singup_screen_ui/screens/main%20screens/home%20screen/grid_item.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Data/data.dart';
@@ -11,17 +13,20 @@ import '../../../providers/profiles_provider.dart';
 import '../../../widgets/drawer.dart';
 import 'horizontal_list_view.dart';
 
-class HomeScreen extends StatefulWidget {
+List<Item> itemsList = [];
+
+class HomeScreen extends rp.ConsumerStatefulWidget {
   static const routename = 'homescreen';
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  rp.ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends rp.ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    itemsList = ref.watch(itemsListProvider.state).state;
     final _profile =
         Provider.of<Profiles>(context, listen: false).getProfile(profileID);
     return Scaffold(
@@ -82,14 +87,10 @@ class _HomeScreenState extends State<HomeScreen> {
             children: <Widget>[
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (ctx) => const SearchScreen(
-                        category: ItemCategory.all,
-                        isEdit: false,
-                      ),
-                    ),
-                  );
+                  showSearch(
+                      context: context,
+                      // delegate to customize the search bar
+                      delegate: CustomSearchDelegate());
                 },
                 child: Container(
                   margin: const EdgeInsets.only(top: 15.0, left: 32, right: 32),
@@ -158,5 +159,68 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+}
+
+class CustomSearchDelegate extends SearchDelegate {
+  List<Item> searchTerms = itemsList;
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        onPressed: () {
+          query = '';
+        },
+        icon: Icon(Icons.clear),
+      ),
+    ];
+  }
+
+  // second overwrite to pop out of search menu
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        close(context, null);
+      },
+      icon: Icon(Icons.arrow_back),
+    );
+  }
+
+  // third overwrite to show query result
+  @override
+  Widget buildResults(BuildContext context) {
+    List matchQuery = [];
+    for (var item in searchTerms) {
+      if (item.description.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(item);
+      }
+    }
+    return ListView.builder(
+      itemCount: matchQuery.length,
+      itemBuilder: (context, index) {
+        var result = matchQuery[index];
+        return ListTile(
+          title: Text(result.description.toString()),
+        );
+      },
+    );
+  }
+
+  // last overwrite to show the
+  // querying process at the runtime
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    List matchQuery = [];
+    for (var item in searchTerms) {
+      if (item.description.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(item);
+      }
+    }
+    return ListView.builder(itemCount: matchQuery.length, itemBuilder: (context, index) {
+      var result = matchQuery[index];
+      return SingleItemWidget(isEdit: false, item: result);
+    });
   }
 }

@@ -4,8 +4,17 @@ import 'package:login_singup_screen_ui/providers/item_model.dart';
 import 'package:login_singup_screen_ui/providers/items_provider.dart';
 import 'package:login_singup_screen_ui/widgets/userCheck.dart';
 
-final itemsStreamProvider =
-    StreamProvider<List<Item>>((ref) => Items().getItemsList());
+final itemsStreamProvider = StreamProvider<List<Item>>((ref) {
+  final _stream = Items().getItemsList();
+  _stream.listen((event) {
+    for (var item in event){
+      
+        ref.read(itemsListProvider).add(item);
+      
+    }
+  });
+  return _stream;
+});
 
 class InitializerWidget extends ConsumerStatefulWidget {
   const InitializerWidget({Key? key}) : super(key: key);

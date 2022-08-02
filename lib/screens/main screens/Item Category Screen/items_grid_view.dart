@@ -36,7 +36,7 @@ class ItemsGridView extends StatelessWidget {
                 ),
                 itemBuilder: (ctx, index) => ChangeNotifierProvider.value(
                   value: items[index],
-                  child: SingleItemWidget(
+                  child: SingleItemWidget(item: items[index],
                     isEdit: isEdit,
                   ),
                 ),

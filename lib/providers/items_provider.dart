@@ -15,9 +15,9 @@ class Items with ChangeNotifier {
       .collection('items')
       .snapshots()
       .map((snapshot) =>
-          snapshot.docs.map((doc) => Items.fromJson(doc.data())).toList());
+          snapshot.docs.map((doc) => Items.fromJson(doc.data(), doc)).toList());
 
-  static Item fromJson(Map<String, dynamic> json) {
+  static Item fromJson(Map<String, dynamic> json, doc) {
     final string2Itemcategory =
         ItemCategory.values.asMap().map((k, v) => MapEntry("$v", v));
     final string2Sem =
@@ -26,17 +26,13 @@ class Items with ChangeNotifier {
         YearCategory.values.asMap().map((k, v) => MapEntry("$v", v));
     final string2Branch =
         BranchCategory.values.asMap().map((k, v) => MapEntry("$v", v));
-    List<String> imageList = json['imageList']
-        ;
-    
-    for (var url in imageList) {
-      url.trim();
-    }
+  
+
     return Item(
       category: string2Itemcategory[json['category']] ?? ItemCategory.all,
       description: json['description'],
       id: json['id'],
-      imageList: FieldValue.arrayUnion(imageList),
+      imageList: doc['imageList'] == null ? ['asd'] : List.from(doc['imageList']),
       title: json['title'],
       price: json['price'],
       profileId: json['profileId'],

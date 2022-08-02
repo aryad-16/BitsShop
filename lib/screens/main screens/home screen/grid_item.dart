@@ -12,24 +12,18 @@ import '../../../providers/profiles_provider.dart';
 import '../Edit Screen/edit_screen.dart';
 
 class SingleItemWidget extends StatelessWidget {
+  final item;
   final bool isEdit;
   const SingleItemWidget({
     Key? key,
-    required this.isEdit,
+    required this.isEdit,required this.item,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final item = Provider.of<Item>(context);
+   
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => ChangeNotifierProvider.value(
-            value: item,
-            child: const ItemDetailScreen(),
-          ),
-        ),
-      ),
+      onTap: null,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8),
         width: 200,
@@ -51,7 +45,7 @@ class SingleItemWidget extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
-                    item.imageList,
+                    item.imageList[0],
                     fit: BoxFit.contain,
                   ),
                 ),
