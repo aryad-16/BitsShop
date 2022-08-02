@@ -72,7 +72,7 @@ class Item with ChangeNotifier {
       profileId: docData.contains('profileId')
           ? doc.get('profileId').toString()
           : 'not set',
-      imageList: docData.contains('imageList') ? doc.get('imageList') : '',
+      imageList: docData.contains('imageList') ? doc.get('imageList') as List<String> : [],
       branch: docData.contains('branch')
           ? BranchCategory.values[doc.get('branch')]
           : null,

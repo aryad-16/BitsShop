@@ -14,7 +14,6 @@ import 'providers/items_provider.dart';
 import 'screens/bottom_nav_bar_screen.dart';
 import 'screens/signup and login/register_screen.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -23,45 +22,9 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-  // Future<List> getFeedItems() async {
-  //   print("Hello guys have a good day");
-  //   List<Item> feedItems = [];
-  //   final user = FirebaseAuth.instance.currentUser;
-  //   await FirebaseFirestore.instance.collection('items').get().then((ds) {
-  //     feedItems = ds.docs
-  //         .map((doc) => Item(
-  //             category: ItemCategory.values
-  //                 .firstWhere((e) => e.toString() == doc['category']),
-  //             price: int.parse(doc['price']),
-  //             profileId: doc['profileId'],
-  //             title: doc['title'],
-  //             id: doc['id'],
-  //             description: doc['description'],
-  //             imageList: doc['imageList'].split(','),
-  //             year: doc.data().toString().contains('year')
-  //                 ? YearCategory.values
-  //                     .firstWhere((e) => e.toString() == doc['year'])
-  //                 : null,
-  //             sem: doc.data().toString().contains('semester')
-  //                 ? SemesterCategory.values
-  //                     .firstWhere((e) => e.toString() == doc['semester'])
-  //                 : null,
-  //             branch: doc.data().toString().contains('branch')
-  //                 ? BranchCategory.values
-  //                     .firstWhere((e) => e.toString() == doc['branch'])
-  //                 : null))
-  //         .toList();
-  //     Items().setItemsList(feedItems);
-  //     print("Have a good ${feedItems[0].category}");
-  //   }).catchError((e) {
-  //     print(e);
-  //   }).then((value) {});
-  //   return feedItems;
-  // }
 
   @override
   Widget build(BuildContext context) {
-    // getFeedItems();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: Items()),

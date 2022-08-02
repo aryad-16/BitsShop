@@ -51,7 +51,7 @@ class SingleItemWidget extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
-                    item.imageList[0],
+                    item.imageList,
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -86,7 +86,6 @@ class SingleItemWidget extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 17,
                       fontFamily: 'Poppins Medium',
-                      // fontWeight: FontWeight.bold,
                       color: Constant.yellowColor,
                     ),
                   ),

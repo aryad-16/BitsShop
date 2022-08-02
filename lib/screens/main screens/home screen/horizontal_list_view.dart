@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as rp;
-import 'package:login_singup_screen_ui/main.dart';
-import 'package:login_singup_screen_ui/providers/items_provider.dart';
 import 'package:login_singup_screen_ui/widgets/initializer.dart';
 import 'package:provider/provider.dart';
 import 'package:string_extensions/string_extensions.dart';
@@ -63,24 +61,33 @@ class HorizontalListView extends rp.ConsumerWidget {
             ),
           ),
           StreamBuilder(
-              stream: ref.read(itemsStreamProvider.stream),
-              builder: (context, snapshot) {
-                var it = snapshot.data as List<Item>;
-                print(it.length);
-                return snapshot.hasData && snapshot.data != 0
-                    ? SizedBox(
-                        height: 310,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: it.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return const SingleItemWidget(isEdit: false);
-                          },
-                        ),
-                      )
-                    : CircularProgressIndicator();
-              }),
+            stream: ref.watch(itemsStreamProvider.stream),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return const SizedBox(
+                  height: 310,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              }
+              var it = snapshot.data as List<Item>;
+              return SizedBox(
+                height: 310,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: it.length ,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return ChangeNotifierProvider.value(
+                      value: it[index],
+                      child: const SingleItemWidget(isEdit: false),
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         ],
       ),
     );
