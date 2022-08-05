@@ -1,16 +1,28 @@
+
 # BitsShop
 
-A new Flutter project.
+An platform where students of Bits Pilani can create and mangae ads of their items. 
+ 
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Tech Stack
 
-A few resources to get you started if this is your first Flutter project:
+**Client:** Flutter with Provider as State Management Tool
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+**Server:** Firebase
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## Register Screen
+
+![App Screenshot](https://lh3.googleusercontent.com/a-/AFdZuco2z3tFuFiqvezGZp_rOmD9Sb1rT0JxvBuXiCP5=s360-p-rw-no)
+
+
+## Authors
+
+👤Arya D
+  - Github [@aryad](https://github.com/aryad-16)
+  - LinkedIn [@aryad](https://www.linkedin.com/in/aryad1612/)
+ 
+👤Prathamesh Awnekar 
+  - Github [@PrathameshAnwekar](https://github.com/PrathameshAnwekar)
+  - LinkedIn [@PrathameshAnwekar](https://www.linkedin.com/in/prathamesh-anwekar-b5a261211/)
