@@ -56,6 +56,12 @@ A multi-platform app (Currently under development) to help BITSians trade books,
 
 <p float="left" >
   <img src="https://user-images.githubusercontent.com/83908779/184391024-db9ad8ce-7dfb-477a-827d-b27f7fe228fb.jpg" width="200" height="400" />
+   &nbsp; 
+  <img src="https://user-images.githubusercontent.com/83908779/184393426-d8952488-d207-4254-9f56-098e724ddf1b.jpg" width="200" height="400" /> 
+   &nbsp; 
+  <img src="https://user-images.githubusercontent.com/83908779/184393651-ea96e009-6d53-4a77-b837-4255b79b41fd.jpg" width="200" height="400" /> 
+   &nbsp; 
+  <img src="https://user-images.githubusercontent.com/83908779/184393570-c2f7d3ec-4c84-4771-9e30-d5eccf29a66b.jpg" width="200" height="400" /> 
 </p>
 
 ## Profile Screen
