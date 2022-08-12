@@ -1,13 +1,13 @@
 
 # BitsShop
 
-An platform where students of Bits Pilani can create and mangae ads of their items. 
+A multi-platform app (Currently under development) to help BITSians trade books, devices, and other stuff on campus. 
  
 
 
 ## Tech Stack
 
-**Client:** Flutter with Provider as State Management Tool
+**Client:** Flutter, Riverpod as State Management Tool
 
 **Server:** Firebase
 
