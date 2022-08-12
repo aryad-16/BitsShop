@@ -12,9 +12,10 @@ A multi-platform app (Currently under development) to help BITSians trade books,
 **Server:** Firebase
 
 
-## Register Screen 
 
-![App Screenshot](https://drive.google.com/file/d/1EEGY1yXVceqssk0p6V4P3uIsLh-gyj4e/view?usp=sharing)
+## Register / Login Screens 
+
+<img src="https://user-images.githubusercontent.com/83908779/184385597-e261efc2-ba61-4645-95ac-38f3cd92bd3d.jpg" width="200" height="400" />
 
 
 ## Developers
