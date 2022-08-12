@@ -17,7 +17,7 @@ A multi-platform app (Currently under development) to help BITSians trade books,
 ![App Screenshot](https://lh3.googleusercontent.com/a-/AFdZuco2z3tFuFiqvezGZp_rOmD9Sb1rT0JxvBuXiCP5=s360-p-rw-no)
 
 
-## Authors
+## Developers
 
 👤Arya D
   - Github [@aryad](https://github.com/aryad-16)
