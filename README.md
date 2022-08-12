@@ -28,8 +28,10 @@ A multi-platform app (Currently under development) to help BITSians trade books,
 
 <p float="left" >
   <img src="https://user-images.githubusercontent.com/83908779/184388906-e2d155c2-bf1e-4ce7-ae72-9a963de0aa66.jpg" width="200" height="400" />
-  &nbsp; 
+  &nbsp; &nbsp;
   <img src="https://user-images.githubusercontent.com/83908779/184389659-3b1dae15-fb46-4cba-a3c0-63d5a76cb9d7.jpg" width="200" height="400" />  
+  &nbsp;
+  <img src="https://user-images.githubusercontent.com/83908779/184391738-a45f8945-b3a6-4777-9ff0-6d8b17dd8e02.jpg" width="200" height="400" />  
 </p>
 
 ## Item Detail Screen
@@ -38,6 +40,26 @@ A multi-platform app (Currently under development) to help BITSians trade books,
   <img src="https://user-images.githubusercontent.com/83908779/184390023-f668259a-6925-4cb5-b7c5-cda336695e4b.jpg" width="200" height="400" />
   &nbsp; 
   <img src="https://user-images.githubusercontent.com/83908779/184390079-b7a5f538-9912-449c-8682-f39bcea63c60.jpg" width="200" height="400" />  
+</p>
+
+## New Ad Screen
+
+<p float="left" >
+  <img src="https://user-images.githubusercontent.com/83908779/184391283-6e5300a1-095c-4b47-9711-367d4e0d3d95.jpg" width="200" height="400" />
+  &nbsp; 
+  <img src="https://user-images.githubusercontent.com/83908779/184391320-39680354-5a62-4e04-98a5-37e67653b0b1.jpg" width="200" height="400" />  
+</p>
+
+## Manage Ads Screen
+
+<p float="left" >
+  <img src="https://user-images.githubusercontent.com/83908779/184391024-db9ad8ce-7dfb-477a-827d-b27f7fe228fb.jpg" width="200" height="400" />
+</p>
+
+## Profile Screen
+
+<p float="left" >
+  <img src="https://user-images.githubusercontent.com/83908779/184391876-11e706bf-f325-4eaf-880b-3e8d3680d6a3.jpg" width="200" height="400" />
 </p>
 
 ## Developers
