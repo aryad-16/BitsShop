@@ -24,10 +24,12 @@ A multi-platform app (Currently under development) to help BITSians trade books,
   <img src="https://user-images.githubusercontent.com/83908779/184388483-bdbb4858-9080-418b-a07d-2874cafd2c2c.jpg" width="200" height="400" />  
 </p>
 
-## Feed / Search Screen 
+## Home / Search Screen 
 
 <p float="left" >
   <img src="https://user-images.githubusercontent.com/83908779/184388906-e2d155c2-bf1e-4ce7-ae72-9a963de0aa66.jpg" width="200" height="400" />
+  &nbsp;
+  <img src="https://user-images.githubusercontent.com/83908779/184392377-2084f0aa-9e0b-49b1-8324-31f6b1ebd134.jpg" width="200" height="400" />  
   &nbsp; &nbsp;
   <img src="https://user-images.githubusercontent.com/83908779/184389659-3b1dae15-fb46-4cba-a3c0-63d5a76cb9d7.jpg" width="200" height="400" />  
   &nbsp;
@@ -60,6 +62,12 @@ A multi-platform app (Currently under development) to help BITSians trade books,
 
 <p float="left" >
   <img src="https://user-images.githubusercontent.com/83908779/184391876-11e706bf-f325-4eaf-880b-3e8d3680d6a3.jpg" width="200" height="400" />
+</p>
+
+## Favorites Screen
+
+<p float="left" >
+  <img src="https://user-images.githubusercontent.com/83908779/184389056-3c021727-1097-4b16-a511-5ab7752dfbc8.jpg" width="200" height="400" />
 </p>
 
 ## Developers
