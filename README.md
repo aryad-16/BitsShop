@@ -1,7 +1,7 @@
 
 # BitsShop
 
-A multi-platform app (Currently under development) to help BITSians trade books, devices, and other stuff on campus. 
+A multi-platform app to help BITSians trade books, devices, and other stuff on campus. 
  
 
 
